@@ -1,4 +1,6 @@
-VIMBA-Module
-============
+###Prosilica Module
 
-Module for controlling AVT cameras within RTXI
+**Requirements:**  
+**Limitations:**  
+
+Module for controlling AVT cameras within RTXI  
