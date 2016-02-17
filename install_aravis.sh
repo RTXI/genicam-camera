@@ -11,4 +11,6 @@ cd aravis-git
 make -j`nproc` && sudo make install
 
 # Generate camera xml file.
-arv-tool-0.4 -n $(arv-tool-0.4) genicam > "$(arv-tool-0.4).xml"
+CAMERA_NAME=$(arv-tool-0.4)
+arv-tool-0.4 -n ${CAMERA_NAME} genicam > "${CAMERA_NAME}.xml" && \
+sed -i 's///g' "${CAMERA_NAME}.xml"
