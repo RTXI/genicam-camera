@@ -1,9 +1,6 @@
 ###Prosilica Module
 
-<!--
-**Requirements:** [vimba sdk](https://www.alliedvision.com/fileadmin/content/software/software/Vimba/Vimba_v1.4_Linux.tgz)  
--->
-**Requirements:** libglib2.0-dev libgtk2.0-dev, libxml2-dev, (libgstreamer1.0-dev, libnotify-dev, libgstreamer-plugins-base1.0-dev, libgirepository1.0-dev)  
+**Requirements:** intltool, libgstreamer1.0-dev, libgtk-3-dev, gtk-doc-tools, libnotify-dev, libgstreamer-plugins-base1.0-dev, libgirepository1.0-dev, libgstreamer0.10-dev, libgstreamer-plugins-base0.10-dev, python-gobject-dev, python-gst0.10-dev, python-gst, and gobject-introspection
 **Limitations:**  
 
 Module for controlling AVT cameras within RTXI. 
