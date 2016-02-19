@@ -4,13 +4,15 @@
 # git version. 
 git clone git://git.gnome.org/aravis aravis-git
 
+# Install package dependencies.
+sudo apt-get install \
+	intltool libgstreamer1.0-dev libgtk-3-dev gtk-doc-tools libnotify-dev \
+	libgstreamer-plugins-base1.0-dev libgirepository1.0-dev \
+	libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev \
+	gobject-introspection
+
 cd aravis-git
 # Need to install dependencies first, instructions missing.
 ./autogen.sh --enable-viewer --enable-introspection=yes \
-             --enable-gst-plugin-0.10 --enable-gst-plugin && \
+             --enable-gst-0.10-plugin --enable-gst-plugin && \
 make -j`nproc` && sudo make install
-
-# Generate camera xml file.
-CAMERA_NAME=$(arv-tool-0.4)
-arv-tool-0.4 -n ${CAMERA_NAME} genicam > "${CAMERA_NAME}.xml" && \
-sed -i 's///g' "${CAMERA_NAME}.xml"
