@@ -9,7 +9,8 @@ sudo apt-get install \
 	intltool libgstreamer1.0-dev libgtk-3-dev gtk-doc-tools libnotify-dev \
 	libgstreamer-plugins-base1.0-dev libgirepository1.0-dev \
 	libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev \
-	python-gobject-dev python-gst0.10-dev python-gst gobject-introspection
+	python-gobject-dev python-gst0.10-dev python-gst-1.0 \
+	gobject-introspection
 
 cd aravis-git
 # Need to install dependencies first, instructions missing.
