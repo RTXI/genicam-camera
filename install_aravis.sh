@@ -9,10 +9,10 @@ sudo apt-get install \
 	intltool libgstreamer1.0-dev libgtk-3-dev gtk-doc-tools libnotify-dev \
 	libgstreamer-plugins-base1.0-dev libgirepository1.0-dev \
 	libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev \
-	gobject-introspection
+	python-gobject-dev python-gst0.10-dev python-gst gobject-introspection
 
 cd aravis-git
 # Need to install dependencies first, instructions missing.
-./autogen.sh --enable-viewer --enable-introspection=yes \
-             --enable-gst-0.10-plugin --enable-gst-plugin && \
+./autogen.sh --enable-viewer --enable-introspection=yes --enable-gtk-doc \
+             --enable-gst-0.10-plugin --enable-gst-plugin --enable-cpp-test && \
 make -j`nproc` && sudo make install
