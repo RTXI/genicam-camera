@@ -1,12 +1,16 @@
 #! /bin/bash
 
-# install dependences
+################################################################################
+# Install qarv dependences.
+################################################################################
 sudo apt-get install \
 	cmake libswscale-dev libavutil-dev libavcodec-dev libopencv-dev
 
-# clone reop and build
-git clone https://github.com/anselg/qarv
-cd qarv
+################################################################################
+# Clone my (anselg) repository and build.
+################################################################################
+git clone https://github.com/anselg/qarv qarv-git
+cd qarv-git
 mkdir build
 cd build
 cmake ..
