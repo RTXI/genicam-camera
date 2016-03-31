@@ -1,8 +1,12 @@
 #! /bin/bash
 
+SCRIPT_DIR=$(pwd)
+BASE_DIR=../
+BUILD_DIR=${BASE_DIR}/build
+
 # Should ultimately use a static version of the software, not the latest git 
 # version. 
-git clone git://git.gnome.org/aravis aravis-git
+git clone git://git.gnome.org/aravis ${BUILD_DIR}/aravis-git
 
 ################################################################################
 # Install package dependencies.
@@ -15,12 +19,13 @@ sudo apt-get install \
 	python-gobject-dev python-gst0.10-dev python-gst-1.0 \
 	gobject-introspection
 
-cd aravis-git
+cd ${BUILD_DIR}/aravis-git
 # Need to install dependencies first, instructions missing.
 ./autogen.sh --enable-introspection=yes --enable-gst-0.10-plugin \
              --enable-gst-plugin --enable-cpp-test && \
 make -j`nproc` && sudo make install
 
+cd ${SCRIPT_DIR}
 
 ################################################################################
 # Export variables. Assumes that the script is run from the base of the 
