@@ -1,6 +1,9 @@
 # Aravis files (needs work)
 aravis-git/
 
+# Qarv files
+qarv-git/
+
 # Text Editor backups
 *.swp
 *~
