@@ -27,6 +27,8 @@
 #endif
 
 #include "genicam-camera.h"
+#include "include/api/qarvcamera.h"
+#include "include/api/qarvgui.h"
 
 #include <iostream>
 
@@ -51,6 +53,7 @@ GenicamCamera::GenicamCamera(void)
 	  Workspace::Instance("GenICam Module", vars, num_vars) {
 
 	setWindowTitle(QString::number( getID() ) + " GenICam Module");
+	QArvCamera::init();
 	createGUI();
 	initialize();
 	show();
@@ -71,21 +74,23 @@ void GenicamCamera::createGUI(void) {
 	MainWindow::getInstance()->createMdi(subWindow); 
 	subWindow->setWidget(this);
 
-	QWidget *widget = new QWidget(subWindow);
+	QArvGui *widget = new QArvGui(subWindow, false);
 	QVBoxLayout *layout = new QVBoxLayout(this);
 	setLayout(layout);
 
 	layout->addWidget(widget);
 
-	QPushButton *button = new QPushButton("Howdy.");
-	layout->addWidget(button);
+//	QPushButton *button = new QPushButton("Howdy.");
+//	layout->addWidget(button);
 
-	QObject::connect(button, SIGNAL(clicked(void)), 
-	                 this, SLOT(buttonClicked(void)));
+//	QObject::connect(button, SIGNAL(clicked(void)), 
+//	                 this, SLOT(buttonClicked(void)));
 
 	subWindow->adjustSize();
 }
 
+/*
 void GenicamCamera::buttonClicked(void) {
 	std::cout<<"button clicked"<<std::endl;
 }
+*/

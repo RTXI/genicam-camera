@@ -26,6 +26,9 @@
 #include <event.h>
 #include <plugin.h>
 
+#include "include/api/qarvcamera.h"
+#include "include/api/qarvgui.h"
+
 #include <QtGlobal>
 #if QT_VERSION >= 0x050000
 	#include <QtWidgets>
@@ -47,6 +50,8 @@ class GenicamCamera: public QWidget, public RT::Thread, public Plugin::Object,
 //		void receiveEvent( const ::Event::Object * );
 //		void receiveEventRT( const ::Event::Object * );
 
+	
+
 	public slots:
 
 	protected:
@@ -56,7 +61,7 @@ class GenicamCamera: public QWidget, public RT::Thread, public Plugin::Object,
 		void initialize(void);
 
 	private slots:
-		void buttonClicked(void);
+//		void buttonClicked(void);
 };
 
 #endif
