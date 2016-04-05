@@ -27,6 +27,32 @@ extern "C" {
 	#include <arvenums.h>
 }
 
+/*
+#include "include/decoders/bayer/bayerbg8.h"
+#include "include/decoders/bayer/bayerbg10.h"
+#include "include/decoders/bayer/bayerbg12.h"
+#include "include/decoders/bayer/bayerbg12_packed.h"
+#include "include/decoders/bayer/bayerbg16.h"
+
+#include "include/decoders/bayer/bayergb8.h"
+#include "include/decoders/bayer/bayergb10.h"
+#include "include/decoders/bayer/bayergb12.h"
+#include "include/decoders/bayer/bayergb12_packed.h"
+#include "include/decoders/bayer/bayergb16.h"
+
+#include "include/decoders/bayer/bayergr8.h"
+#include "include/decoders/bayer/bayergr10.h"
+#include "include/decoders/bayer/bayergr12.h"
+#include "include/decoders/bayer/bayergr12_packed.h"
+#include "include/decoders/bayer/bayergr16.h"
+
+#include "include/decoders/bayer/bayerrg8.h"
+#include "include/decoders/bayer/bayerrg10.h"
+#include "include/decoders/bayer/bayerrg12.h"
+#include "include/decoders/bayer/bayerrg12_packed.h"
+#include "include/decoders/bayer/bayerrg16.h"
+*/
+
 // Some formats appeared only after aravis-0.2.0, so
 // we check for their presence. The 12_PACKED formats
 // were added individually.
@@ -193,6 +219,271 @@ class BayerDecoder: public QArvDecoder {
 			QArvDecoder* stage1;
 			int cvt;
 };
+
+// 8-bit
+class BayerGR8 : public QObject, public QArvPixelFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArvPixelFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
+
+	public:
+		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_GR_8; }
+		QArvDecoder* makeDecoder(QSize size) {
+			return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_GR_8>(size);
+		}
+};
+
+class BayerRG8 : public QObject, public QArvPixelFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArvPixelFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
+
+	public:
+		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_RG_8; }
+		QArvDecoder* makeDecoder(QSize size) {
+			return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_RG_8>(size);
+		}
+};
+
+class BayerGB8 : public QObject, public QArvPixelFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArvPixelFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
+
+	public:
+		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_GB_8; }
+		QArvDecoder* makeDecoder(QSize size) {
+			return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_GB_8>(size);
+		}
+};
+
+class BayerBG8 : public QObject, public QArvPixelFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArvPixelFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
+
+	public:
+		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_BG_8; }
+		QArvDecoder* makeDecoder(QSize size) {
+			return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_BG_8>(size);
+		}
+};
+
+// 10-bit
+
+class BayerGR10 : public QObject, public QArvPixelFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArvPixelFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
+
+	public:
+		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_GR_10; }
+		QArvDecoder* makeDecoder(QSize size) {
+			return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_GR_10>(size);
+		}
+};
+
+class BayerRG10 : public QObject, public QArvPixelFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArvPixelFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
+
+	public:
+		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_RG_10; }
+		QArvDecoder* makeDecoder(QSize size) {
+			return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_RG_10>(size);
+		}
+};
+
+class BayerGB10 : public QObject, public QArvPixelFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArvPixelFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
+
+	public:
+		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_GB_10; }
+		QArvDecoder* makeDecoder(QSize size) {
+			return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_GB_10>(size);
+		}
+};
+
+class BayerBG10 : public QObject, public QArvPixelFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArvPixelFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
+
+	public:
+		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_BG_10; }
+		QArvDecoder* makeDecoder(QSize size) {
+			return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_BG_10>(size);
+		}
+};
+
+// 12-bit
+
+class BayerGR12 : public QObject, public QArvPixelFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArvPixelFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
+
+	public:
+		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_GR_12; }
+		QArvDecoder* makeDecoder(QSize size) {
+			return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_GR_12>(size);
+		}
+};
+
+class BayerRG12 : public QObject, public QArvPixelFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArvPixelFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
+
+	public:
+		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_RG_12; }
+		QArvDecoder* makeDecoder(QSize size) {
+			return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_RG_12>(size);
+		}
+};
+
+class BayerGB12 : public QObject, public QArvPixelFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArvPixelFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
+
+	public:
+		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_GB_12; }
+		QArvDecoder* makeDecoder(QSize size) {
+			return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_GB_12>(size);
+		}
+};
+
+class BayerBG12 : public QObject, public QArvPixelFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArvPixelFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
+
+	public:
+		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_BG_12; }
+		QArvDecoder* makeDecoder(QSize size) {
+			return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_BG_12>(size);
+		}
+};
+
+// 12-bit packed
+
+#ifdef ARV_PIXEL_FORMAT_BAYER_GR_12_PACKED
+
+class BayerGR12_PACKED : public QObject, public QArvPixelFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArvPixelFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
+
+	public:
+		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_GR_12_PACKED; }
+		QArvDecoder* makeDecoder(QSize size) {
+			return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_GR_12_PACKED>(size);
+		}
+};
+
+#endif
+
+#ifdef ARV_PIXEL_FORMAT_BAYER_RG_12_PACKED
+
+class BayerRG12_PACKED : public QObject, public QArvPixelFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArvPixelFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
+
+	public:
+		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_RG_12_PACKED; }
+		QArvDecoder* makeDecoder(QSize size) {
+			return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_RG_12_PACKED>(size);
+		}
+};
+
+#endif
+
+#ifdef ARV_PIXEL_FORMAT_BAYER_GB_12_PACKED
+
+class BayerGB12_PACKED : public QObject, public QArvPixelFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArvPixelFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
+
+	public:
+		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_GB_12_PACKED; }
+		QArvDecoder* makeDecoder(QSize size) {
+			return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_GB_12_PACKED>(size);
+		}
+};
+
+#endif
+
+class BayerBG12_PACKED : public QObject, public QArvPixelFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArvPixelFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
+
+	public:
+		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_BG_12_PACKED; }
+		QArvDecoder* makeDecoder(QSize size) {
+			return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_BG_12_PACKED>(size);
+		}
+};
+
+// 16-bit
+
+#ifdef ARV_PIXEL_FORMAT_BAYER_GR_16
+
+class BayerGR16 : public QObject, public QArvPixelFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArvPixelFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
+
+	public:
+		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_GR_16; }
+		QArvDecoder* makeDecoder(QSize size) {
+			return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_GR_16>(size);
+		}
+};
+
+class BayerRG16 : public QObject, public QArvPixelFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArvPixelFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
+
+	public:
+		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_RG_16; }
+		QArvDecoder* makeDecoder(QSize size) {
+			return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_RG_16>(size);
+		}
+};
+
+class BayerGB16 : public QObject, public QArvPixelFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArvPixelFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
+
+public:
+	ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_GB_16; }
+	QArvDecoder* makeDecoder(QSize size) {
+		return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_GB_16>(size);
+	}
+};
+
+class BayerBG16 : public QObject, public QArvPixelFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArvPixelFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
+
+	public:
+		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_BG_16; }
+		QArvDecoder* makeDecoder(QSize size) {
+			return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_BG_16>(size);
+		}
+};
+
+#endif
 
 }
 #endif

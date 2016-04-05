@@ -19,32 +19,8 @@ HEADERS = genicam-camera.h \
           include/decoders/mono12packed.h \
           include/decoders/swscaledecoder.h \
           include/decoders/unsupported.h \
-          include/decoders/bayer/bayerbg10.h \
-          include/decoders/bayer/bayerbg12.h \
-          include/decoders/bayer/bayerbg12_packed.h \
-          include/decoders/bayer/bayerbg16.h \
-          include/decoders/bayer/bayerbg8.h \
-          include/decoders/bayer/bayergb10.h \
-          include/decoders/bayer/bayergb12.h \
-          include/decoders/bayer/bayergb12_packed.h \
-          include/decoders/bayer/bayergb16.h \
-          include/decoders/bayer/bayergb8.h \
-          include/decoders/bayer/bayergr10.h \
-          include/decoders/bayer/bayergr12.h \
-          include/decoders/bayer/bayergr12_packed.h \
-          include/decoders/bayer/bayergr16.h \
-          include/decoders/bayer/bayergr8.h \
-          include/decoders/bayer/bayerrg10.h \
-          include/decoders/bayer/bayerrg12.h \
-          include/decoders/bayer/bayerrg12_packed.h \
-          include/decoders/bayer/bayerrg16.h \
-          include/decoders/bayer/bayerrg8.h \
-          include/decoders/mono/mono10.h \
-          include/decoders/mono/mono12.h \
-          include/decoders/mono/mono14.h \
-          include/decoders/mono/mono16.h \
-          include/decoders/mono/mono8.h \
-          include/decoders/mono/mono8signed.h \
+          include/decoders/monounpacked.h \
+          include/decoders/monounpackeddecoders.h \
 
 
 SOURCES = genicam-camera.cpp \
@@ -65,35 +41,9 @@ SOURCES = genicam-camera.cpp \
           include/workthread.cpp \
           include/decoders/bayer.cpp \
           include/decoders/graymap.cpp \
-          include/decoders/monounpacked.cpp \
           include/decoders/mono12packed.cpp \
           include/decoders/swscaledecoder.cpp \
-          include/decoders/bayer/bayerbg10.cpp \
-          include/decoders/bayer/bayerbg12.cpp \
-          include/decoders/bayer/bayerbg12_packed.cpp \
-          include/decoders/bayer/bayerbg16.cpp \
-          include/decoders/bayer/bayerbg8.cpp \
-          include/decoders/bayer/bayergb10.cpp \
-          include/decoders/bayer/bayergb12.cpp \
-          include/decoders/bayer/bayergb12_packed.cpp \
-          include/decoders/bayer/bayergb16.cpp \
-          include/decoders/bayer/bayergb8.cpp \
-          include/decoders/bayer/bayergr10.cpp \
-          include/decoders/bayer/bayergr12.cpp \
-          include/decoders/bayer/bayergr12_packed.cpp \
-          include/decoders/bayer/bayergr16.cpp \
-          include/decoders/bayer/bayergr8.cpp \
-          include/decoders/bayer/bayerrg10.cpp \
-          include/decoders/bayer/bayerrg12.cpp \
-          include/decoders/bayer/bayerrg12_packed.cpp \
-          include/decoders/bayer/bayerrg16.cpp \
-          include/decoders/bayer/bayerrg8.cpp \
-          include/decoders/mono/mono10.cpp \
-          include/decoders/mono/mono12.cpp \
-          include/decoders/mono/mono14.cpp \
-          include/decoders/mono/mono16.cpp \
-          include/decoders/mono/mono8.cpp \
-          include/decoders/mono/mono8signed.cpp \
+          include/decoders/monounpackeddecoders.cpp \
           include/api/moc_qarvdecoder.cpp \
           include/api/moc_qarvrecordedvideo.cpp \
           include/api/moc_qarvtype.cpp \
@@ -104,32 +54,6 @@ SOURCES = genicam-camera.cpp \
           include/moc_roicombobox.cpp \
           include/moc_glvideowidget.cpp \
           include/moc_workthread.cpp \
-          include/decoders/bayer/moc_bayerbg10.cpp \
-          include/decoders/bayer/moc_bayerbg12.cpp \
-          include/decoders/bayer/moc_bayerbg12_packed.cpp \
-          include/decoders/bayer/moc_bayerbg16.cpp \
-          include/decoders/bayer/moc_bayerbg8.cpp \
-          include/decoders/bayer/moc_bayergb10.cpp \
-          include/decoders/bayer/moc_bayergb12.cpp \
-          include/decoders/bayer/moc_bayergb12_packed.cpp \
-          include/decoders/bayer/moc_bayergb16.cpp \
-          include/decoders/bayer/moc_bayergb8.cpp \
-          include/decoders/bayer/moc_bayergr10.cpp \
-          include/decoders/bayer/moc_bayergr12.cpp \
-          include/decoders/bayer/moc_bayergr12_packed.cpp \
-          include/decoders/bayer/moc_bayergr16.cpp \
-          include/decoders/bayer/moc_bayergr8.cpp \
-          include/decoders/bayer/moc_bayerrg10.cpp \
-          include/decoders/bayer/moc_bayerrg12.cpp \
-          include/decoders/bayer/moc_bayerrg12_packed.cpp \
-          include/decoders/bayer/moc_bayerrg16.cpp \
-          include/decoders/bayer/moc_bayerrg8.cpp \
-          include/decoders/mono/moc_mono10.cpp \
-          include/decoders/mono/moc_mono12.cpp \
-          include/decoders/mono/moc_mono14.cpp \
-          include/decoders/mono/moc_mono16.cpp \
-          include/decoders/mono/moc_mono8.cpp \
-          include/decoders/mono/moc_mono8signed.cpp \
 
 ### Do not edit below this line ###
 
