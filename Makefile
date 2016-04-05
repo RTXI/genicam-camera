@@ -21,14 +21,16 @@ HEADERS = genicam-camera.h \
           include/decoders/unsupported.h \
           include/decoders/monounpacked.h \
           include/decoders/monounpackeddecoders.h \
+          include/recorders/recorder.h \
+          include/recorders/gstrecorder_implementation.h \
+          include/recorders/gstrecorders.h \
+          include/recorders/rawrecorders.h \
+          include/recorders/imagerecorder.h \
 
 
 SOURCES = genicam-camera.cpp \
-          moc_genicam-camera.cpp \
           include/api/qarvcamera.cpp \
           include/api/qarvgui.cpp \
-          include/api/moc_qarvcamera.cpp \
-          include/api/moc_qarvgui.cpp \
           include/api/qarvdecoder.cpp \
           include/api/qarvrecordedvideo.cpp \
           include/api/qarvtype.cpp \
@@ -44,6 +46,14 @@ SOURCES = genicam-camera.cpp \
           include/decoders/mono12packed.cpp \
           include/decoders/swscaledecoder.cpp \
           include/decoders/monounpackeddecoders.cpp \
+          include/recorders/recorder.cpp \
+          include/recorders/gstrecorder_implementation.cpp \
+          include/recorders/gstrecorders.cpp \
+          include/recorders/rawrecorders.cpp \
+          include/recorders/imagerecorder.cpp \
+          moc_genicam-camera.cpp \
+          include/api/moc_qarvcamera.cpp \
+          include/api/moc_qarvgui.cpp \
           include/api/moc_qarvdecoder.cpp \
           include/api/moc_qarvrecordedvideo.cpp \
           include/api/moc_qarvtype.cpp \
@@ -54,6 +64,9 @@ SOURCES = genicam-camera.cpp \
           include/moc_roicombobox.cpp \
           include/moc_glvideowidget.cpp \
           include/moc_workthread.cpp \
+          include/recorders/moc_gstrecorders.cpp \
+          include/recorders/moc_rawrecorders.cpp \
+          include/recorders/moc_imagerecorder.cpp \
 
 ### Do not edit below this line ###
 
