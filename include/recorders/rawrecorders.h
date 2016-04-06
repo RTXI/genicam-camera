@@ -20,20 +20,49 @@
 #ifndef RAWRECORDERS_H
 #define RAWRECORDERS_H
 
-//#include "include/recorder.h"
 #include "include/recorders/recorder.h"
 
 namespace QArv {
 
+class RawUndecodedFormat: public QObject, public OutputFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArv::OutputFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvOutputFormat" FILE "RawUndecodedFormat.json")
+
+	public:
+		QString name() { return "Raw undecoded"; }
+		bool canAppend() { return true; }
+		bool canWriteInfo() { return true; }
+		Recorder* makeRecorder(QArvDecoder* decoder,
+		                       QString fileName,
+		                       QSize frameSize,
+		                       int framesPerSecond,
+		                       bool writeInfo);
+};
+
 class RawDecoded8Format: public QObject, public OutputFormat {
 	Q_OBJECT
 	Q_INTERFACES(QArv::OutputFormat)
-//	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.RawDecoded8Format" FILE "RawDecoded8Format.json") // Qt5
-	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvOutputFormat" FILE "RawDecoded8Format.json") // Qt5
+   Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvOutputFormat" FILE "RawDecoded8Format.json")
 
 	public:
 		QString name() { return "Raw decoded (8-bit)"; }
 		bool canAppend() { return true; }
+		bool canWriteInfo() { return true; }
+		Recorder* makeRecorder(QArvDecoder* decoder,
+		                       QString fileName,
+		                       QSize frameSize,
+		                       int framesPerSecond,
+		                       bool writeInfo);
+};
+
+class RawDecoded16Format: public QObject, public OutputFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArv::OutputFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvOutputFormat" FILE "RawDecoded16Format.json")
+
+	public:
+		QString name() { return "Raw decoded (16-bit)"; }
 		bool canWriteInfo() { return true; }
 		Recorder* makeRecorder(QArvDecoder* decoder,
 		                       QString fileName,

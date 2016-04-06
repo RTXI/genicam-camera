@@ -17,20 +17,21 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef GSTRECORDERS_H
-#define GSTRECORDERS_H
+#ifndef IMAGERECORDER_H
+#define IMAGERECORDER_H
 
 #include "include/recorders/recorder.h"
 
 namespace QArv {
 
-class HuffyuvAviFormat : public QObject, public OutputFormat {
+class ImageFormat: public QObject, public OutputFormat {
 	Q_OBJECT
 	Q_INTERFACES(QArv::OutputFormat)
-	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvOutputFormat" FILE "HuffyuvAviFormat.json")
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvOutputFormat")
 
 public:
-	QString name() { return "huffyuv AVI"; }
+	QString name() { return "TIFF images"; }
+	bool canAppend() { return true; }
 	bool canWriteInfo() { return false; }
 	Recorder* makeRecorder(QArvDecoder* decoder,
 	                       QString fileName,

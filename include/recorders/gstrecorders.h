@@ -17,28 +17,26 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef RAWDECODED16_H
-#define RAWDECODED16_H
+#ifndef GSTRECORDERS_H
+#define GSTRECORDERS_H
 
-//#include "include/recorder.h"
 #include "include/recorders/recorder.h"
 
 namespace QArv {
 
-class RawDecoded16Format: public QObject, public OutputFormat {
+class HuffyuvAviFormat : public QObject, public OutputFormat {
 	Q_OBJECT
 	Q_INTERFACES(QArv::OutputFormat)
-//	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.RawDecoded16Format" FILE "RawDecoded16Format.json") // Qt5
-	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvOutputFormat" FILE "RawDecoded16Format.json") // Qt5
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvOutputFormat")
 
-	public:
-		QString name() { return "Raw decoded (16-bit)"; }
-		bool canWriteInfo() { return true; }
-		Recorder* makeRecorder(QArvDecoder* decoder,
-		                       QString fileName,
-		                       QSize frameSize,
-		                       int framesPerSecond,
-		                       bool writeInfo);
+public:
+	QString name() { return "huffyuv AVI"; }
+	bool canWriteInfo() { return false; }
+	Recorder* makeRecorder(QArvDecoder* decoder,
+	                       QString fileName,
+	                       QSize frameSize,
+	                       int framesPerSecond,
+	                       bool writeInfo);
 };
 
 }

@@ -81,11 +81,11 @@ class OutputFormat {
 		                              QSize frameSize,
 		                              int framesPerSecond,
 		                              bool writeInfo);
-	};
+};
 
 }
 
-Q_DECLARE_INTERFACE(QArv::OutputFormat,"org.qt-project.Qt.QArvOutputFormat")
+Q_DECLARE_INTERFACE(QArv::OutputFormat, "org.qt-project.Qt.QArvOutputFormat")
 Q_DECLARE_METATYPE(QArv::OutputFormat*)
 
 #endif
