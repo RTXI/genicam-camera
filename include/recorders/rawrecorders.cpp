@@ -17,12 +17,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "include/recorders/rawrecorders.h"
+#include "rawrecorders.h"
 #include <QFile>
 #include <QSettings>
 #include <QRegExp>
 #include <QFileInfo>
-#include "include/globals.h"
+#include "../globals.h"
 extern "C" {
 #include <libavutil/pixdesc.h>
 }

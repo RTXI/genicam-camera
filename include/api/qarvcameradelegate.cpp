@@ -17,9 +17,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "include/api/qarvcameradelegate.h"
-#include "include/api/qarvtype.h"
-#include "include/globals.h"
+#include "qarvcameradelegate.h"
+#include "qarvtype.h"
+#include "../globals.h"
 #include <QLayout>
 
 QArvCameraDelegate::QArvCameraDelegate(QObject* parent) : QStyledItemDelegate(parent) {}

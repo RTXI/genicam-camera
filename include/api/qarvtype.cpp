@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "include/api/qarvtype.h"
-#include "include/globals.h"
+#include "qarvtype.h"
+#include "../globals.h"
 #include <QComboBox>
 #include <QLayout>
 #include <QLineEdit>

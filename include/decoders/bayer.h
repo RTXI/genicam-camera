@@ -20,7 +20,7 @@
 #ifndef BAYER_H
 #define BAYER_H
 
-#include "include/api/qarvdecoder.h"
+#include "../api/qarvdecoder.h"
 #include <opencv2/imgproc/imgproc.hpp>
 #include <QDataStream>
 extern "C" {
@@ -197,8 +197,8 @@ class BayerDecoder: public QArvDecoder {
 // 8-bit
 class BayerGR8 : public QObject, public QArvPixelFormat {
 	Q_OBJECT
-	Q_INTERFACES(QArvPixelFormat)
 	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
+	Q_INTERFACES(QArvPixelFormat)
 
 	public:
 		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_GR_8; }

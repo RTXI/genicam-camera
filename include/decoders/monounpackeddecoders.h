@@ -20,7 +20,7 @@
 #ifndef MONOUNPACKEDDECODER_H
 #define MONOUNPACKEDDECODER_H
 
-#include "include/decoders/monounpacked.h"
+#include "monounpacked.h"
 extern "C" {
   #include <arvenums.h>
 }

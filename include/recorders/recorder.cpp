@@ -17,7 +17,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "include/recorders/recorder.h"
+#include "recorder.h"
 #include <QPluginLoader>
 
 using namespace QArv;

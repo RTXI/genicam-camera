@@ -17,10 +17,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "include/decoders/swscaledecoder.h"
+#include "swscaledecoder.h"
 #include <cstdlib>
 #include <opencv2/core/types_c.h>
-#include "include/globals.h"
+#include "../globals.h"
 
 extern "C" {
 #include <libavutil/pixdesc.h>

@@ -21,9 +21,9 @@
 #define VIDEOPLAYER_H
 
 #include "ui_qarv_videoplayer.h"
-#include "api/qarvdecoder.h"
-#include "api/qarvrecordedvideo.h"
-#include "recorders/recorder.h"
+#include "../api/qarvdecoder.h"
+#include "../api/qarvrecordedvideo.h"
+#include "../recorders/recorder.h"
 #include <QTimer>
 
 class QArvVideoPlayer: public QWidget, private Ui::VideoPlayer {

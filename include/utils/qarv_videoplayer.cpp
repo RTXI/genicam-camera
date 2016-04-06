@@ -17,9 +17,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "utils/qarv_videoplayer.h"
-#include "recorders/gstrecorders/gstrecorder_implementation.h"
-#include "globals.h"
+#include "qarv_videoplayer.h"
+#include "../recorders/gstrecorders/gstrecorder_implementation.h"
+#include "../globals.h"
 #include <QFileDialog>
 #include <QPluginLoader>
 

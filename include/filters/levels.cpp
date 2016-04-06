@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "filters/levels.h"
-#include "globals.h"
+#include "levels.h"
+#include "../globals.h"
 #include <QtPlugin>
 
 using namespace QArv;

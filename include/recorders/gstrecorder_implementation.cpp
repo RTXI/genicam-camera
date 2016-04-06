@@ -17,11 +17,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "include/recorders/gstrecorder_implementation.h"
+#include "gstrecorder_implementation.h"
 #include <QProcess>
 #include <QFileInfo>
 #include <QStringList>
-#include "include/globals.h"
+#include "../globals.h"
 
 using namespace QArv;
 

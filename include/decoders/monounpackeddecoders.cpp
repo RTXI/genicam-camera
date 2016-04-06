@@ -17,7 +17,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "include/decoders/monounpackeddecoders.h"
+#include "monounpackeddecoders.h"
 
 //Q_EXPORT_STATIC_PLUGIN2(Mono8, QArv::Mono8Format)
 Q_IMPORT_PLUGIN(Mono8Format)

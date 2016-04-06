@@ -20,7 +20,7 @@
 #ifndef UNSUPPORTED_H
 #define UNSUPPORTED_H
 
-#include "include/api/qarvdecoder.h"
+#include "../api/qarvdecoder.h"
 extern "C" {
 	#include <arvenums.h>
 }

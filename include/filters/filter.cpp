@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "filters/filter.h"
+#include "filter.h"
 #include <QPluginLoader>
 #include <QHBoxLayout>
 #include <QCheckBox>

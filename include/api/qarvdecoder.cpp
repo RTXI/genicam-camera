@@ -17,13 +17,13 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "include/api/qarvdecoder.h"
-#include "include/decoders/swscaledecoder.h"
-#include "include/decoders/graymap.h"
+#include "qarvdecoder.h"
+#include "../decoders/swscaledecoder.h"
+#include "../decoders/graymap.h"
 #include <opencv2/imgproc/imgproc.hpp>
 #include <QPluginLoader>
 #include <QMap>
-#include "include/globals.h"
+#include "../globals.h"
 #include <type_traits>
 extern "C" {
 	#include <arvenums.h>

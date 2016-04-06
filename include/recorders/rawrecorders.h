@@ -20,7 +20,7 @@
 #ifndef RAWRECORDERS_H
 #define RAWRECORDERS_H
 
-#include "include/recorders/recorder.h"
+#include "recorder.h"
 
 namespace QArv {
 

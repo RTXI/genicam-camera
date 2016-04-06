@@ -20,7 +20,7 @@
 #ifndef QARVGUI_H
 #define QARVGUI_H
 
-#include "include/api/qarvcamera.h"
+#include "qarvcamera.h"
 #include <QMainWindow>
 #include <QApplication>
 

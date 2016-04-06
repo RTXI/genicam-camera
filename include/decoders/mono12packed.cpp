@@ -17,7 +17,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "include/decoders/mono12packed.h"
+#include "mono12packed.h"
 
 using namespace QArv;
 

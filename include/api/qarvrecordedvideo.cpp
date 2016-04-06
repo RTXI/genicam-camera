@@ -17,11 +17,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "include/api/qarvrecordedvideo.h"
+#include "qarvrecordedvideo.h"
 #include <QSettings>
 #include <QFileInfo>
 #include <QDir>
-#include "include/globals.h"
+#include "../globals.h"
 extern "C" {
 #include <arvbuffer.h>
 }

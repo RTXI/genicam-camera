@@ -20,7 +20,7 @@
 #ifndef LEVELS_H
 #define LEVELS_H
 
-#include "filters/filter.h"
+#include "filter.h"
 #include "ui_levels.h"
 #include <atomic>
 

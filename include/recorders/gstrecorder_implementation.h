@@ -20,7 +20,7 @@
 #ifndef GSTRECORDER_IMPLEMENTATION_H
 #define GSTRECORDER_IMPLEMENTATION_H
 
-#include "include/recorders/recorder.h"
+#include "recorder.h"
 #include <QStringList>
 
 namespace QArv {

@@ -20,7 +20,7 @@
 #ifndef IMAGERECORDER_H
 #define IMAGERECORDER_H
 
-#include "include/recorders/recorder.h"
+#include "recorder.h"
 
 namespace QArv {
 

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>VideoPlayer</class>
+ <widget class="QWidget" name="VideoPlayer">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>633</width>
+    <height>558</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>QArv Video Player</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../res/icons/icons.qrc">
+    <normaloff>:/icons/qarv.svgz</normaloff>:/icons/qarv.svgz</iconset>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QArv::GLVideoWidget" name="videoWidget" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="openButton">
+       <property name="toolTip">
+        <string>Open a video description file for raw video.</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset theme="document-open">
+         <normaloff/>
+        </iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="fpsSpinbox">
+       <property name="toolTip">
+        <string>Set video frame rate.</string>
+       </property>
+       <property name="suffix">
+        <string> FPS</string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="value">
+        <number>25</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="playButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Play or pause video.</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset theme="media-playback-start">
+         <normaloff/>
+        </iconset>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="slider">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="transcodeBox">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="title">
+      <string>Transcoding</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QPushButton" name="leftMarkButton">
+          <property name="toolTip">
+           <string>Set starting point for transcode</string>
+          </property>
+          <property name="icon">
+           <iconset theme="go-first">
+            <normaloff/>
+           </iconset>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="rightMarkButton">
+          <property name="toolTip">
+           <string>Set end point for transcode</string>
+          </property>
+          <property name="icon">
+           <iconset theme="go-last">
+            <normaloff/>
+           </iconset>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="transcodeButton">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="toolTip">
+           <string>Select destination file and start transcoding</string>
+          </property>
+          <property name="icon">
+           <iconset theme="media-record">
+            <normaloff/>
+           </iconset>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QProgressBar" name="transcodeBar">
+          <property name="value">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Codec:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="codecBox">
+          <property name="toolTip">
+           <string>Select codec. Choose &quot;Custom&quot; to provide a gstreamer pipeline fragment.</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="gstLine">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="toolTip">
+           <string>Enter a gstreamer pipeline fragment as you would for gst-launch. The first and last part of the pipeline are provided by QArv.</string>
+          </property>
+          <property name="frame">
+           <bool>true</bool>
+          </property>
+          <property name="placeholderText">
+           <string notr="true">gstreamer pipeline fragment, e.g. 'avenc_huffyuv ! avimux'</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QArv::GLVideoWidget</class>
+   <extends>QWidget</extends>
+   <header>glvideowidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../../res/icons/icons.qrc"/>
+ </resources>
+ <connections/>
+</ui>

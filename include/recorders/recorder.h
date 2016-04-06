@@ -20,7 +20,7 @@
 #ifndef RECORDER_H
 #define RECORDER_H
 
-#include "include/api/qarvdecoder.h"
+#include "../api/qarvdecoder.h"
 #include <QList>
 #include <QString>
 #include <QMetaType>

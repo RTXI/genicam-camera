@@ -17,9 +17,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "include/api/qarvgui.h"
-#include "include/qarvmainwindow.h"
-#include "include/globals.h"
+#include "qarvgui.h"
+#include "../qarvmainwindow.h"
+#include "../globals.h"
 
 #include <QTranslator>
 #include <QHBoxLayout>

@@ -17,7 +17,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "include/decoders/graymap.h"
+#include "graymap.h"
 
 static QVector<QRgb> initGraymap() {
 	QVector<QRgb> map(256);

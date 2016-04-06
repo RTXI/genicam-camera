@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "include/recorders/gstrecorders.h"
-#include "include/recorders/gstrecorder_implementation.h"
+#include "gstrecorders.h"
+#include "gstrecorder_implementation.h"
 
 using namespace QArv;
 

@@ -25,10 +25,10 @@ extern "C" {
 #include <cstdlib>
 #include <cstring>
 
-#include "include/api/qarvcamera.h"
-#include "include/qarvfeaturetree.h"
-#include "include/api/qarvtype.h"
-#include "include/globals.h"
+#include "qarvcamera.h"
+#include "../qarvfeaturetree.h"
+#include "qarvtype.h"
+#include "../globals.h"
 #include <QTextDocument>
 
 using namespace QArv;
