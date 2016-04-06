@@ -101,7 +101,7 @@ class QArvDecoder {
 		static QArvDecoder* makeSwScaleDecoder(enum PixelFormat fmt,
 		                                       QSize size,
 		                                       int swsFlags = 0);
-	};
+};
 
 //! Interface for the plugin to generate a decoder for a particular format.
 class QArvPixelFormat {

@@ -27,32 +27,6 @@ extern "C" {
 	#include <arvenums.h>
 }
 
-/*
-#include "include/decoders/bayer/bayerbg8.h"
-#include "include/decoders/bayer/bayerbg10.h"
-#include "include/decoders/bayer/bayerbg12.h"
-#include "include/decoders/bayer/bayerbg12_packed.h"
-#include "include/decoders/bayer/bayerbg16.h"
-
-#include "include/decoders/bayer/bayergb8.h"
-#include "include/decoders/bayer/bayergb10.h"
-#include "include/decoders/bayer/bayergb12.h"
-#include "include/decoders/bayer/bayergb12_packed.h"
-#include "include/decoders/bayer/bayergb16.h"
-
-#include "include/decoders/bayer/bayergr8.h"
-#include "include/decoders/bayer/bayergr10.h"
-#include "include/decoders/bayer/bayergr12.h"
-#include "include/decoders/bayer/bayergr12_packed.h"
-#include "include/decoders/bayer/bayergr16.h"
-
-#include "include/decoders/bayer/bayerrg8.h"
-#include "include/decoders/bayer/bayerrg10.h"
-#include "include/decoders/bayer/bayerrg12.h"
-#include "include/decoders/bayer/bayerrg12_packed.h"
-#include "include/decoders/bayer/bayerrg16.h"
-*/
-
 // Some formats appeared only after aravis-0.2.0, so
 // we check for their presence. The 12_PACKED formats
 // were added individually.
