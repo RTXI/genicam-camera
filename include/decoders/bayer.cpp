@@ -21,6 +21,7 @@
 
 using namespace QArv;
 
+/*
 Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
 
 //Q_EXPORT_PLUGIN2(BayerGR8, BayerGR8)
@@ -75,3 +76,4 @@ Q_IMPORT_PLUGIN(BayerGB16)
 //Q_EXPORT_PLUGIN2(BayerBG16, BayerBG16)
 Q_IMPORT_PLUGIN(BayerBG16)
 #endif
+*/

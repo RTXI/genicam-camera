@@ -15,13 +15,38 @@ HEADERS = genicam-camera.h \
           include/glvideowidget.h \
           include/ui_mainwindow.h \
           include/workthread.h \
-          include/decoders/bayer.h \
           include/decoders/graymap.h \
           include/decoders/mono12packed.h \
           include/decoders/swscaledecoder.h \
           include/decoders/unsupported.h \
-          include/decoders/monounpacked.h \
-          include/decoders/monounpackeddecoders.h \
+          include/decoders/bayer.h \
+          include/decoders/bayer/bayerbg10.h \
+          include/decoders/bayer/bayerbg12.h \
+          include/decoders/bayer/bayerbg12_packed.h \
+          include/decoders/bayer/bayerbg16.h \
+          include/decoders/bayer/bayerbg8.h \
+          include/decoders/bayer/bayergb10.h \
+          include/decoders/bayer/bayergb12.h \
+          include/decoders/bayer/bayergb12_packed.h \
+          include/decoders/bayer/bayergb16.h \
+          include/decoders/bayer/bayergb8.h \
+          include/decoders/bayer/bayergr10.h \
+          include/decoders/bayer/bayergr12.h \
+          include/decoders/bayer/bayergr12_packed.h \
+          include/decoders/bayer/bayergr16.h \
+          include/decoders/bayer/bayergr8.h \
+          include/decoders/bayer/bayerrg10.h \
+          include/decoders/bayer/bayerrg12.h \
+          include/decoders/bayer/bayerrg12_packed.h \
+          include/decoders/bayer/bayerrg16.h \
+          include/decoders/bayer/bayerrg8.h \
+          incdlue/decoders/monounpacked.h \
+          include/decoders/mono/mono10.h \
+          include/decoders/mono/mono12.h \
+          include/decoders/mono/mono14.h \
+          include/decoders/mono/mono16.h \
+          include/decoders/mono/mono8.h \
+          include/decoders/mono/mono8signed.h \
           include/recorders/recorder.h \
           include/recorders/rawrecorders.h \
           include/recorders/imagerecorder.h \
@@ -46,7 +71,6 @@ SOURCES = genicam-camera.cpp \
           include/decoders/graymap.cpp \
           include/decoders/mono12packed.cpp \
           include/decoders/swscaledecoder.cpp \
-          include/decoders/monounpackeddecoders.cpp \
           include/recorders/recorder.cpp \
           include/recorders/rawrecorders.cpp \
           include/recorders/imagerecorder.cpp \
@@ -66,7 +90,32 @@ SOURCES = genicam-camera.cpp \
           include/moc_glvideowidget.cpp \
           include/moc_workthread.cpp \
           include/decoders/moc_bayer.cpp \
-          include/decoders/moc_monounpackeddecoders.cpp \
+          include/decoders/bayer/moc_bayerbg10.cpp \
+          include/decoders/bayer/moc_bayerbg12.cpp \
+          include/decoders/bayer/moc_bayerbg12_packed.cpp \
+          include/decoders/bayer/moc_bayerbg16.cpp \
+          include/decoders/bayer/moc_bayerbg8.cpp \
+          include/decoders/bayer/moc_bayergb10.cpp \
+          include/decoders/bayer/moc_bayergb12.cpp \
+          include/decoders/bayer/moc_bayergb12_packed.cpp \
+          include/decoders/bayer/moc_bayergb16.cpp \
+          include/decoders/bayer/moc_bayergb8.cpp \
+          include/decoders/bayer/moc_bayergr10.cpp \
+          include/decoders/bayer/moc_bayergr12.cpp \
+          include/decoders/bayer/moc_bayergr12_packed.cpp \
+          include/decoders/bayer/moc_bayergr16.cpp \
+          include/decoders/bayer/moc_bayergr8.cpp \
+          include/decoders/bayer/moc_bayerrg10.cpp \
+          include/decoders/bayer/moc_bayerrg12.cpp \
+          include/decoders/bayer/moc_bayerrg12_packed.cpp \
+          include/decoders/bayer/moc_bayerrg16.cpp \
+          include/decoders/bayer/moc_bayerrg8.cpp \
+          include/decoders/mono/moc_mono10.cpp \
+          include/decoders/mono/moc_mono12.cpp \
+          include/decoders/mono/moc_mono14.cpp \
+          include/decoders/mono/moc_mono16.cpp \
+          include/decoders/mono/moc_mono8.cpp \
+          include/decoders/mono/moc_mono8signed.cpp \
           include/decoders/moc_mono12packed.cpp \
           include/recorders/moc_rawrecorders.cpp \
           include/recorders/moc_imagerecorder.cpp \

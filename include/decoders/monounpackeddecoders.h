@@ -22,11 +22,12 @@
 
 #include "monounpacked.h"
 extern "C" {
-  #include <arvenums.h>
+	#include <arvenums.h>
 }
 
 namespace QArv {
 
+/*
 class Mono8Format : public QObject, public QArvPixelFormat {
 	Q_OBJECT
 	Q_INTERFACES(QArvPixelFormat)
@@ -98,6 +99,7 @@ class Mono16Format : public QObject, public QArvPixelFormat {
 			return new MonoUnpackedDecoder<uint16_t, 16, ARV_PIXEL_FORMAT_MONO_16>(size); 
 		}
 };
+*/
 
 }
 

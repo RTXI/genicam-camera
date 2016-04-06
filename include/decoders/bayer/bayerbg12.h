@@ -17,24 +17,33 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "monounpackeddecoders.h"
+#ifndef BAYERBG12_H
+#define BAYERBG12_H
 
-/*
-//Q_EXPORT_STATIC_PLUGIN2(Mono8, QArv::Mono8Format)
-Q_IMPORT_PLUGIN(Mono8Format)
+#include "../../api/qarvdecoder.h"
+#include "../bayer.h"
+#include <opencv2/imgproc/imgproc.hpp>
+#include <QDataStream>
+extern "C" {
+	#include <arvenums.h>
+}
 
-//Q_EXPORT_STATIC_PLUGIN2(Mono8Signed, QArv::Mono8SignedFormat)
-Q_IMPORT_PLUGIN(Mono8SignedFormat)
+namespace QArv {
 
-//Q_EXPORT_STATIC_PLUGIN2(Mono10, QArv::Mono10Format)
-Q_IMPORT_PLUGIN(Mono10Format)
+class BayerBG12 : public QObject, public QArvPixelFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArvPixelFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
 
-//Q_EXPORT_STATIC_PLUGIN2(Mono12, QArv::Mono12Format)
-Q_IMPORT_PLUGIN(Mono12Format)
+	public:
+		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_BG_12; }
+		QArvDecoder* makeDecoder(QSize size) {
+			return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_BG_12>(size);
+		}
+};
 
-//Q_EXPORT_STATIC_PLUGIN2(Mono14, QArv::Mono14Format)
-Q_IMPORT_PLUGIN(Mono14Format)
+}
 
-//Q_EXPORT_STATIC_PLUGIN2(Mono16, QArv::Mono16Format)
-Q_IMPORT_PLUGIN(Mono16Format)
-*/
+Q_IMPORT_PLUGIN(BayerBG12)
+
+#endif

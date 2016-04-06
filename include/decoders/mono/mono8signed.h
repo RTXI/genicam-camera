@@ -17,24 +17,30 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "monounpackeddecoders.h"
+#ifndef MONO8SIGNED_H
+#define MONO8SIGNED_H
 
-/*
-//Q_EXPORT_STATIC_PLUGIN2(Mono8, QArv::Mono8Format)
-Q_IMPORT_PLUGIN(Mono8Format)
+#include "../monounpacked.h"
+extern "C" {
+  #include <arvenums.h>
+}
 
-//Q_EXPORT_STATIC_PLUGIN2(Mono8Signed, QArv::Mono8SignedFormat)
+namespace QArv {
+
+class Mono8SignedFormat : public QObject, public QArvPixelFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArvPixelFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
+	
+	public:
+		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_MONO_8_SIGNED; }
+		QArvDecoder* makeDecoder(QSize size) { 
+			return new MonoUnpackedDecoder<int8_t, 8, ARV_PIXEL_FORMAT_MONO_8_SIGNED>(size); 
+		}
+};
+
+}
+
 Q_IMPORT_PLUGIN(Mono8SignedFormat)
 
-//Q_EXPORT_STATIC_PLUGIN2(Mono10, QArv::Mono10Format)
-Q_IMPORT_PLUGIN(Mono10Format)
-
-//Q_EXPORT_STATIC_PLUGIN2(Mono12, QArv::Mono12Format)
-Q_IMPORT_PLUGIN(Mono12Format)
-
-//Q_EXPORT_STATIC_PLUGIN2(Mono14, QArv::Mono14Format)
-Q_IMPORT_PLUGIN(Mono14Format)
-
-//Q_EXPORT_STATIC_PLUGIN2(Mono16, QArv::Mono16Format)
-Q_IMPORT_PLUGIN(Mono16Format)
-*/
+#endif

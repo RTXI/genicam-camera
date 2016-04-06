@@ -194,6 +194,7 @@ class BayerDecoder: public QArvDecoder {
 			int cvt;
 };
 
+/*
 // 8-bit
 class BayerGR8 : public QObject, public QArvPixelFormat {
 	Q_OBJECT
@@ -459,5 +460,6 @@ class BayerBG16 : public QObject, public QArvPixelFormat {
 
 #endif
 
+*/
 }
 #endif

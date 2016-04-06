@@ -17,24 +17,41 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "monounpackeddecoders.h"
+#ifndef BAYERBG16_H
+#define BAYERBG16_H
 
-/*
-//Q_EXPORT_STATIC_PLUGIN2(Mono8, QArv::Mono8Format)
-Q_IMPORT_PLUGIN(Mono8Format)
+#include "../../api/qarvdecoder.h"
+#include "../bayer.h"
+#include <opencv2/imgproc/imgproc.hpp>
+#include <QDataStream>
+extern "C" {
+	#include <arvenums.h>
+}
 
-//Q_EXPORT_STATIC_PLUGIN2(Mono8Signed, QArv::Mono8SignedFormat)
-Q_IMPORT_PLUGIN(Mono8SignedFormat)
+// Some formats appeared only after aravis-0.2.0, so
+// we check for their presence. The 12_PACKED formats
+// were added individually.
 
-//Q_EXPORT_STATIC_PLUGIN2(Mono10, QArv::Mono10Format)
-Q_IMPORT_PLUGIN(Mono10Format)
+namespace QArv {
 
-//Q_EXPORT_STATIC_PLUGIN2(Mono12, QArv::Mono12Format)
-Q_IMPORT_PLUGIN(Mono12Format)
+#ifdef ARV_PIXEL_FORMAT_BAYER_GR_16
 
-//Q_EXPORT_STATIC_PLUGIN2(Mono14, QArv::Mono14Format)
-Q_IMPORT_PLUGIN(Mono14Format)
+class BayerBG16 : public QObject, public QArvPixelFormat {
+	Q_OBJECT
+	Q_INTERFACES(QArvPixelFormat)
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
 
-//Q_EXPORT_STATIC_PLUGIN2(Mono16, QArv::Mono16Format)
-Q_IMPORT_PLUGIN(Mono16Format)
-*/
+	public:
+		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_BG_16; }
+		QArvDecoder* makeDecoder(QSize size) {
+			return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_BG_16>(size);
+		}
+};
+
+#endif
+
+}
+
+Q_IMPORT_PLUGIN(BayerBG16)
+
+#endif
