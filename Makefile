@@ -40,7 +40,7 @@ HEADERS = genicam-camera.h \
           include/decoders/bayer/bayerrg12_packed.h \
           include/decoders/bayer/bayerrg16.h \
           include/decoders/bayer/bayerrg8.h \
-          incdlue/decoders/monounpacked.h \
+          include/decoders/monounpacked.h \
           include/decoders/mono/mono10.h \
           include/decoders/mono/mono12.h \
           include/decoders/mono/mono14.h \
@@ -48,10 +48,12 @@ HEADERS = genicam-camera.h \
           include/decoders/mono/mono8.h \
           include/decoders/mono/mono8signed.h \
           include/recorders/recorder.h \
-          include/recorders/rawrecorders.h \
           include/recorders/imagerecorder.h \
           include/recorders/gstrecorder_implementation.h \
           include/recorders/gstrecorders.h \
+          include/recorders/rawrecorders/rawdecoded8.h \
+          include/recorders/rawrecorders/rawdecoded16.h \
+          include/recorders/rawrecorders/rawundecoded.h \
 
 
 SOURCES = genicam-camera.cpp \
@@ -72,10 +74,12 @@ SOURCES = genicam-camera.cpp \
           include/decoders/mono12packed.cpp \
           include/decoders/swscaledecoder.cpp \
           include/recorders/recorder.cpp \
-          include/recorders/rawrecorders.cpp \
           include/recorders/imagerecorder.cpp \
           include/recorders/gstrecorder_implementation.cpp \
           include/recorders/gstrecorders.cpp \
+          include/recorders/rawrecorders/rawdecoded8.cpp \
+          include/recorders/rawrecorders/rawdecoded16.cpp \
+          include/recorders/rawrecorders/rawundecoded.cpp \
           moc_genicam-camera.cpp \
           include/api/moc_qarvcamera.cpp \
           include/api/moc_qarvgui.cpp \
@@ -89,7 +93,6 @@ SOURCES = genicam-camera.cpp \
           include/moc_roicombobox.cpp \
           include/moc_glvideowidget.cpp \
           include/moc_workthread.cpp \
-          include/decoders/moc_bayer.cpp \
           include/decoders/bayer/moc_bayerbg10.cpp \
           include/decoders/bayer/moc_bayerbg12.cpp \
           include/decoders/bayer/moc_bayerbg12_packed.cpp \
@@ -117,9 +120,11 @@ SOURCES = genicam-camera.cpp \
           include/decoders/mono/moc_mono8.cpp \
           include/decoders/mono/moc_mono8signed.cpp \
           include/decoders/moc_mono12packed.cpp \
-          include/recorders/moc_rawrecorders.cpp \
           include/recorders/moc_imagerecorder.cpp \
           include/recorders/moc_gstrecorders.cpp \
+          include/recorders/rawrecorders/moc_rawdecoded8.cpp \
+          include/recorders/rawrecorders/moc_rawdecoded16.cpp \
+          include/recorders/rawrecorders/moc_rawundecoded.cpp \
 
 CXXFLAGS += $(shell pkg-config --cflags aravis-0.4 libavformat libavutil libswscale) 
 LDFLAGS  += $(shell pkg-config --libs aravis-0.4 libavformat libavutil libswscale) 
