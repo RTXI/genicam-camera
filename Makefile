@@ -70,7 +70,33 @@ SOURCES = genicam-camera.cpp \
           include/glvideowidget.cpp \
           include/workthread.cpp \
           include/decoders/bayer.cpp \
+          include/decoders/bayer/bayerbg10.cpp \
+          include/decoders/bayer/bayerbg12.cpp \
+          include/decoders/bayer/bayerbg12_packed.cpp \
+          include/decoders/bayer/bayerbg16.cpp \
+          include/decoders/bayer/bayerbg8.cpp \
+          include/decoders/bayer/bayergb10.cpp \
+          include/decoders/bayer/bayergb12.cpp \
+          include/decoders/bayer/bayergb12_packed.cpp \
+          include/decoders/bayer/bayergb16.cpp \
+          include/decoders/bayer/bayergb8.cpp \
+          include/decoders/bayer/bayergr10.cpp \
+          include/decoders/bayer/bayergr12.cpp \
+          include/decoders/bayer/bayergr12_packed.cpp \
+          include/decoders/bayer/bayergr16.cpp \
+          include/decoders/bayer/bayergr8.cpp \
+          include/decoders/bayer/bayerrg10.cpp \
+          include/decoders/bayer/bayerrg12.cpp \
+          include/decoders/bayer/bayerrg12_packed.cpp \
+          include/decoders/bayer/bayerrg16.cpp \
+          include/decoders/bayer/bayerrg8.cpp \
           include/decoders/graymap.cpp \
+          include/decoders/mono/mono10.cpp \
+          include/decoders/mono/mono12.cpp \
+          include/decoders/mono/mono14.cpp \
+          include/decoders/mono/mono16.cpp \
+          include/decoders/mono/mono8.cpp \
+          include/decoders/mono/mono8signed.cpp \
           include/decoders/mono12packed.cpp \
           include/decoders/swscaledecoder.cpp \
           include/recorders/recorder.cpp \
@@ -137,17 +163,26 @@ clean::
 	rm -rf include/.libs
 	rm -rf include/api/.libs
 	rm -rf include/decoders/.libs
+	rm -rf include/decoders/bayer/.libs
+	rm -rf include/decoders/mono/.libs
 	rm -rf include/recorders/.libs
+	rm -rf include/recorders/rawrecorders/.libs
 	rm -rf include/filters/.libs
 	rm -f include/*.o
 	rm -f include/api/*.o
 	rm -f include/decoders/*.o
+	rm -f include/decoders/bayer/*.o
+	rm -f include/decoders/mono/*.o
 	rm -f include/recorders/*.o
+	rm -f include/recorders/rawrecorders/*.o
 	rm -f include/filters/*.o
 	rm -f include/moc_*
 	rm -f include/api/moc_*
 	rm -f include/decoders/moc_*
+	rm -f include/decoders/bayer/moc_*
+	rm -f include/decoders/mono/moc_*
 	rm -f include/recorders/moc_*
+	rm -f include/recorders/rawrecorders/moc_*
 	rm -f include/filters/moc_*
 
 #	rm -f $(OBJECTS)
