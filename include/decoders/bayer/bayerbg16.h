@@ -20,7 +20,7 @@
 #ifndef BAYERBG16_H
 #define BAYERBG16_H
 
-#include "../../api/qarvdecoder.h"
+//#include "../../api/qarvdecoder.h"
 #include "../bayer.h"
 #include <opencv2/imgproc/imgproc.hpp>
 #include <QDataStream>
@@ -39,7 +39,6 @@ namespace QArv {
 class BayerBG16 : public QObject, public QArvPixelFormat {
 	Q_OBJECT
 	Q_INTERFACES(QArvPixelFormat)
-	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
 
 	public:
 		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_BG_16; }
@@ -51,7 +50,5 @@ class BayerBG16 : public QObject, public QArvPixelFormat {
 #endif
 
 }
-
-Q_IMPORT_PLUGIN(BayerBG16)
 
 #endif

@@ -20,7 +20,7 @@
 #ifndef BAYERGB12_H
 #define BAYERGB12_H
 
-#include "../../api/qarvdecoder.h"
+//#include "../../api/qarvdecoder.h"
 #include "../bayer.h"
 #include <opencv2/imgproc/imgproc.hpp>
 #include <QDataStream>
@@ -47,7 +47,5 @@ class BayerGB12 : public QObject, public QArvPixelFormat {
 };
 
 }
-
-Q_IMPORT_PLUGIN(BayerGB12)
 
 #endif

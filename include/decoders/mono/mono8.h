@@ -17,9 +17,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MONO8_H
-#define MONO8_H
-
 #include "../monounpacked.h"
 extern "C" {
   #include <arvenums.h>
@@ -40,7 +37,3 @@ class Mono8Format : public QObject, public QArvPixelFormat {
 };
 
 }
-
-Q_IMPORT_PLUGIN(Mono8Format)
-
-#endif

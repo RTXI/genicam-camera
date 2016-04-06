@@ -20,7 +20,7 @@
 #ifndef BAYERGB10_H
 #define BAYERGB10_H
 
-#include "../../api/qarvdecoder.h"
+//#include "../../api/qarvdecoder.h"
 #include "../bayer.h"
 #include <opencv2/imgproc/imgproc.hpp>
 #include <QDataStream>
@@ -47,7 +47,5 @@ class BayerGB10 : public QObject, public QArvPixelFormat {
 };
 
 }
-
-Q_IMPORT_PLUGIN(BayerGB10)
 
 #endif

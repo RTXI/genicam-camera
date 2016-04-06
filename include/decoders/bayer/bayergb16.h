@@ -20,7 +20,7 @@
 #ifndef BAYERGB16_H
 #define BAYERGB16_H
 
-#include "../../api/qarvdecoder.h"
+//#include "../../api/qarvdecoder.h"
 #include "../bayer.h"
 #include <opencv2/imgproc/imgproc.hpp>
 #include <QDataStream>
@@ -51,7 +51,5 @@ public:
 #endif
 
 }
-
-Q_IMPORT_PLUGIN(BayerGB16)
 
 #endif

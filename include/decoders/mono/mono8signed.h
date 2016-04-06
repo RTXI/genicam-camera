@@ -17,9 +17,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MONO8SIGNED_H
-#define MONO8SIGNED_H
-
 #include "../monounpacked.h"
 extern "C" {
   #include <arvenums.h>
@@ -30,8 +27,6 @@ namespace QArv {
 class Mono8SignedFormat : public QObject, public QArvPixelFormat {
 	Q_OBJECT
 	Q_INTERFACES(QArvPixelFormat)
-	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
-	
 	public:
 		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_MONO_8_SIGNED; }
 		QArvDecoder* makeDecoder(QSize size) { 
@@ -40,7 +35,3 @@ class Mono8SignedFormat : public QObject, public QArvPixelFormat {
 };
 
 }
-
-Q_IMPORT_PLUGIN(Mono8SignedFormat)
-
-#endif

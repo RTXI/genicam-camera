@@ -20,14 +20,13 @@
 #ifndef BAYERBG8_H
 #define BAYERBG8_H
 
-#include "../../api/qarvdecoder.h"
+//#include "../../api/qarvdecoder.h"
 #include "../bayer.h"
 #include <opencv2/imgproc/imgproc.hpp>
 #include <QDataStream>
 extern "C" {
 	#include <arvenums.h>
 }
-
 
 // Some formats appeared only after aravis-0.2.0, so
 // we check for their presence. The 12_PACKED formats
@@ -48,7 +47,4 @@ class BayerBG8 : public QObject, public QArvPixelFormat {
 };
 
 }
-
-Q_IMPORT_PLUGIN(BayerBG8)
-	
 #endif

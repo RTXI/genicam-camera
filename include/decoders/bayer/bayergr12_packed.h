@@ -20,7 +20,7 @@
 #ifndef BAYERGR12_PACKED_H
 #define BAYERGR12_PACKED_H
 
-#include "../../api/qarvdecoder.h"
+//#include "../../api/qarvdecoder.h"
 #include "../bayer.h"
 #include <opencv2/imgproc/imgproc.hpp>
 #include <QDataStream>
@@ -51,7 +51,5 @@ class BayerGR12_PACKED : public QObject, public QArvPixelFormat {
 #endif
 
 }
-
-Q_IMPORT_PLUGIN(BayerGR12_PACKED)
 
 #endif

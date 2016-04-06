@@ -20,7 +20,7 @@
 #ifndef BAYERRG16_H
 #define BAYERRG16_H
 
-#include "../../api/qarvdecoder.h"
+//#include "../../api/qarvdecoder.h"
 #include "../bayer.h"
 #include <opencv2/imgproc/imgproc.hpp>
 #include <QDataStream>
@@ -41,17 +41,15 @@ class BayerRG16 : public QObject, public QArvPixelFormat {
 	Q_INTERFACES(QArvPixelFormat)
 	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
 
-	public:
-		ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_RG_16; }
-		QArvDecoder* makeDecoder(QSize size) {
-			return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_RG_16>(size);
-		}
+public:
+	ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_RG_16; }
+	QArvDecoder* makeDecoder(QSize size) {
+		return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_RG_16>(size);
+	}
 };
 
 #endif
 
 }
-
-Q_IMPORT_PLUGIN(BayerRG16)
 
 #endif
