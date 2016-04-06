@@ -72,6 +72,8 @@ SOURCES = genicam-camera.cpp \
           include/recorders/moc_imagerecorder.cpp \
           include/recorders/moc_gstrecorders.cpp \
 
+CXXFLAGS += $(shell pkg-config --cflags aravis-0.4 libavformat libavutil libswscale) 
+LDFLAGS  += $(shell pkg-config --libs aravis-0.4 libavformat libavutil libswscale) 
 
 ### Do not edit below this line ###
 
@@ -101,4 +103,3 @@ clean::
 #	rm -f $(PLUGIN_NAME).la
 #	rm -f $(PLUGIN_NAME).o
 #	rm -rf .libs
-	
