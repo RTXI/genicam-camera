@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef RAWRECORDERS_H
-#define RAWRECORDERS_H
+#ifndef RAWDECODED8_H
+#define RAWDECODED8_H
 
 #include "../recorder.h"
 

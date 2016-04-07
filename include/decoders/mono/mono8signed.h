@@ -17,6 +17,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef MONO8SIGNED_H
+#define MONO8SIGNED_H
+
 #include "../monounpacked.h"
 extern "C" {
   #include <arvenums.h>
@@ -35,3 +38,5 @@ class Mono8SignedFormat : public QObject, public QArvPixelFormat {
 };
 
 }
+
+#endif

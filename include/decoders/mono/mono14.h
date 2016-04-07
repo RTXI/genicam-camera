@@ -17,6 +17,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef MONO14_H
+#define MONO14_H
+
 #include "../monounpacked.h"
 extern "C" {
   #include <arvenums.h>
@@ -37,3 +40,5 @@ class Mono14Format : public QObject, public QArvPixelFormat {
 };
 
 }
+
+#endif
