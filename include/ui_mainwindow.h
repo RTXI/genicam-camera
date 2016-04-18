@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.3.2
+** Created by: Qt User Interface Compiler version 5.6.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -26,7 +26,6 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListView>
-#include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
@@ -213,7 +212,7 @@ public:
     QButtonGroup *stopRecordingRadios;
     QButtonGroup *buttonGroup;
 
-    void setupUi(QMainWindow *MainWindowUI)
+    void setupUi(QWidget *MainWindowUI)
     {
         if (MainWindowUI->objectName().isEmpty())
             MainWindowUI->setObjectName(QStringLiteral("MainWindowUI"));
@@ -291,6 +290,7 @@ public:
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         gridLayout_2 = new QGridLayout(centralwidget);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
+        gridLayout_2->setContentsMargins(0, 0, 0, 0);
         tabWidget = new QTabWidget(centralwidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
         basicTab = new QWidget();
@@ -1012,7 +1012,6 @@ public:
 
         gridLayout_2->addWidget(tabWidget, 0, 0, 1, 1);
 
-        MainWindowUI->setCentralWidget(centralwidget);
         videodock = new QDockWidget(MainWindowUI);
         videodock->setObjectName(QStringLiteral("videodock"));
         widget_2 = new QWidget();
@@ -1068,7 +1067,6 @@ public:
         verticalLayout_8->addWidget(video);
 
         videodock->setWidget(widget_2);
-        MainWindowUI->addDockWidget(static_cast<Qt::DockWidgetArea>(2), videodock);
         histogramdock = new QDockWidget(MainWindowUI);
         histogramdock->setObjectName(QStringLiteral("histogramdock"));
         widget = new QWidget();
@@ -1109,7 +1107,6 @@ public:
         verticalLayout->addWidget(histogram);
 
         histogramdock->setWidget(widget);
-        MainWindowUI->addDockWidget(static_cast<Qt::DockWidgetArea>(2), histogramdock);
         messageDock = new QDockWidget(MainWindowUI);
         messageDock->setObjectName(QStringLiteral("messageDock"));
         dockWidgetContents = new QWidget();
@@ -1124,14 +1121,11 @@ public:
         gridLayout->addWidget(messageList, 0, 0, 1, 1);
 
         messageDock->setWidget(dockWidgetContents);
-        MainWindowUI->addDockWidget(static_cast<Qt::DockWidgetArea>(2), messageDock);
         recordingToolbar = new QToolBar(MainWindowUI);
         recordingToolbar->setObjectName(QStringLiteral("recordingToolbar"));
         recordingToolbar->setToolButtonStyle(Qt::ToolButtonFollowStyle);
-        MainWindowUI->addToolBar(Qt::TopToolBarArea, recordingToolbar);
         subwindowToolbar = new QToolBar(MainWindowUI);
         subwindowToolbar->setObjectName(QStringLiteral("subwindowToolbar"));
-        MainWindowUI->addToolBar(Qt::TopToolBarArea, subwindowToolbar);
 
         recordingToolbar->addAction(snapshotAction);
         recordingToolbar->addAction(recordAction);
@@ -1146,7 +1140,7 @@ public:
         QMetaObject::connectSlotsByName(MainWindowUI);
     } // setupUi
 
-    void retranslateUi(QMainWindow *MainWindowUI)
+    void retranslateUi(QWidget *MainWindowUI)
     {
         MainWindowUI->setWindowTitle(QApplication::translate("MainWindowUI", "QArv", 0));
         snapshotAction->setText(QApplication::translate("MainWindowUI", "Snapshot", 0));
