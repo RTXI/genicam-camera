@@ -1,7 +1,7 @@
 #! /bin/bash
 
 SCRIPT_DIR=$(pwd)
-BASE_DIR=../
+BASE_DIR=..
 BUILD_DIR=${BASE_DIR}/build
 
 # Should ultimately use a static version of the software, not the latest git 
