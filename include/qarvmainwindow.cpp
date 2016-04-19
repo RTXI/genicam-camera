@@ -17,12 +17,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "include/globals.h"
-#include "include/qarvmainwindow.h"
-#include "include/api/qarvcameradelegate.h"
-#include "include/getmtu_linux.h"
-#include "include/decoders/unsupported.h"
-#include "include/filters/filter.h"
+#include "globals.h"
+#include "qarvmainwindow.h"
+#include "api/qarvcameradelegate.h"
+#include "getmtu_linux.h"
+#include "decoders/unsupported.h"
+#include "filters/filter.h"
 
 #include <QNetworkInterface>
 #include <QFileInfo>
@@ -46,13 +46,13 @@ Q_DECLARE_METATYPE(cv::Mat)
 
 using namespace QArv;
 
-QArvMainWindow::QArvMainWindow(QWidget* parent, bool standalone_) :
-	QMainWindow(parent), camera(NULL), decoder(NULL), playing(false),
-	recording(false), started(false), drawHistogram(false),
-	standalone(standalone_), imageTransform(),
-	imageTransform_flip(0), imageTransform_rot(0),
-	toDisableWhenPlaying(), toDisableWhenRecording(), futureHoldsAHistogram(false),
-	recordingTimeCumulative(0) {
+QArvMainWindow::QArvMainWindow(QWidget* parent, bool standalone_) 
+	: QWidget(parent), camera(NULL), decoder(NULL), playing(false),
+	  recording(false), started(false), drawHistogram(false),
+	  standalone(standalone_), imageTransform(),
+	  imageTransform_flip(0), imageTransform_rot(0),
+	  toDisableWhenPlaying(), toDisableWhenRecording(), 
+	  futureHoldsAHistogram(false), recordingTimeCumulative(0) {
 
 	setAttribute(Qt::WA_DeleteOnClose);
 

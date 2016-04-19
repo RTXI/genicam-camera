@@ -22,11 +22,11 @@
 
 #include "ui_mainwindow.h"
 
-#include "include/glvideowidget.h"
-#include "include/workthread.h"
-#include "include/api/qarvcamera.h"
-#include "include/api/qarvdecoder.h"
-#include "include/recorders/recorder.h"
+#include "glvideowidget.h"
+#include "workthread.h"
+#include "api/qarvcamera.h"
+#include "api/qarvdecoder.h"
+#include "recorders/recorder.h"
 
 #include <QTimer>
 #include <QTime>
@@ -42,8 +42,7 @@ class QArvGui;
 namespace QArv
 {
 
-class QArvMainWindow : public QMainWindow, private Ui::MainWindowUI {
-//class QArvMainWindow : public QMainWindow {
+class QArvMainWindow : public QWidget, private Ui::MainWindowUI {
 	Q_OBJECT
 
 	public:
