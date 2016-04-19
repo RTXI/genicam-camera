@@ -43,8 +43,8 @@ class LevelsFilter : public ImageFilter {
 class LevelsPlugin : public QObject, public ImageFilterPlugin {
 	Q_OBJECT
 	Q_INTERFACES(QArv::ImageFilterPlugin)
-//	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.LevelsPlugin" FILE "LevelsPlugin.json") // Qt5
-	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvImageFilterPlugin" FILE "LevelsPlugin.json") // Qt5
+	//Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvImageFilterPlugin" FILE "LevelsPlugin.json")
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvImageFilterPlugin")
 
 	public:
 		QString name();

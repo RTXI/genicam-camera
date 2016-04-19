@@ -50,14 +50,14 @@ class ImageFilterSettingsWidget : public QWidget {
 		virtual ~ImageFilterSettingsWidget() {}
 
 	protected slots:
-	//! Implemented by each plugin to update the filter continuously.
-	virtual void setLiveUpdate(bool enabled) = 0;
+		//! Implemented by each plugin to update the filter continuously.
+		virtual void setLiveUpdate(bool enabled) = 0;
 
-	//! Implemented by each plugin to update the filter once.
-	virtual void applySettings() = 0;
+		//! Implemented by each plugin to update the filter once.
+		virtual void applySettings() = 0;
 
 	protected:
-	ImageFilter* imageFilter;
+		ImageFilter* imageFilter;
 
 	friend class ImageFilterSettingsDialog;
 };
