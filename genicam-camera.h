@@ -50,8 +50,6 @@ class GenicamCamera: public QWidget, public RT::Thread, public Plugin::Object,
 //		void receiveEvent( const ::Event::Object * );
 //		void receiveEventRT( const ::Event::Object * );
 
-	
-
 	public slots:
 
 	protected:
@@ -59,6 +57,7 @@ class GenicamCamera: public QWidget, public RT::Thread, public Plugin::Object,
 	private:
 		void createGUI(void);
 		void initialize(void);
+		QMdiSubWindow *subWindow;
 
 	private slots:
 //		void buttonClicked(void);

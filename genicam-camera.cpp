@@ -54,6 +54,11 @@ GenicamCamera::GenicamCamera(void)
 
 	setWindowTitle(QString::number( getID() ) + " GenICam Module");
 	QArvCamera::init();
+
+	QCoreApplication::setOrganizationDomain("org.qt-project");
+	QCoreApplication::setOrganizationName("Qt");
+	QCoreApplication::setApplicationName("QArv");
+
 	createGUI();
 	initialize();
 	show();
@@ -65,19 +70,17 @@ void GenicamCamera::initialize(void) {}
 
 void GenicamCamera::createGUI(void) {
 
-	QMdiSubWindow *subWindow = new QMdiSubWindow;
+	//QWidget *subWindow = new QWidget;
+	subWindow = new QMdiSubWindow;
 	subWindow->setAttribute(Qt::WA_DeleteOnClose);
 	subWindow->setWindowIcon(QIcon("/usr/local/lib/rtxi/RTXI-widget-icon.png"));
 	subWindow->setWindowFlags(Qt::CustomizeWindowHint | 
 	                          Qt::WindowCloseButtonHint | 
 	                          Qt::WindowMinimizeButtonHint );
 	MainWindow::getInstance()->createMdi(subWindow); 
-	subWindow->setWidget(this);
 
 	QArvGui *widget = new QArvGui(subWindow, false);
 	QVBoxLayout *layout = new QVBoxLayout(this);
-	setLayout(layout);
-
 	layout->addWidget(widget);
 
 //	QPushButton *button = new QPushButton("Howdy.");
@@ -86,6 +89,10 @@ void GenicamCamera::createGUI(void) {
 //	QObject::connect(button, SIGNAL(clicked(void)), 
 //	                 this, SLOT(buttonClicked(void)));
 
+	setLayout(layout);
+	subWindow->setWidget(this);
+	widget->show();
+	subWindow->show();
 	subWindow->adjustSize();
 }
 
