@@ -21,7 +21,7 @@
 #define QARVGUI_H
 
 #include "qarvcamera.h"
-#include <QMainWindow>
+//#include <QMainWindow>
 #include <QApplication>
 
 #include <opencv2/opencv.hpp>
@@ -81,7 +81,8 @@ class QArvGui : public QWidget {
 		QArvCamera* camera();
 
 		//! Returns the underlying QMainWindow.
-		QMainWindow* mainWindow();
+		//QMainWindow* mainWindow();
+		QWidget* mainWindow();
 
 	signals:
 		//! Emitted when a new frame arrives from the camera.

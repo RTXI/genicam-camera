@@ -113,7 +113,8 @@ QArvCamera* QArvGui::camera() {
 	return ext->mw->camera;
 }
 
-QMainWindow* QArvGui::mainWindow() {
+//QMainWindow* QArvGui::mainWindow() {
+QWidget* QArvGui::mainWindow() {
 	return ext->mw;
 }
 
