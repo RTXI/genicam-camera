@@ -61,8 +61,6 @@ SOURCES = genicam-camera.cpp \
 CXXFLAGS += $(shell pkg-config --cflags aravis-0.4 libavformat libavutil libswscale opencv) 
 LDFLAGS  += $(shell pkg-config --libs aravis-0.4 libavformat libavutil libswscale opencv) -L/usr/local/lib/libqarv-2.so
 
-LIBS += librecorders.so libdecoders.so
-
 ### Do not edit below this line ###
 
 include $(shell rtxi_plugin_config --pkgdata-dir)/Makefile.plugin_compile
