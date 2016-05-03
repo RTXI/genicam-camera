@@ -22,6 +22,7 @@
 
 #include "qarvcamera.h"
 //#include <QMainWindow>
+#include <QtWidgets>
 #include <QApplication>
 
 #include <opencv2/opencv.hpp>
