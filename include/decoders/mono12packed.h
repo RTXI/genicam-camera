@@ -20,7 +20,7 @@
 #ifndef MONO12PACKED_H
 #define MONO12PACKED_H
 
-#include "../api/qarvdecoder.h"
+#include <qarvdecoder.h>
 extern "C" {
 	#include <arvenums.h>
 }

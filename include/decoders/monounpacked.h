@@ -21,7 +21,7 @@
 #define MONOUNPACKED_H
 
 #include <type_traits>
-#include "../api/qarvdecoder.h"
+#include <qarvdecoder.h>
 
 namespace QArv {
 

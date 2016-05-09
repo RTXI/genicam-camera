@@ -34,7 +34,7 @@
 #define WORKTHREAD_H
 
 #include "filters/filter.h"
-#include "api/qarvcamera.h"
+#include <qarvcamera.h>
 #include <QImage>
 #include <QFile>
 #include <QTime>

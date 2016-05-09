@@ -20,7 +20,7 @@
 #ifndef BAYER_H
 #define BAYER_H
 
-#include "../api/qarvdecoder.h"
+#include <qarvdecoder.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <QDataStream>
 extern "C" {
