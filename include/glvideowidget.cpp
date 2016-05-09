@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "glvideowidget.h>
-#include "globals.h>
+#include "glvideowidget.h"
+#include "globals.h"
 #include <qarvdecoder.h>
 
 using namespace QArv;
