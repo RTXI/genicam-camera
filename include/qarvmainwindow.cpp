@@ -226,11 +226,11 @@ QArvMainWindow::QArvMainWindow(QWidget* parent, bool standalone_)
 		l->setLineWidth(0);
 		return l;
 	};
-	statusBar()->addPermanentWidget(makeVerticalLine());
+	//statusBar()->addPermanentWidget(makeVerticalLine());
 	recordingTimeLabel = new QLabel(tr("Recording stopped"));
-	statusBar()->addPermanentWidget(recordingTimeLabel);
-	statusBar()->addPermanentWidget(makeVerticalLine());
-	statusBar()->showMessage(tr("Welcome to QArv!"));
+	//statusBar()->addPermanentWidget(recordingTimeLabel);
+	//statusBar()->addPermanentWidget(makeVerticalLine());
+	//statusBar()->showMessage(tr("Welcome to QArv!"));
 }
 
 QArvMainWindow::~QArvMainWindow() {
@@ -260,8 +260,8 @@ void QArvMainWindow::on_refreshCamerasButton_clicked(bool clicked) {
 	QString message = tr("Found %n cameras.",
 	                     "Number of cameras",
 	                     cameraSelector->count());
-	statusBar()->showMessage(statusBar()->currentMessage() + " " + message,
-	                         statusTimeoutMsec);
+	//statusBar()->showMessage(//statusBar()->currentMessage() + " " + message,
+	//                         statusTimeoutMsec);
 	logMessage() << message;
 	QSettings settings;
 	QVariant data = settings.value("qarv_camera/selected");
@@ -274,14 +274,14 @@ void QArvMainWindow::on_refreshCamerasButton_clicked(bool clicked) {
 
 void QArvMainWindow::on_unzoomButton_toggled(bool checked) {
 	if (checked) {
-		oldstate = saveState();
+		//oldstate = saveState();
 		oldgeometry = saveGeometry();
 		oldsize = video->size();
 		QSize newsize = video->getImageSize();
 		video->setFixedSize(newsize);
 	} else {
 		video->setFixedSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
-		restoreState(oldstate);
+		//restoreState(oldstate);
 		restoreGeometry(oldgeometry);
 		video->setFixedSize(oldsize);
 		videodock->resize(1, 1);
@@ -409,7 +409,7 @@ void QArvMainWindow::on_cameraSelector_currentIndexChanged(int index) {
 	 	                     "trying best-effort MTU %1.");
 		int mtu = 1500;
 		message = message.arg(mtu);
-		statusBar()->showMessage(message, statusTimeoutMsec);
+		//statusBar()->showMessage(message, statusTimeoutMsec);
 		logMessage() << message;
 		camera->setMTU(mtu);
 	}
@@ -497,8 +497,8 @@ void QArvMainWindow::on_applyROIButton_clicked(bool clicked) {
 	{
 		auto ROI2 = roirange.intersected(ROI);
 		if (ROI2 != ROI)
-			statusBar()->showMessage(tr("Region of interest too large, shrinking."),
-			                         statusTimeoutMsec);
+			//statusBar()->showMessage(tr("Region of interest too large, shrinking."),
+			//                         statusTimeoutMsec);
 		ROI = ROI2;
 		ROI.setX((ROI.x() / 2) * 2);
 		ROI.setY((ROI.y() / 2) * 2);
@@ -571,7 +571,7 @@ void QArvMainWindow::startVideo(bool start) {
 				QString message = tr("Decoder for %1 doesn't exist!");
 				message = message.arg(camera->getPixelFormat());
 				logMessage() << message;
-				statusBar()->showMessage(message, statusTimeoutMsec);
+				//statusBar()->showMessage(message, statusTimeoutMsec);
 				if (standalone)
 					decoder = new Unsupported(camera->getPixelFormatId(),
 					                          camera->getROI().size());
@@ -659,8 +659,8 @@ void QArvMainWindow::on_recordAction_toggled(bool checked) {
 		bool earlyBail = false;
 		if (filenameEdit->text().isEmpty()) {
 			tabWidget->setCurrentWidget(recordingTab);
-			statusBar()->showMessage(tr("Please set the video file name."),
-			                         statusTimeoutMsec);
+			//statusBar()->showMessage(tr("Please set the video file name."),
+			//                         statusTimeoutMsec);
 			earlyBail = true;
 		} else if (QFile(filenameEdit->text()).exists()) {
 			// This check does not work for gstreamer and images. However, images
@@ -701,11 +701,11 @@ void QArvMainWindow::on_recordAction_toggled(bool checked) {
 		if (!open) {
 			QString message = tr("Unable to initialize the recording plugin.");
 			logMessage() << message;
-			statusBar()->showMessage(message, statusTimeoutMsec);
+			//statusBar()->showMessage(message, statusTimeoutMsec);
 			recordAction->setChecked(false);
 			checked = false;
 		} else {
-			statusBar()->clearMessage();
+			//statusBar()->clearMessage();
 			QString msg;
 			if (recordMetadataCheck->isChecked()) {
 				auto metaFileName = filenameEdit->text() + ".caminfo";
@@ -726,7 +726,7 @@ void QArvMainWindow::on_recordAction_toggled(bool checked) {
 			}
 			if (!msg.isNull()) {
 				logMessage() << msg;
-				statusBar()->showMessage(msg, statusTimeoutMsec);
+				//statusBar()->showMessage(msg, statusTimeoutMsec);
 			}
 		}
 	}
@@ -785,8 +785,8 @@ void QArvMainWindow::on_snapshotAction_toggled(bool checked) {
 
 	if (snappathEdit->text().isEmpty() || snapbasenameEdit->text().isEmpty()) {
 		tabWidget->setCurrentWidget(recordingTab);
-		statusBar()->showMessage(tr("Please set the snapshot directory and name."),
-		                         statusTimeoutMsec);
+		//statusBar()->showMessage(tr("Please set the snapshot directory and name."),
+		//                         statusTimeoutMsec);
 		snapshotAction->setChecked(false);
 		return;
 	}
@@ -794,18 +794,18 @@ void QArvMainWindow::on_snapshotAction_toggled(bool checked) {
 	QDir dir(name);
 	if (!dir.exists()) {
 		tabWidget->setCurrentWidget(recordingTab);
-		statusBar()->showMessage(tr("Snapshot directory does not exist."),
-		                         statusTimeoutMsec);
+		//statusBar()->showMessage(tr("Snapshot directory does not exist."),
+		//                         statusTimeoutMsec);
 		snapshotAction->setChecked(false);
 		return;
 	}
 	if (!playing) {
-		statusBar()->showMessage(tr("Video is not playing, no image to save."),
-		                         statusTimeoutMsec);
+		//statusBar()->showMessage(tr("Video is not playing, no image to save."),
+		//                         statusTimeoutMsec);
 		snapshotAction->setChecked(false);
 		return;
 	}
-	statusBar()->clearMessage();
+	//statusBar()->clearMessage();
 
 	if (snapshotPNG->isChecked())
 		connect(workthread, SIGNAL(frameCooked(cv::Mat)),
@@ -822,15 +822,15 @@ void QArvMainWindow::snapshotRare(QByteArray frame) {
 		                 + snapbasenameEdit->text()
 		                 + time.toString("yyyy-MM-dd-hhmmss.zzz");
 		if (frame.isEmpty()) {
-			statusBar()->showMessage(tr("Current frame is invalid, try "
-			                            "snapshotting again."), statusTimeoutMsec);
+			//statusBar()->showMessage(tr("Current frame is invalid, try "
+			//                            "snapshotting again."), statusTimeoutMsec);
 			return;
 		}
 		QFile file(fileName + ".frame");
 		if (file.open(QIODevice::WriteOnly)) file.write(frame);
-		else
-			statusBar()->showMessage(tr("Snapshot cannot be written."),
-			                         statusTimeoutMsec);
+		//else
+			//statusBar()->showMessage(tr("Snapshot cannot be written."),
+			//                         statusTimeoutMsec);
 }
 
 void QArvMainWindow::snapshotCooked(cv::Mat frame) {
@@ -839,9 +839,9 @@ void QArvMainWindow::snapshotCooked(cv::Mat frame) {
 	QString fileName = snappathEdit->text() + "/"
 	                   + snapbasenameEdit->text()
 	                   + time.toString("yyyy-MM-dd-hhmmss.zzz");
-	if (!cv::imwrite((fileName + ".png").toStdString(), frame))
-		statusBar()->showMessage(tr("Snapshot cannot be written."),
-		                         statusTimeoutMsec);
+	//if (!cv::imwrite((fileName + ".png").toStdString(), frame))
+		//statusBar()->showMessage(tr("Snapshot cannot be written."),
+		//                         statusTimeoutMsec);
 }
 
 void QArvMainWindow::on_chooseFilenameButton_clicked(bool checked) {
@@ -890,7 +890,7 @@ void QArvMainWindow::on_saveSettingsButton_clicked(bool checked) {
 		file << camera;
 	} else {
 		QString message = tr("Could not open settings file.");
-		statusBar()->showMessage(message, statusTimeoutMsec);
+		//statusBar()->showMessage(message, statusTimeoutMsec);
 		logMessage() << message;
 	}
 }
@@ -940,7 +940,7 @@ void QArvMainWindow::on_loadSettingsButton_clicked(bool checked) {
 		}
 	} else {
 		QString message = tr("Could not open camera settings file.");
-		statusBar()->showMessage(message, statusTimeoutMsec);
+		//statusBar()->showMessage(message, statusTimeoutMsec);
 		logMessage() << message;
 	}
 }
@@ -1182,7 +1182,7 @@ void QArvMainWindow::saveProgramSettings() {
 		wgt->close();
 	}
 	settings.setValue("qarv_mainwindow/geometry", saveGeometry());
-	settings.setValue("qarv_mainwindow/state", saveState());
+	//settings.setValue("qarv_mainwindow/state", saveState());
 
 	// buttons, combo boxes, text fields etc.
 	for (auto i = saved_widgets.begin(); i != saved_widgets.end(); i++) {
@@ -1208,7 +1208,7 @@ void QArvMainWindow::restoreProgramSettings() {
 
 	// main window geometry and state
 	restoreGeometry(settings.value("qarv_mainwindow/geometry").toByteArray());
-	restoreState(settings.value("qarv_mainwindow/state").toByteArray());
+	//restoreState(settings.value("qarv_mainwindow/state").toByteArray());
 
 	// buttons, combo boxes, text fields etc.
 	for (auto i = saved_widgets.begin(); i != saved_widgets.end(); i++) {
@@ -1240,7 +1240,7 @@ void QArvMainWindow::on_videoFormatSelector_currentIndexChanged(int i) {
 		recordInfoCheck->setEnabled(fmt->canWriteInfo() && b);
 	} else {
 		logMessage() << "Video format pointer is not an OutputFormat plugin";
-		statusBar()->showMessage(tr("Cannot select this video format."));
+		//statusBar()->showMessage(tr("Cannot select this video format."));
 	}
 }
 
@@ -1267,7 +1267,7 @@ void QArvMainWindow::on_postprocList_doubleClicked(const QModelIndex& index) {
 		editor->setWindowTitle(item->text());
 		item->setData(ptr2var(editor), Qt::UserRole + 2);
 		editor->setObjectName("Filter settings widget");
-		addDockWidget(Qt::RightDockWidgetArea, editor);
+		//addDockWidget(Qt::RightDockWidgetArea, editor);
 		editor->setFloating(true);
 	}
 	editor->show();
@@ -1332,7 +1332,7 @@ void QArvMainWindow::bufferUnderrunOccured()
 {
 		QString msg = tr("Buffer underrun!");
 		logMessage() << msg;
-		statusBar()->showMessage(msg, statusTimeoutMsec);
+		//statusBar()->showMessage(msg, statusTimeoutMsec);
 }
 
 void QArvMainWindow::addPostprocFilter()
