@@ -22,7 +22,7 @@
 
 #include <QSize>
 #include <QImage>
-#include <qarvdecoder.h>
+#include "../api/qarvdecoder.h"
 
 extern "C" {
 #include <libswscale/swscale.h>

@@ -20,8 +20,8 @@
 #ifndef BAYERGR10_H
 #define BAYERGR10_H
 
-//#include <qarvdecoder.h>
-#include "../bayer.h>
+//#include "../../api/qarvdecoder.h"
+#include "../bayer.h"
 #include <opencv2/imgproc/imgproc.hpp>
 #include <QDataStream>
 extern "C" {

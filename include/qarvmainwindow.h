@@ -24,8 +24,8 @@
 
 #include "glvideowidget.h"
 #include "workthread.h"
-#include <qarvcamera.h>
-#include <qarvdecoder.h>
+#include "api/qarvcamera.h"
+#include "api/qarvdecoder.h"
 #include "recorders/recorder.h"
 
 #include <QTimer>

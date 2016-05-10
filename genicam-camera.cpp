@@ -27,8 +27,8 @@
 #endif
 
 #include "genicam-camera.h"
-#include <qarvcamera.h>
-#include <qarvgui.h>
+#include "include/api/qarvcamera.h"
+#include "include/api/qarvgui.h"
 
 #include <iostream>
 

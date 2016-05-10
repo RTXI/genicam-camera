@@ -26,8 +26,8 @@
 #include <event.h>
 #include <plugin.h>
 
-#include <qarvcamera.h>
-#include <qarvgui.h>
+#include "include/api/qarvcamera.h"
+#include "include/api/qarvgui.h"
 
 #include <QtGlobal>
 #if QT_VERSION >= 0x050000
