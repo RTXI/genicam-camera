@@ -42,11 +42,13 @@ class QArvGui;
 namespace QArv
 {
 
-class QArvMainWindow : public QWidget, private Ui::MainWindowUI {
+//class QArvMainWindow : public QWidget, private Ui::MainWindowUI {
+class QArvMainWindow : public QMainWindow, private Ui::MainWindowUI {
 	Q_OBJECT
 
 	public:
 		QArvMainWindow(QWidget* parent = 0, bool standalone = true);
+//		QArvMainWindow(QMainWindow* parent = 0, bool standalone = true);
 		~QArvMainWindow();
 
 	signals:

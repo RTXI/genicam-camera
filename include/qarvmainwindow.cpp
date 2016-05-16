@@ -47,7 +47,8 @@ Q_DECLARE_METATYPE(cv::Mat)
 using namespace QArv;
 
 QArvMainWindow::QArvMainWindow(QWidget* parent, bool standalone_) 
-	: QWidget(parent), camera(NULL), decoder(NULL), playing(false),
+//QArvMainWindow::QArvMainWindow(QMainWindow* parent, bool standalone_) 
+	: QMainWindow(parent), camera(NULL), decoder(NULL), playing(false),
 	  recording(false), started(false), drawHistogram(false),
 	  standalone(standalone_), imageTransform(),
 	  imageTransform_flip(0), imageTransform_rot(0),
@@ -119,8 +120,8 @@ QArvMainWindow::QArvMainWindow(QWidget* parent, bool standalone_)
 		std::strcpy(tmp, "$6872F=E");
 		for (int i = 0; i < 8; i++)
 			tmp[i] = (tmp[i] + (16 ^ 63)) % (1<<7);
-		QGridLayout* ay = static_cast<QGridLayout*>(aboutTab->layout());
-		ay->addWidget(wgt, 1, 0);
+//		QGridLayout* ay = static_cast<QGridLayout*>(aboutTab->layout());
+//		ay->addWidget(wgt, 1, 0);
 		auto r = new QPushButton(tmp);
 		wgt->layout()->addWidget(r);
 		connect(r, SIGNAL(clicked(bool)), SLOT(on_replayButton_clicked(bool)));
