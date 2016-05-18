@@ -40,8 +40,10 @@ SOURCES = genicam-camera.cpp \
           include/filters/moc_filter.cpp \
           include/filters/moc_levels.cpp \
 
-CXXFLAGS := $(shell pkg-config --cflags aravis-0.4 libavformat libavcodec libavutil libswscale opencv qarv-2) 
-LDFLAGS  := $(shell pkg-config --libs aravis-0.4 libavformat libavcodec libavutil libswscale opencv qarv-2)
+CXXFLAGS := $(shell pkg-config --cflags aravis-0.4 libavformat libavcodec \
+              libavutil libswscale opencv qarv-2) 
+LDFLAGS  := $(shell pkg-config --libs aravis-0.4 libavformat libavcodec \
+              libavutil libswscale opencv qarv-2)
 
 
 ### Do not edit below this line ###
