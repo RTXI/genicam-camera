@@ -60,6 +60,14 @@ clean::
 	rm -rf include/recorders/.libs
 	rm -rf include/recorders/rawrecorders/.libs
 	rm -rf include/filters/.libs
+	rm -f include/*.lo
+	rm -f include/api/*.lo
+	rm -f include/decoders/*.lo
+	rm -f include/decoders/bayer/*.lo
+	rm -f include/decoders/mono/*.lo
+	rm -f include/recorders/*.lo
+	rm -f include/recorders/rawrecorders/*.lo
+	rm -f include/filters/*.lo
 	rm -f include/*.o
 	rm -f include/api/*.o
 	rm -f include/decoders/*.o
