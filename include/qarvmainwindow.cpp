@@ -71,6 +71,7 @@ QArvMainWindow::QArvMainWindow(QWidget* parent, bool standalone_)
 	connect(workthread, SIGNAL(recordingStopped()), SLOT(stopRecording()));
 
 	// Setup theme icons if available.
+/*
 	bool usingFallbackIcons = false;
 	QMap<QAbstractButton*, QString> icons;
 	icons[unzoomButton] = "zoom-original";
@@ -102,6 +103,7 @@ QArvMainWindow::QArvMainWindow(QWidget* parent, bool standalone_)
 	}
 	if (usingFallbackIcons)
 		logMessage() << "Some icons are not available in your theme, using bundled icons.";
+*/
 	{
 		auto d = QDate::currentDate();
 		int y = d.year(), l = d.month(), a = d.day();

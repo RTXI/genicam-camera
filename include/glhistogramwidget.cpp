@@ -29,11 +29,11 @@ GLHistogramWidget::GLHistogramWidget(QWidget* parent) :
 	histGreen(histograms1.green), histBlue(histograms1.blue) {
 	indexed = true;
 	logarithmic = false;
-	QFile iconfile(QString(qarv_datafiles) + 
-	               "/view-object-histogram-linear.svgz");
-	if (iconfile.exists())
-		idleImageIcon = QIcon(iconfile.fileName());
-	else
+//	QFile iconfile(QString(qarv_datafiles) + 
+//	               "/view-object-histogram-linear.svgz");
+//	if (iconfile.exists())
+//		idleImageIcon = QIcon(iconfile.fileName());
+//	else
 		idleImageIcon = QIcon::fromTheme("view-object-histogram-linear");
 	setIdle();
 }

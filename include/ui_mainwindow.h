@@ -221,9 +221,9 @@ public:
     {
         if (MainWindowUI->objectName().isEmpty())
             MainWindowUI->setObjectName(QStringLiteral("MainWindowUI"));
-        MainWindowUI->resize(977, 583);
+//        MainWindowUI->resize(977, 583);
         QIcon icon;
-        icon.addFile(QStringLiteral(":/icons/qarv.svgz"), QSize(), QIcon::Normal, QIcon::Off);
+//        icon.addFile(QStringLiteral(":/icons/qarv.svgz"), QSize(), QIcon::Normal, QIcon::Off);
         MainWindowUI->setWindowIcon(icon);
         snapshotAction = new QAction(MainWindowUI);
         snapshotAction->setObjectName(QStringLiteral("snapshotAction"));
