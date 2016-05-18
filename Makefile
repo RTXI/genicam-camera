@@ -40,8 +40,8 @@ SOURCES = genicam-camera.cpp \
           include/filters/moc_filter.cpp \
           include/filters/moc_levels.cpp \
 
-CXXFLAGS += $(shell pkg-config --cflags aravis-0.4 libavformat libavcodec libavutil libswscale opencv qarv-2) 
-LDFLAGS  += $(shell pkg-config --libs aravis-0.4 libavformat libavcodec libavutil libswscale opencv qarv-2)
+CXXFLAGS := $(shell pkg-config --cflags aravis-0.4 libavformat libavcodec libavutil libswscale opencv qarv-2) 
+LDFLAGS  := $(shell pkg-config --libs aravis-0.4 libavformat libavcodec libavutil libswscale opencv qarv-2)
 
 # -DQARV_ABI=\"2\" -DQARV_API=\"2\" -DQARV_DATA=\"/usr/local/share/qarv/2/\" -DQARV_VERSION="\"'0696323'\"" -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_STATICPLUGIN -DQT_SVG_LIB -DQT_WIDGETS_LIB
 
@@ -51,7 +51,9 @@ LDFLAGS  += $(shell pkg-config --libs aravis-0.4 libavformat libavcodec libavuti
 
 include $(shell rtxi_plugin_config --pkgdata-dir)/Makefile.plugin_compile
 
-clean::
+clean: extraclean
+
+extraclean: 
 	rm -rf include/.libs
 	rm -rf include/api/.libs
 	rm -rf include/decoders/.libs
