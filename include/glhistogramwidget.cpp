@@ -20,7 +20,6 @@
 #include "glhistogramwidget.h"
 #include "globals.h"
 #include <QStyleOption>
-#include "globals.h"
 
 using namespace QArv;
 

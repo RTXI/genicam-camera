@@ -24,7 +24,8 @@ extern "C" {
 #include <arv.h>
 #include <gio/gio.h>
 }
-#include "api/qarvcamera.h"
+//#include "api/qarvcamera.h"
+#include <qarvcamera.h>
 
 //! A class that stores the hirearchy of camera features.
 /*! String identifiers are used to get feature nodes from Aravis. At first it

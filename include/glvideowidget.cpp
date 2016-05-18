@@ -19,7 +19,8 @@
 
 #include "glvideowidget.h"
 #include "globals.h"
-#include "api/qarvdecoder.h"
+//#include "api/qarvdecoder.h"
+#include <qarvdecoder.h>
 
 using namespace QArv;
 

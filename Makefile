@@ -2,11 +2,6 @@ PLUGIN_NAME = genicam_camera
 
 HEADERS = genicam-camera.h \
           include/getmtu_linux.h \
-          include/api/qarvcamera.h \
-          include/api/qarvdecoder.h \
-          include/api/qarvrecordedvideo.h \
-          include/api/qarvtype.h \
-          include/api/qarvcameradelegate.h \
           include/glhistogramwidget.h \
           include/globals.h \
           include/qarvfeaturetree.h \
@@ -22,14 +17,7 @@ HEADERS = genicam-camera.h \
           include/filters/levels.h \
           include/filters/ui_levels.h \
 
-
 SOURCES = genicam-camera.cpp \
-          include/api/qarvcamera.cpp \
-          include/api/qarvgui.cpp \
-          include/api/qarvdecoder.cpp \
-          include/api/qarvrecordedvideo.cpp \
-          include/api/qarvtype.cpp \
-          include/api/qarvcameradelegate.cpp \
           include/glhistogramwidget.cpp \
           include/globals.cpp \
           include/qarvfeaturetree.cpp \
@@ -43,12 +31,6 @@ SOURCES = genicam-camera.cpp \
           include/filters/filter.cpp \
           include/filters/levels.cpp \
           moc_genicam-camera.cpp \
-          include/api/moc_qarvcamera.cpp \
-          include/api/moc_qarvgui.cpp \
-          include/api/moc_qarvdecoder.cpp \
-          include/api/moc_qarvrecordedvideo.cpp \
-          include/api/moc_qarvtype.cpp \
-          include/api/moc_qarvcameradelegate.cpp \
           include/moc_glhistogramwidget.cpp \
           include/moc_globals.cpp \
           include/moc_qarvmainwindow.cpp \
@@ -58,8 +40,12 @@ SOURCES = genicam-camera.cpp \
           include/filters/moc_filter.cpp \
           include/filters/moc_levels.cpp \
 
-CXXFLAGS += $(shell pkg-config --cflags aravis-0.4 libavformat libavcodec libavutil libswscale opencv) 
-LDFLAGS  += $(shell pkg-config --libs aravis-0.4 libavformat libavcodec libavutil libswscale opencv) -L/usr/local/lib/libqarv-2.so
+CXXFLAGS += $(shell pkg-config --cflags aravis-0.4 libavformat libavcodec libavutil libswscale opencv qarv-2) 
+LDFLAGS  += $(shell pkg-config --libs aravis-0.4 libavformat libavcodec libavutil libswscale opencv qarv-2)
+
+# -DQARV_ABI=\"2\" -DQARV_API=\"2\" -DQARV_DATA=\"/usr/local/share/qarv/2/\" -DQARV_VERSION="\"'0696323'\"" -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_STATICPLUGIN -DQT_SVG_LIB -DQT_WIDGETS_LIB
+
+# Wl, --no-as-needed $(shell pkg-config --libs qarv-2)
 
 ### Do not edit below this line ###
 

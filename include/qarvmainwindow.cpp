@@ -19,7 +19,8 @@
 
 #include "globals.h"
 #include "qarvmainwindow.h"
-#include "api/qarvcameradelegate.h"
+#include <qarvcameradelegate.h>
+//#include "api/qarvcameradelegate.h"
 #include "getmtu_linux.h"
 #include "decoders/unsupported.h"
 #include "filters/filter.h"
