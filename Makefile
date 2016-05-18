@@ -43,9 +43,6 @@ SOURCES = genicam-camera.cpp \
 CXXFLAGS := $(shell pkg-config --cflags aravis-0.4 libavformat libavcodec libavutil libswscale opencv qarv-2) 
 LDFLAGS  := $(shell pkg-config --libs aravis-0.4 libavformat libavcodec libavutil libswscale opencv qarv-2)
 
-# -DQARV_ABI=\"2\" -DQARV_API=\"2\" -DQARV_DATA=\"/usr/local/share/qarv/2/\" -DQARV_VERSION="\"'0696323'\"" -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_STATICPLUGIN -DQT_SVG_LIB -DQT_WIDGETS_LIB
-
-# Wl, --no-as-needed $(shell pkg-config --libs qarv-2)
 
 ### Do not edit below this line ###
 
@@ -86,11 +83,3 @@ extraclean:
 	rm -f include/recorders/moc_*
 	rm -f include/recorders/rawrecorders/moc_*
 	rm -f include/filters/moc_*
-
-#	rm -f $(OBJECTS)
-#	rm -f $(MOOBJECTS)
-#	rm -f moc_*
-#	rm -f *.o
-#	rm -f $(PLUGIN_NAME).la
-#	rm -f $(PLUGIN_NAME).o
-#	rm -rf .libs
