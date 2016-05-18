@@ -79,7 +79,7 @@ void GenicamCamera::createGUI(void) {
 	                          Qt::WindowMinimizeButtonHint );
 	MainWindow::getInstance()->createMdi(subWindow); 
 
-	QArvGui *widget = new QArvGui(subWindow, false);
+	QArvGui *widget = new QArvGui(subWindow, true);
 	QVBoxLayout *layout = new QVBoxLayout(this);
 	layout->addWidget(widget);
 
