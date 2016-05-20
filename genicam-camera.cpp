@@ -18,6 +18,8 @@
  */
 
 #include <main_window.h>
+#include <pthread.h>
+#include <iostream>
 
 #include <QtGlobal>
 #if QT_VERSION >= 0x050000
@@ -26,12 +28,9 @@
 	#include <QtGui>
 #endif
 
-#include "genicam-camera.h"
 #include <qarvcamera.h>
 #include <qarvgui.h>
-
-#include <iostream>
-
+#include "genicam-camera.h"
 
 extern "C" Plugin::Object *createRTXIPlugin(void) {
     return new GenicamCamera();
@@ -52,6 +51,8 @@ GenicamCamera::GenicamCamera(void)
 	: QWidget(MainWindow::getInstance()->centralWidget()), RT::Thread(0), 
 	  Workspace::Instance("GenICam Module", vars, num_vars) {
 
+	pthread_create(&thread, 0, bounce, this);
+
 	setWindowTitle(QString::number( getID() ) + " GenICam Module");
 	QArvCamera::init();
 
@@ -64,7 +65,13 @@ GenicamCamera::GenicamCamera(void)
 	show();
 }
 
-GenicamCamera::~GenicamCamera(void) {}
+GenicamCamera::~GenicamCamera(void) {
+	pthread_join(thread, 0);
+}
+
+void *GenicamCamera::bounce(void *thing) {
+	std::cout<<"bounce. bounce."<<std::endl;
+}
 
 void GenicamCamera::initialize(void) {}
 

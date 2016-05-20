@@ -55,6 +55,8 @@ class GenicamCamera: public QWidget, public RT::Thread, public Plugin::Object,
 	protected:
 
 	private:
+		static void *bounce(void *);
+		pthread_t thread;
 		void createGUI(void);
 		void initialize(void);
 		QMdiSubWindow *subWindow;
