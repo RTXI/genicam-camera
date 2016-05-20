@@ -28,8 +28,6 @@
 
 #include <qarvcamera.h>
 #include <qarvgui.h>
-//#include "include/api/qarvcamera.h"
-//#include "include/api/qarvgui.h"
 
 #include <QtGlobal>
 #if QT_VERSION >= 0x050000
@@ -62,7 +60,6 @@ class GenicamCamera: public QWidget, public RT::Thread, public Plugin::Object,
 		QMdiSubWindow *subWindow;
 
 	private slots:
-//		void buttonClicked(void);
 };
 
 #endif

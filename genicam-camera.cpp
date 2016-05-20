@@ -27,8 +27,6 @@
 #endif
 
 #include "genicam-camera.h"
-//#include "include/api/qarvcamera.h"
-//#include "include/api/qarvgui.h"
 #include <qarvcamera.h>
 #include <qarvgui.h>
 
@@ -72,7 +70,6 @@ void GenicamCamera::initialize(void) {}
 
 void GenicamCamera::createGUI(void) {
 
-	//QWidget *subWindow = new QWidget;
 	subWindow = new QMdiSubWindow;
 	subWindow->setAttribute(Qt::WA_DeleteOnClose);
 	subWindow->setWindowIcon(QIcon("/usr/local/lib/rtxi/RTXI-widget-icon.png"));
@@ -85,12 +82,6 @@ void GenicamCamera::createGUI(void) {
 	QVBoxLayout *layout = new QVBoxLayout(this);
 	layout->addWidget(widget);
 
-//	QPushButton *button = new QPushButton("Howdy.");
-//	layout->addWidget(button);
-
-//	QObject::connect(button, SIGNAL(clicked(void)), 
-//	                 this, SLOT(buttonClicked(void)));
-
 	setLayout(layout);
 	subWindow->setWidget(this);
 	widget->show();
@@ -98,8 +89,3 @@ void GenicamCamera::createGUI(void) {
 	subWindow->adjustSize();
 }
 
-/*
-void GenicamCamera::buttonClicked(void) {
-	std::cout<<"button clicked"<<std::endl;
-}
-*/
