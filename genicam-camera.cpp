@@ -32,6 +32,10 @@
 #include <qarvgui.h>
 #include "genicam-camera.h"
 
+const char *Genicam::START_GENICAM_RECORDING_EVENT = "SYSTEM : start genicam recording";
+const char *Genicam::STOP_GENICAM_RECORDING_EVENT = "SYSTEM : stop genicam recording";
+const char *Genicam::GENICAM_SNAPSHOT_EVENT = "SYSTEM : genicam snap";
+
 extern "C" Plugin::Object *createRTXIPlugin(void) {
     return new GenicamCamera();
 }
@@ -96,3 +100,26 @@ void GenicamCamera::createGUI(void) {
 	subWindow->adjustSize();
 }
 
+void GenicamCamera::receiveEvent(const ::Event::Object *event) {
+	if (event->getName() == Genicam::START_GENICAM_RECORDING_EVENT) {
+std::cout<<event->getName()<<std::endl;
+	} else if (event->getName() == Genicam::STOP_GENICAM_RECORDING_EVENT) {
+std::cout<<event->getName()<<std::endl;
+	} else if (event->getName() == Genicam::GENICAM_SNAPSHOT_EVENT) {
+std::cout<<event->getName()<<std::endl;
+	} else {
+std::cout<<"Genicam: "<<event->getName()<<std::endl;
+	}
+}
+
+void GenicamCamera::receiveEventRT(const ::Event::Object *event) {
+	if (event->getName() == Genicam::START_GENICAM_RECORDING_EVENT) {
+std::cout<<event->getName()<<" RT"<<std::endl;
+	} else if (event->getName() == Genicam::STOP_GENICAM_RECORDING_EVENT) {
+std::cout<<event->getName()<<" RT"<<std::endl;
+	} else if (event->getName() == Genicam::GENICAM_SNAPSHOT_EVENT) {
+std::cout<<event->getName()<<" RT"<<std::endl;
+	} else {
+std::cout<<"Genicam RT: "<<event->getName()<<std::endl;
+	}
+}

@@ -38,6 +38,12 @@
 
 #include <iostream>
 
+namespace Genicam {
+	extern const char *START_GENICAM_RECORDING_EVENT;
+	extern const char *STOP_GENICAM_RECORDING_EVENT;
+	extern const char *GENICAM_SNAPSHOT_EVENT;
+}
+
 class GenicamCamera: public QWidget, public RT::Thread, public Plugin::Object, 
                      public Workspace::Instance, public Event::Handler, 
                      public Event::RTHandler {
@@ -47,8 +53,8 @@ class GenicamCamera: public QWidget, public RT::Thread, public Plugin::Object,
 	public:
 		GenicamCamera(void);
 		virtual ~GenicamCamera(void);
-//		void receiveEvent( const ::Event::Object * );
-//		void receiveEventRT( const ::Event::Object * );
+		void receiveEvent( const ::Event::Object * );
+		void receiveEventRT( const ::Event::Object * );
 
 	public slots:
 
