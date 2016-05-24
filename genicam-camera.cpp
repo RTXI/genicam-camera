@@ -122,6 +122,7 @@ void GenicamCamera::receiveEventRT(const ::Event::Object *event) {
 	} else if (event->getName() == Genicam::STOP_GENICAM_RECORDING_EVENT) {
 		std::cout<<event->getName()<<" RT"<<std::endl;
 		dynamic_cast<QArv::QArvMainWindow*>(widget->mainWindow())->recordAction->setChecked(false);
+		dynamic_cast<QArv::QArvMainWindow*>(widget->mainWindow())->closeFileAction->trigger();
 	} else if (event->getName() == Genicam::GENICAM_SNAPSHOT_EVENT) {
 		std::cout<<event->getName()<<" RT"<<std::endl;
 		dynamic_cast<QArv::QArvMainWindow*>(widget->mainWindow())->snapshotAction->setChecked(true);
