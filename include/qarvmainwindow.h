@@ -45,13 +45,15 @@ namespace QArv
 {
 
 //class QArvMainWindow : public QWidget, private Ui::MainWindowUI {
-class QArvMainWindow : public QMainWindow, private Ui::MainWindowUI {
+class QArvMainWindow : public QMainWindow, public Ui::MainWindowUI {
 	Q_OBJECT
 
 	public:
 		QArvMainWindow(QWidget* parent = 0, bool standalone = true);
 //		QArvMainWindow(QMainWindow* parent = 0, bool standalone = true);
 		~QArvMainWindow();
+
+//		void extern_snapshotAction_toggled(bool checked);
 
 	signals:
 		void recordingStarted(bool started);

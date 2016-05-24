@@ -30,11 +30,14 @@
 
 #include <qarvcamera.h>
 #include <qarvgui.h>
+#include "include/qarvmainwindow.h"
 #include "genicam-camera.h"
 
 const char *Genicam::START_GENICAM_RECORDING_EVENT = "SYSTEM : start genicam recording";
 const char *Genicam::STOP_GENICAM_RECORDING_EVENT = "SYSTEM : stop genicam recording";
 const char *Genicam::GENICAM_SNAPSHOT_EVENT = "SYSTEM : genicam snap";
+
+//class QArvMainWindow;
 
 extern "C" Plugin::Object *createRTXIPlugin(void) {
     return new GenicamCamera();
@@ -89,7 +92,7 @@ void GenicamCamera::createGUI(void) {
 	                          Qt::WindowMinimizeButtonHint );
 	MainWindow::getInstance()->createMdi(subWindow); 
 
-	QArvGui *widget = new QArvGui(subWindow, true);
+	widget = new QArvGui(subWindow, true);
 	QVBoxLayout *layout = new QVBoxLayout(this);
 	layout->addWidget(widget);
 
@@ -114,12 +117,15 @@ std::cout<<"Genicam: "<<event->getName()<<std::endl;
 
 void GenicamCamera::receiveEventRT(const ::Event::Object *event) {
 	if (event->getName() == Genicam::START_GENICAM_RECORDING_EVENT) {
-std::cout<<event->getName()<<" RT"<<std::endl;
+		dynamic_cast<QArv::QArvMainWindow*>(widget->mainWindow())->recordAction->setChecked(true);
+		std::cout<<event->getName()<<" RT"<<std::endl;
 	} else if (event->getName() == Genicam::STOP_GENICAM_RECORDING_EVENT) {
-std::cout<<event->getName()<<" RT"<<std::endl;
+		std::cout<<event->getName()<<" RT"<<std::endl;
+		dynamic_cast<QArv::QArvMainWindow*>(widget->mainWindow())->recordAction->setChecked(false);
 	} else if (event->getName() == Genicam::GENICAM_SNAPSHOT_EVENT) {
-std::cout<<event->getName()<<" RT"<<std::endl;
+		std::cout<<event->getName()<<" RT"<<std::endl;
+		dynamic_cast<QArv::QArvMainWindow*>(widget->mainWindow())->snapshotAction->setChecked(true);
 	} else {
-std::cout<<"Genicam RT: "<<event->getName()<<std::endl;
+		std::cout<<"Genicam RT: "<<event->getName()<<std::endl;
 	}
 }

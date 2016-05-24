@@ -778,6 +778,12 @@ skip_all_file_opening:
 		emit recordingStarted(recording);
 }
 
+/*
+void QArvMainWindow::extern_snapshotAction_toggled(bool checked) {
+	on_snapshotAction_toggled(checked);
+}
+*/
+
 void QArvMainWindow::on_snapshotAction_toggled(bool checked) {
 	if (!checked) {
 		disconnect(workthread, SIGNAL(frameDelivered(QByteArray,ArvBuffer*)),

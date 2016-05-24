@@ -66,6 +66,7 @@ class GenicamCamera: public QWidget, public RT::Thread, public Plugin::Object,
 		void createGUI(void);
 		void initialize(void);
 		QMdiSubWindow *subWindow;
+		QArvGui *widget;
 
 	private slots:
 };
