@@ -46,8 +46,8 @@ class MessageSender: public QObject {
 		QStringList preconnectMessages;
 
 		MessageSender();
-//		void connectNotify(const char* signal);
-//		void disconnectNotify(const char* signal);
+		void connectNotify(const QMetaMethod &signal);
+		void disconnectNotify(const QMetaMethod &signal);
 
 		void sendMessage(const QString& message);
 

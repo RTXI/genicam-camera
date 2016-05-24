@@ -20,6 +20,7 @@
 #include "globals.h"
 
 #include <QTime>
+#include <QMetaMethod>
 
 using namespace QArv;
 
@@ -29,8 +30,7 @@ MessageSender QArvDebug::messageSender __attribute__((init_priority(1000)));
 
 MessageSender::MessageSender(): QObject(), connected(false) {}
 
-/*
-void MessageSender::connectNotify(const char * signal)
+void MessageSender::connectNotify(const QMetaMethod &signal)
 {
 	QObject::connectNotify(signal);
 	connected = true;
@@ -39,13 +39,12 @@ void MessageSender::connectNotify(const char * signal)
 	preconnectMessages.clear();
 }
 
-void MessageSender::disconnectNotify(const char * signal)
+void MessageSender::disconnectNotify(const QMetaMethod &signal)
 {
 	QObject::disconnectNotify(signal);
 	if (receivers(SIGNAL(newDebugMessage(QString))) < 1)
 		connected = false;
 }
-*/
 
 void MessageSender::sendMessage(const QString& message) {
 	if (connected) emit newDebugMessage(message);

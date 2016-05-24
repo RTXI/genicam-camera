@@ -24,8 +24,6 @@
 
 #include "glvideowidget.h"
 #include "workthread.h"
-//#include "api/qarvcamera.h"
-//#include "api/qarvdecoder.h"
 #include <qarvcamera.h>
 #include <qarvdecoder.h>
 #include "recorders/recorder.h"
@@ -44,16 +42,12 @@ class QArvGui;
 namespace QArv
 {
 
-//class QArvMainWindow : public QWidget, private Ui::MainWindowUI {
 class QArvMainWindow : public QMainWindow, public Ui::MainWindowUI {
 	Q_OBJECT
 
 	public:
 		QArvMainWindow(QWidget* parent = 0, bool standalone = true);
-//		QArvMainWindow(QMainWindow* parent = 0, bool standalone = true);
 		~QArvMainWindow();
-
-//		void extern_snapshotAction_toggled(bool checked);
 
 	signals:
 		void recordingStarted(bool started);
