@@ -8,7 +8,8 @@ BUILD_DIR=${BASE_DIR}/build
 # Install qarv dependences.
 ################################################################################
 sudo apt-get install \
-	cmake libswscale-dev libavutil-dev libavcodec-dev libopencv-dev
+	cmake libswscale-dev libavutil-dev libavcodec-dev libopencv-dev \
+	gstreamer1.0-libav
 
 ################################################################################
 # Clone my (anselg) repository and build.
