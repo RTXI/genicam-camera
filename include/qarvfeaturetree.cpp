@@ -18,7 +18,6 @@
  */
 
 #include "qarvfeaturetree.h"
-//#include "api/qarvtype.h"
 #include <qarvtype.h>
 
 QArvCamera::QArvFeatureTree::QArvFeatureTree(

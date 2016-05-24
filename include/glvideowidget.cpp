@@ -19,13 +19,12 @@
 
 #include "glvideowidget.h"
 #include "globals.h"
-//#include "api/qarvdecoder.h"
 #include <qarvdecoder.h>
 
 using namespace QArv;
 
 GLVideoWidget::GLVideoWidget(QWidget* parent) : QGLWidget(QGLFormat(QGL::NoDepthBuffer | QGL::NoSampleBuffers), parent),
-//	idleImageRenderer(QString("camera-video")),
+	idleImageRenderer(QString("camera-video")),
 	idling(true), selecting(false),
 	drawRectangle(false), fixedSelection(false), corner1(), corner2(),
 	rectangle(), whitepen(Qt::white), blackpen(Qt::black) {
