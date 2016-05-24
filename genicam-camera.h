@@ -40,6 +40,7 @@
 
 namespace Genicam {
 	extern const char *START_GENICAM_RECORDING_EVENT;
+	extern const char *PAUSE_GENICAM_RECORDING_EVENT;
 	extern const char *STOP_GENICAM_RECORDING_EVENT;
 	extern const char *GENICAM_SNAPSHOT_EVENT;
 }
