@@ -3,15 +3,15 @@
  * Copyright (C) 2012-2014 Jure Varlec <jure.varlec@ad-vega.si>
  * Andrej Lajovic <andrej.lajovic@ad-vega.si>
  *
- * This program is free software: you can redistribute it and/or modify 
- * it under the terms of the GNU General Public License as published by 
- * the Free Software Foundation, either version 3 of the License, or 
- * (at your option) any later version. 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
- * GNU General Public License for more details. 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
@@ -30,8 +30,8 @@
 
 #include <QDockWidget>
 #include <QSettings>
-#include <opencv2/opencv.hpp>
 #include <atomic>
+#include <opencv2/opencv.hpp>
 
 namespace QArv {
 
@@ -41,86 +41,87 @@ class ImageFilterPlugin;
 typedef QSharedPointer<ImageFilter> ImageFilterPtr;
 
 class ImageFilterSettingsWidget : public QWidget {
-	Q_OBJECT
+  Q_OBJECT
 
-	public:
-		explicit ImageFilterSettingsWidget(ImageFilter* filter, 
-		                                   QWidget* parent = 0, 
-		                                   Qt::WindowFlags f = 0);
-		virtual ~ImageFilterSettingsWidget() {}
+public:
+  explicit ImageFilterSettingsWidget(ImageFilter *filter, QWidget *parent = 0,
+                                     Qt::WindowFlags f = 0);
+  virtual ~ImageFilterSettingsWidget() {}
 
-	protected slots:
-		//! Implemented by each plugin to update the filter continuously.
-		virtual void setLiveUpdate(bool enabled) = 0;
+protected slots:
+  //! Implemented by each plugin to update the filter continuously.
+  virtual void setLiveUpdate(bool enabled) = 0;
 
-		//! Implemented by each plugin to update the filter once.
-		virtual void applySettings() = 0;
+  //! Implemented by each plugin to update the filter once.
+  virtual void applySettings() = 0;
 
-	protected:
-		ImageFilter* imageFilter;
+protected:
+  ImageFilter *imageFilter;
 
-	friend class ImageFilterSettingsDialog;
+  friend class ImageFilterSettingsDialog;
 };
 
 class ImageFilter {
-	public:
-		ImageFilter(ImageFilterPlugin* plugin);
-		virtual ~ImageFilter() {}
+public:
+  ImageFilter(ImageFilterPlugin *plugin);
+  virtual ~ImageFilter() {}
 
-		//! Links back to the plugin, to get the plugin name etc.
-		ImageFilterPlugin* plugin();
+  //! Links back to the plugin, to get the plugin name etc.
+  ImageFilterPlugin *plugin();
 
-		//! Shows the settings dialog.
-		virtual ImageFilterSettingsWidget* createSettingsWidget() = 0;
+  //! Shows the settings dialog.
+  virtual ImageFilterSettingsWidget *createSettingsWidget() = 0;
 
-		//! Called when the filter is instantiated.
-		virtual void restoreSettings() = 0;
+  //! Called when the filter is instantiated.
+  virtual void restoreSettings() = 0;
 
-		//! Called by the ImageFilterSettingsDialog when it is closed.
-		virtual void saveSettings() = 0;
+  //! Called by the ImageFilterSettingsDialog when it is closed.
+  virtual void saveSettings() = 0;
 
-		//! The gist of the matter. It works in-place. It can return a float CV_TYPE!
-		virtual void filterImage(cv::Mat& image) = 0;
+  //! The gist of the matter. It works in-place. It can return a float CV_TYPE!
+  virtual void filterImage(cv::Mat &image) = 0;
 
-		//! Used by the main window to mark filter as enabled.
-		bool isEnabled() { return enabled.load(std::memory_order_relaxed); }
-		void setEnabled(bool enable) { enabled.store(enable, std::memory_order_relaxed); }
+  //! Used by the main window to mark filter as enabled.
+  bool isEnabled() { return enabled.load(std::memory_order_relaxed); }
+  void setEnabled(bool enable) {
+    enabled.store(enable, std::memory_order_relaxed);
+  }
 
-	private:
-		ImageFilterPlugin* pluginPtr;
-		std::atomic<bool> enabled;
+private:
+  ImageFilterPlugin *pluginPtr;
+  std::atomic<bool> enabled;
 };
 
 class ImageFilterPlugin {
-	public:
-		virtual QString name() = 0;
-		virtual ImageFilter* makeFilter() = 0;
-		static ImageFilter* makeFilter(QString name);
+public:
+  virtual QString name() = 0;
+  virtual ImageFilter *makeFilter() = 0;
+  static ImageFilter *makeFilter(QString name);
 };
 
 class ImageFilterSettingsDialog : public QDockWidget {
-	Q_OBJECT
+  Q_OBJECT
 
-	public:
-		explicit ImageFilterSettingsDialog(ImageFilterSettingsWidget* settings,
-		                                   QWidget* parent = 0,
-		                                   Qt::WindowFlags f = 0);
+public:
+  explicit ImageFilterSettingsDialog(ImageFilterSettingsWidget *settings,
+                                     QWidget *parent = 0,
+                                     Qt::WindowFlags f = 0);
 
-	private slots:
-		void accept();
-		void reject();
-		void apply();
+private slots:
+  void accept();
+  void reject();
+  void apply();
 
-	private:
-		ImageFilterSettingsWidget* settings;
+private:
+  ImageFilterSettingsWidget *settings;
 };
-
 }
 
-Q_DECLARE_INTERFACE(QArv::ImageFilterPlugin,"org.qt-project.Qt.QArvImageFilterPlugin")
-Q_DECLARE_METATYPE(QArv::ImageFilterPlugin*)
-Q_DECLARE_METATYPE(QArv::ImageFilter*)
-Q_DECLARE_METATYPE(QArv::ImageFilterSettingsWidget*)
-Q_DECLARE_METATYPE(QArv::ImageFilterSettingsDialog*)
+Q_DECLARE_INTERFACE(QArv::ImageFilterPlugin,
+                    "org.qt-project.Qt.QArvImageFilterPlugin")
+Q_DECLARE_METATYPE(QArv::ImageFilterPlugin *)
+Q_DECLARE_METATYPE(QArv::ImageFilter *)
+Q_DECLARE_METATYPE(QArv::ImageFilterSettingsWidget *)
+Q_DECLARE_METATYPE(QArv::ImageFilterSettingsDialog *)
 
 #endif

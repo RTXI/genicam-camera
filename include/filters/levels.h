@@ -1,5 +1,5 @@
 /*
- * QArv, a Qt interface to aravis. 
+ * QArv, a Qt interface to aravis.
  * Copyright (C) 2012-2014 Jure Varlec <jure.varlec@ad-vega.si>
  * Andrej Lajovic <andrej.lajovic@ad-vega.si>
  *
@@ -27,57 +27,57 @@
 namespace QArv {
 
 class LevelsFilter : public ImageFilter {
-	public:
-		LevelsFilter(ImageFilterPlugin* plugin);
-		ImageFilterSettingsWidget* createSettingsWidget();
-		void restoreSettings();
-		void saveSettings();
-		void filterImage(cv::Mat& image);
+public:
+  LevelsFilter(ImageFilterPlugin *plugin);
+  ImageFilterSettingsWidget *createSettingsWidget();
+  void restoreSettings();
+  void saveSettings();
+  void filterImage(cv::Mat &image);
 
-	private:
-		std::atomic<double> black, white, gamma;
+private:
+  std::atomic<double> black, white, gamma;
 
-		friend class LevelsSettingsWidget;
+  friend class LevelsSettingsWidget;
 };
 
 class LevelsPlugin : public QObject, public ImageFilterPlugin {
-	Q_OBJECT
-	Q_INTERFACES(QArv::ImageFilterPlugin)
-	//Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvImageFilterPlugin" FILE "LevelsPlugin.json")
-	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvImageFilterPlugin")
+  Q_OBJECT
+  Q_INTERFACES(QArv::ImageFilterPlugin)
+  // Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvImageFilterPlugin" FILE
+  // "LevelsPlugin.json")
+  Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvImageFilterPlugin")
 
-	public:
-		QString name();
-		ImageFilter* makeFilter();
+public:
+  QString name();
+  ImageFilter *makeFilter();
 };
 
-class LevelsSettingsWidget : public ImageFilterSettingsWidget, private Ui_levelsSettingsWidget {
+class LevelsSettingsWidget : public ImageFilterSettingsWidget,
+                             private Ui_levelsSettingsWidget {
 
-	Q_OBJECT
+  Q_OBJECT
 
-	public:
-		LevelsSettingsWidget(ImageFilter* filter,
-		                     QWidget* parent = 0,
-		                     Qt::WindowFlags f = 0);
+public:
+  LevelsSettingsWidget(ImageFilter *filter, QWidget *parent = 0,
+                       Qt::WindowFlags f = 0);
 
-	protected slots:
-		void setLiveUpdate(bool enabled);
-		void applySettings();
+protected slots:
+  void setLiveUpdate(bool enabled);
+  void applySettings();
 
-	private slots:
-		void on_blackSlider_valueChanged(int value);
-		void on_whiteSlider_valueChanged(int value);
-		void on_gammaSlider_valueChanged(int value);
-		void on_blackSpinbox_valueChanged(double value);
-		void on_whiteSpinbox_valueChanged(double value);
-		void on_gammaSpinbox_valueChanged(double value);
+private slots:
+  void on_blackSlider_valueChanged(int value);
+  void on_whiteSlider_valueChanged(int value);
+  void on_gammaSlider_valueChanged(int value);
+  void on_blackSpinbox_valueChanged(double value);
+  void on_whiteSpinbox_valueChanged(double value);
+  void on_gammaSpinbox_valueChanged(double value);
 
-	private:
-		LevelsFilter* filter();
-		int doubleToInt(double val);
-		double intToDouble(int val);
+private:
+  LevelsFilter *filter();
+  int doubleToInt(double val);
+  double intToDouble(int val);
 };
-
 };
 
 #endif
