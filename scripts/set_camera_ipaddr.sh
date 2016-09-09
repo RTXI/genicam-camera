@@ -1,4 +1,5 @@
 #! /bin/bash
+set -eu
 
 ################################################################################
 # NEEDS ATTENTION. Using nettools to set the ip address will cause conflicts 

@@ -1,4 +1,5 @@
 #! /bin/bash
+set -eu
 
 SCRIPT_DIR=$(pwd)
 BASE_DIR=../
