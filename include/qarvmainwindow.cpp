@@ -17,11 +17,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "globals.h"
 #include "qarvmainwindow.h"
 #include "decoders/unsupported.h"
 #include "filters/filter.h"
 #include "getmtu_linux.h"
-#include "globals.h"
 #include <qarvcameradelegate.h>
 
 #include <QFileDialog>
