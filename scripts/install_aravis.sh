@@ -14,26 +14,25 @@ sudo apt-get install \
 
 
 ################################################################################
-# Download and install aravis.
+# install aravis.
 ################################################################################
 
 SCRIPT_DIR=$(pwd)
-BUILD_DIR=${SCRIPT_DIR}/../build
+DEP_DIR=$(dirname `pwd`)/deps
+#BUILD_DIR=$(dirname ${SCRIPT_DIR})/build
 ARAVIS_VERSION=0.5.1
 
-# Should ultimately use a static version of the software, not the latest git 
-# version.
-mkdir -p ${BUILD_DIR}
-cd ${BUIlD_DIR}
-wget http://ftp.acc.umu.se/pub/GNOME/sources/aravis/${ARAVIS_VERSION%.*}/aravis-${ARAVIS_VERSION}.tar.xz
-wget http://ftp.acc.umu.se/pub/GNOME/sources/aravis/${ARAVIS_VERSION%.*}/aravis-${ARAVIS_VERSION}.news
-wget http://ftp.acc.umu.se/pub/GNOME/sources/aravis/${ARAVIS_VERSION%.*}/aravis-${ARAVIS_VERSION}.sha256sum
-sha256sum -c aravis-${ARAVIS_VERSION}.sha256sum
-tar xf aravis-${ARAVIS_VERSION}.tar.gz
+#mkdir -p ${BUILD_DIR}
+#cd ${BUILD_DIR}
+#wget "http://ftp.acc.umu.se/pub/GNOME/sources/aravis/${ARAVIS_VERSION%.*}/aravis-${ARAVIS_VERSION}.tar.xz"
+#wget "http://ftp.acc.umu.se/pub/GNOME/sources/aravis/${ARAVIS_VERSION%.*}/aravis-${ARAVIS_VERSION}.news"
+#wget "http://ftp.acc.umu.se/pub/GNOME/sources/aravis/${ARAVIS_VERSION%.*}/aravis-${ARAVIS_VERSION}.sha256sum"
+#sha256sum -c "aravis-${ARAVIS_VERSION}.sha256sum" && tar xf "aravis-${ARAVIS_VERSION}.tar.xz"
+#cd ${BUILD_DIR}/aravis-${ARAVIS_VERSION}
 
-
-cd ${BUILD_DIR}/aravis-git
-# Need to install dependencies first, instructions missing.
+cd ${DEP_DIR}
+tar xf aravis-${ARAVIS_VERSION}.tar.xz
+cd ${DEP_DIR}/aravis-${ARAVIS_VERSION}
 ./autogen.sh --enable-introspection=yes --enable-gst-0.10-plugin \
              --enable-gst-plugin --enable-cpp-test && \
 make -j`nproc` && sudo make install
