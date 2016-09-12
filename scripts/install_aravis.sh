@@ -5,7 +5,7 @@ set -eu
 # Install package dependencies.
 ################################################################################
 
-sudo apt-get install \
+sudo apt-get update && sudo apt-get -y install \
   intltool libgstreamer1.0-dev libgtk-3-dev gtk-doc-tools libnotify-dev \
   libgstreamer-plugins-base1.0-dev libgirepository1.0-dev \
   libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev \
@@ -19,23 +19,16 @@ sudo apt-get install \
 
 SCRIPT_DIR=$(pwd)
 DEP_DIR=$(dirname `pwd`)/deps
-#BUILD_DIR=$(dirname ${SCRIPT_DIR})/build
-ARAVIS_VERSION=0.5.1
-
-#mkdir -p ${BUILD_DIR}
-#cd ${BUILD_DIR}
-#wget "http://ftp.acc.umu.se/pub/GNOME/sources/aravis/${ARAVIS_VERSION%.*}/aravis-${ARAVIS_VERSION}.tar.xz"
-#wget "http://ftp.acc.umu.se/pub/GNOME/sources/aravis/${ARAVIS_VERSION%.*}/aravis-${ARAVIS_VERSION}.news"
-#wget "http://ftp.acc.umu.se/pub/GNOME/sources/aravis/${ARAVIS_VERSION%.*}/aravis-${ARAVIS_VERSION}.sha256sum"
-#sha256sum -c "aravis-${ARAVIS_VERSION}.sha256sum" && tar xf "aravis-${ARAVIS_VERSION}.tar.xz"
-#cd ${BUILD_DIR}/aravis-${ARAVIS_VERSION}
+ARAVIS_VERSION=0.4.1
 
 cd ${DEP_DIR}
 tar xf aravis-${ARAVIS_VERSION}.tar.xz
 cd ${DEP_DIR}/aravis-${ARAVIS_VERSION}
-./autogen.sh --enable-introspection=yes --enable-gst-0.10-plugin \
-             --enable-gst-plugin --enable-cpp-test && \
-make -j`nproc` && sudo make install
+
+./configure \
+    --enable-introspection --disable-viewer --enable-gst-0.10-plugin \
+    --enable-gst-plugin --enable-cpp-test && \
+  make -j`nproc` && sudo make install
 
 cd ${SCRIPT_DIR}
 
