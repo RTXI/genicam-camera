@@ -18,12 +18,19 @@ sudo apt-get install \
 ################################################################################
 
 SCRIPT_DIR=$(pwd)
-BASE_DIR=..
-BUILD_DIR=${BASE_DIR}/build
+BUILD_DIR=${SCRIPT_DIR}/../build
+ARAVIS_VERSION=0.5.1
 
 # Should ultimately use a static version of the software, not the latest git 
-# version. 
-git clone git://git.gnome.org/aravis ${BUILD_DIR}/aravis-git
+# version.
+mkdir -p ${BUILD_DIR}
+cd ${BUIlD_DIR}
+wget http://ftp.acc.umu.se/pub/GNOME/sources/aravis/${ARAVIS_VERSION%.*}/aravis-${ARAVIS_VERSION}.tar.xz
+wget http://ftp.acc.umu.se/pub/GNOME/sources/aravis/${ARAVIS_VERSION%.*}/aravis-${ARAVIS_VERSION}.news
+wget http://ftp.acc.umu.se/pub/GNOME/sources/aravis/${ARAVIS_VERSION%.*}/aravis-${ARAVIS_VERSION}.sha256sum
+sha256sum -c aravis-${ARAVIS_VERSION}.sha256sum
+tar xf aravis-${ARAVIS_VERSION}.tar.gz
+
 
 cd ${BUILD_DIR}/aravis-git
 # Need to install dependencies first, instructions missing.
