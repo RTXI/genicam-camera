@@ -15,15 +15,16 @@ sudo apt-get install \
 ################################################################################
 
 SCRIPT_DIR=$(pwd)
-BASE_DIR=../
-BUILD_DIR=${BASE_DIR}/build
+DEP_DIR=$(dirname `pwd`)/deps
+QARV_VERSION=2
 
-git clone https://github.com/anselg/qarv ${BUILD_DIR}/qarv-git
-cd ${BUILD_DIR}/qarv-git
+cd ${DEP_DIR}
+tar xf qarv-${QARV_VERSION}.tar.xz
+cd ${BUILD_DIR}/qarv-${QARV_VERSION}
 
-mkdir build
+mkdir -p build
 cd build
-cmake ..
+cmake .. 
 make -j`nproc` && sudo make install
 
 cd ${SCRIPT_DIR}
