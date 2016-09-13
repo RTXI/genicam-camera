@@ -20,7 +20,7 @@ QARV_VERSION=2
 
 cd ${DEP_DIR}
 tar xf qarv-${QARV_VERSION}.tar.xz
-cd ${BUILD_DIR}/qarv-${QARV_VERSION}
+cd ${DEP_DIR}/qarv-${QARV_VERSION}
 
 mkdir -p build
 cd build
