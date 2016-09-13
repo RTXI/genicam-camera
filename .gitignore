@@ -1,6 +1,7 @@
 # Aravis and Qarv files
 build/
-deps/aravis*/
+deps/aravis-*/
+deps/qarv-*/
 
 # Text Editor backups
 *.swp
