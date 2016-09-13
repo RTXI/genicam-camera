@@ -14,7 +14,7 @@ sudo apt-get update && sudo apt-get -y install \
 
 
 ################################################################################
-# install aravis.
+# Install aravis.
 ################################################################################
 
 SCRIPT_DIR=$(pwd)
@@ -39,5 +39,5 @@ cd ${SCRIPT_DIR}
 # manually enter the full path name (i.e., without pwd) in your shell profile.
 ################################################################################
 
-export GI_TYPELIB_PATH=$GI_TYPELIB_PATH:$(pwd)/aravis-git/src
-export LD_LIBRARY_PATH=$(pwd)/aravis-git/src/.libs
+#export GI_TYPELIB_PATH=$GI_TYPELIB_PATH:$(pwd)/aravis-git/src
+#export LD_LIBRARY_PATH=$(pwd)/aravis-git/src/.libs
