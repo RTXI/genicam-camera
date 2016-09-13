@@ -5,7 +5,7 @@ set -eu
 # Install qarv dependences.
 ################################################################################
 
-sudo apt-get install \
+sudo apt-get install -y \
   cmake libswscale-dev libavutil-dev libavcodec-dev libopencv-dev \
   gstreamer1.0-libav
 
