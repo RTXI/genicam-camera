@@ -81,7 +81,6 @@ QArvMainWindow::QArvMainWindow(QWidget *parent, bool standalone_)
   connect(workthread, SIGNAL(recordingStopped()), SLOT(stopRecording()));
 
   // Setup theme icons if available.
-  /*
     bool usingFallbackIcons = false;
     QMap<QAbstractButton*, QString> icons;
     icons[unzoomButton] = "zoom-original";
@@ -89,6 +88,7 @@ QArvMainWindow::QArvMainWindow(QWidget *parent, bool standalone_)
     icons[refreshCamerasButton] = "view-refresh";
     icons[chooseFilenameButton] = "document-open";
     icons[chooseSnappathButton] = "document-open";
+  /*
     icons[editGainButton] = "edit-clear-locationbar-rtl";
     icons[editExposureButton] = "edit-clear-locationbar-rtl";
     icons[histogramLog] = "view-object-histogram-logarithmic";
@@ -105,6 +105,8 @@ QArvMainWindow::QArvMainWindow(QWidget *parent, bool standalone_)
     aicons[closeFileAction] = "media-playback-stop";
     aicons[showHistogramAction] = "office-chart-bar";
     aicons[messageAction] = "dialog-information";
+  */
+  /*
     for (auto i = aicons.begin(); i != aicons.end(); i++) {
       if (!QIcon::hasThemeIcon(*i)) {
         i.key()->setIcon(QIcon(QString(qarv_datafiles) + *i + ".svgz"));
