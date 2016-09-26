@@ -23,16 +23,18 @@
 using namespace QArv;
 
 static int init __attribute__((unused)) = []() {
-  qRegisterMetaType<Recorder *>("QArv::Recorder*");
+  qRegisterMetaType<Recorder*>("QArv::Recorder*");
   return 0;
 }();
 
-Recorder *OutputFormat::makeRecorder(QArvDecoder *decoder, QString fileName,
-                                     QString outputFormat, QSize frameSize,
-                                     int framesPerSecond, bool writeInfo) {
+Recorder*
+OutputFormat::makeRecorder(QArvDecoder* decoder, QString fileName,
+                           QString outputFormat, QSize frameSize,
+                           int framesPerSecond, bool writeInfo)
+{
   auto plugins = QPluginLoader::staticInstances();
   foreach (auto plugin, plugins) {
-    auto fmt = qobject_cast<OutputFormat *>(plugin);
+    auto fmt = qobject_cast<OutputFormat*>(plugin);
     if (fmt != NULL && outputFormat == fmt->name())
       return fmt->makeRecorder(decoder, fileName, frameSize, framesPerSecond,
                                writeInfo);

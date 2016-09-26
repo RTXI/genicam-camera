@@ -32,8 +32,11 @@ using namespace QArv;
 
 SwScaleDecoder::SwScaleDecoder(QSize size_, PixelFormat inputPixfmt_,
                                ArvPixelFormat arvPixFmt, int swsFlags)
-    : size(size_), inputPixfmt(inputPixfmt_), arvPixelFormat(arvPixFmt),
-      flags(swsFlags) {
+  : size(size_)
+  , inputPixfmt(inputPixfmt_)
+  , arvPixelFormat(arvPixFmt)
+  , flags(swsFlags)
+{
 
   if (size.width() != (size.width() / 2) * 2 ||
       size.height() != (size.height() / 2) * 2) {
@@ -44,7 +47,7 @@ SwScaleDecoder::SwScaleDecoder(QSize size_, PixelFormat inputPixfmt_,
   if (sws_isSupportedInput(inputPixfmt) > 0) {
 #ifndef HAVE_FMT_DESC_GET
     int bitsPerPixel =
-        av_get_bits_per_pixel(av_pix_fmt_descriptors + inputPixfmt);
+      av_get_bits_per_pixel(av_pix_fmt_descriptors + inputPixfmt);
     uint8_t components = av_pix_fmt_descriptors[inputPixfmt].nb_components;
 #else
     int bitsPerPixel = av_get_bits_per_pixel(av_pix_fmt_desc_get(inputPixfmt));
@@ -75,8 +78,8 @@ SwScaleDecoder::SwScaleDecoder(QSize size_, PixelFormat inputPixfmt_,
                             size.height(), outputPixFmt, 16);
     if (OK)
       ctx =
-          sws_getContext(size.width(), size.height(), inputPixfmt, size.width(),
-                         size.height(), outputPixFmt, flags, 0, 0, 0);
+        sws_getContext(size.width(), size.height(), inputPixfmt, size.width(),
+                       size.height(), outputPixFmt, flags, 0, 0, 0);
   } else {
     logMessage() << "Pixel format" << av_get_pix_fmt_name(inputPixfmt)
                  << "is not supported for input.";
@@ -84,24 +87,39 @@ SwScaleDecoder::SwScaleDecoder(QSize size_, PixelFormat inputPixfmt_,
   }
 }
 
-SwScaleDecoder::~SwScaleDecoder() {
+SwScaleDecoder::~SwScaleDecoder()
+{
   if (OK) {
     sws_freeContext(ctx);
     av_freep(&image_pointers[0]);
   }
 }
 
-ArvPixelFormat SwScaleDecoder::pixelFormat() { return arvPixelFormat; }
+ArvPixelFormat
+SwScaleDecoder::pixelFormat()
+{
+  return arvPixelFormat;
+}
 
-PixelFormat SwScaleDecoder::swscalePixelFormat() { return inputPixfmt; }
+PixelFormat
+SwScaleDecoder::swscalePixelFormat()
+{
+  return inputPixfmt;
+}
 
-int SwScaleDecoder::cvType() { return cvMatType; }
+int
+SwScaleDecoder::cvType()
+{
+  return cvMatType;
+}
 
-void SwScaleDecoder::decode(QByteArray frame) {
+void
+SwScaleDecoder::decode(QByteArray frame)
+{
   if (!OK)
     return;
-  auto dataptr = reinterpret_cast<const uint8_t *>(frame.constData());
-  avpicture_fill(&srcInfo, const_cast<uint8_t *>(dataptr), inputPixfmt,
+  auto dataptr = reinterpret_cast<const uint8_t*>(frame.constData());
+  avpicture_fill(&srcInfo, const_cast<uint8_t*>(dataptr), inputPixfmt,
                  size.width(), size.height());
   int outheight = sws_scale(ctx, srcInfo.data, srcInfo.linesize, 0,
                             size.height(), image_pointers, image_strides);
@@ -110,7 +128,9 @@ void SwScaleDecoder::decode(QByteArray frame) {
   }
 }
 
-const cv::Mat SwScaleDecoder::getCvImage() {
+const cv::Mat
+SwScaleDecoder::getCvImage()
+{
   if (!OK)
     return cv::Mat();
   cv::Mat M(size.height(), size.width(), cvMatType, image_pointers[0],
@@ -118,7 +138,9 @@ const cv::Mat SwScaleDecoder::getCvImage() {
   return M;
 }
 
-QByteArray SwScaleDecoder::decoderSpecification() {
+QByteArray
+SwScaleDecoder::decoderSpecification()
+{
   QByteArray b;
   QDataStream s(&b, QIODevice::WriteOnly);
   s << QString("SwScale") << size << (qlonglong)outputPixFmt << flags;

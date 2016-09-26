@@ -41,11 +41,12 @@ class QArvGui;
 
 namespace QArv {
 
-class QArvMainWindow : public QMainWindow, public Ui::MainWindowUI {
+class QArvMainWindow : public QMainWindow, public Ui::MainWindowUI
+{
   Q_OBJECT
 
 public:
-  QArvMainWindow(QWidget *parent = 0, bool standalone = true);
+  QArvMainWindow(QWidget* parent = 0, bool standalone = true);
   ~QArvMainWindow();
 
 signals:
@@ -92,7 +93,7 @@ private slots:
   void on_statusTimeoutSpinbox_valueChanged(int i);
   void on_videoFormatSelector_currentIndexChanged(int i);
   void on_postprocRemoveButton_clicked(bool checked);
-  void on_postprocList_doubleClicked(const QModelIndex &index);
+  void on_postprocList_doubleClicked(const QModelIndex& index);
   void pickedROI(QRect roi);
   void readExposure();
   void readGain();
@@ -119,30 +120,30 @@ private:
   void stopAllAcquisition();
 
   QImage invalidImage;
-  QArvCamera *camera;
-  QArvDecoder *decoder;
+  QArvCamera* camera;
+  QArvDecoder* decoder;
   QRect roirange, roidefault;
   QPair<double, double> gainrange, exposurerange;
-  QTimer *autoreadexposure;
-  QTimer *autoreadhistogram;
+  QTimer* autoreadexposure;
+  QTimer* autoreadhistogram;
   bool playing, recording, started, drawHistogram, standalone;
   QTransform imageTransform;
   int imageTransform_flip, imageTransform_rot;
   QByteArray oldstate, oldgeometry;
   QSize oldsize;
-  QList<QWidget *> toDisableWhenPlaying;
-  QList<QWidget *> toDisableWhenRecording;
+  QList<QWidget*> toDisableWhenPlaying;
+  QList<QWidget*> toDisableWhenRecording;
   int statusTimeoutMsec;
-  QMap<QString, QWidget *> saved_widgets;
+  QMap<QString, QWidget*> saved_widgets;
   QScopedPointer<Recorder> recorder;
   bool futureHoldsAHistogram;
   QFile timestampFile;
-  QLabel *recordingTimeLabel;
+  QLabel* recordingTimeLabel;
   QTime recordingTime;
   int recordingTimeCumulative;
   QStandardItemModel postprocChain;
   QList<ImageFilterPtr> postprocChainAsList;
-  Workthread *workthread;
+  Workthread* workthread;
 
   friend class ::QArvGui;
 };
@@ -153,14 +154,15 @@ private:
  * size threshold (in characters) are wrapped. Only effective if the widget's
  * ancestors include a QArvMainWindow.
  */
-class ToolTipToRichTextFilter : public QObject {
+class ToolTipToRichTextFilter : public QObject
+{
   Q_OBJECT
 
 public:
-  ToolTipToRichTextFilter(int size_threshold, QObject *parent);
+  ToolTipToRichTextFilter(int size_threshold, QObject* parent);
 
 protected:
-  bool eventFilter(QObject *obj, QEvent *evt);
+  bool eventFilter(QObject* obj, QEvent* evt);
 
 private:
   int size_threshold;

@@ -40,11 +40,12 @@ class ImageFilterPlugin;
 
 typedef QSharedPointer<ImageFilter> ImageFilterPtr;
 
-class ImageFilterSettingsWidget : public QWidget {
+class ImageFilterSettingsWidget : public QWidget
+{
   Q_OBJECT
 
 public:
-  explicit ImageFilterSettingsWidget(ImageFilter *filter, QWidget *parent = 0,
+  explicit ImageFilterSettingsWidget(ImageFilter* filter, QWidget* parent = 0,
                                      Qt::WindowFlags f = 0);
   virtual ~ImageFilterSettingsWidget() {}
 
@@ -56,21 +57,22 @@ protected slots:
   virtual void applySettings() = 0;
 
 protected:
-  ImageFilter *imageFilter;
+  ImageFilter* imageFilter;
 
   friend class ImageFilterSettingsDialog;
 };
 
-class ImageFilter {
+class ImageFilter
+{
 public:
-  ImageFilter(ImageFilterPlugin *plugin);
+  ImageFilter(ImageFilterPlugin* plugin);
   virtual ~ImageFilter() {}
 
   //! Links back to the plugin, to get the plugin name etc.
-  ImageFilterPlugin *plugin();
+  ImageFilterPlugin* plugin();
 
   //! Shows the settings dialog.
-  virtual ImageFilterSettingsWidget *createSettingsWidget() = 0;
+  virtual ImageFilterSettingsWidget* createSettingsWidget() = 0;
 
   //! Called when the filter is instantiated.
   virtual void restoreSettings() = 0;
@@ -79,32 +81,35 @@ public:
   virtual void saveSettings() = 0;
 
   //! The gist of the matter. It works in-place. It can return a float CV_TYPE!
-  virtual void filterImage(cv::Mat &image) = 0;
+  virtual void filterImage(cv::Mat& image) = 0;
 
   //! Used by the main window to mark filter as enabled.
   bool isEnabled() { return enabled.load(std::memory_order_relaxed); }
-  void setEnabled(bool enable) {
+  void setEnabled(bool enable)
+  {
     enabled.store(enable, std::memory_order_relaxed);
   }
 
 private:
-  ImageFilterPlugin *pluginPtr;
+  ImageFilterPlugin* pluginPtr;
   std::atomic<bool> enabled;
 };
 
-class ImageFilterPlugin {
+class ImageFilterPlugin
+{
 public:
   virtual QString name() = 0;
-  virtual ImageFilter *makeFilter() = 0;
-  static ImageFilter *makeFilter(QString name);
+  virtual ImageFilter* makeFilter() = 0;
+  static ImageFilter* makeFilter(QString name);
 };
 
-class ImageFilterSettingsDialog : public QDockWidget {
+class ImageFilterSettingsDialog : public QDockWidget
+{
   Q_OBJECT
 
 public:
-  explicit ImageFilterSettingsDialog(ImageFilterSettingsWidget *settings,
-                                     QWidget *parent = 0,
+  explicit ImageFilterSettingsDialog(ImageFilterSettingsWidget* settings,
+                                     QWidget* parent = 0,
                                      Qt::WindowFlags f = 0);
 
 private slots:
@@ -113,15 +118,15 @@ private slots:
   void apply();
 
 private:
-  ImageFilterSettingsWidget *settings;
+  ImageFilterSettingsWidget* settings;
 };
 }
 
 Q_DECLARE_INTERFACE(QArv::ImageFilterPlugin,
                     "org.qt-project.Qt.QArvImageFilterPlugin")
-Q_DECLARE_METATYPE(QArv::ImageFilterPlugin *)
-Q_DECLARE_METATYPE(QArv::ImageFilter *)
-Q_DECLARE_METATYPE(QArv::ImageFilterSettingsWidget *)
-Q_DECLARE_METATYPE(QArv::ImageFilterSettingsDialog *)
+Q_DECLARE_METATYPE(QArv::ImageFilterPlugin*)
+Q_DECLARE_METATYPE(QArv::ImageFilter*)
+Q_DECLARE_METATYPE(QArv::ImageFilterSettingsWidget*)
+Q_DECLARE_METATYPE(QArv::ImageFilterSettingsDialog*)
 
 #endif

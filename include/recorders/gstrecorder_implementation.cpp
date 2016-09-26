@@ -32,7 +32,9 @@ const int processTimeout = 10000;
  * dependencies link to gstreamer-0.10, which is too old for us.
  */
 
-static bool checkPluginAvailability(const QStringList &plugins) {
+static bool
+checkPluginAvailability(const QStringList& plugins)
+{
   static bool haveInspector = false, failed = false;
   if (failed)
     return false;
@@ -71,9 +73,10 @@ static bool checkPluginAvailability(const QStringList &plugins) {
 }
 
 static const bool gstOK = checkPluginAvailability(
-    {"fdsrc", "videoparse", "queue", "videoconvert", "filesink"});
+  { "fdsrc", "videoparse", "queue", "videoconvert", "filesink" });
 
-class GstRecorder : public Recorder {
+class GstRecorder : public Recorder
+{
 private:
   QProcess gstprocess;
   cv::Mat tmpMat;
@@ -81,39 +84,40 @@ private:
   qint64 numberOfFrames;
 
 public:
-  GstRecorder(QString outputFormat, QArvDecoder *decoder, QString fileName_,
-              QSize size, int FPS, bool writeInfo) {
+  GstRecorder(QString outputFormat, QArvDecoder* decoder, QString fileName_,
+              QSize size, int FPS, bool writeInfo)
+  {
     numberOfFrames = 0;
     fileName = fileName_;
     if (!gstOK)
       return;
     QString informat;
     switch (decoder->cvType()) {
-    case CV_8UC1:
-      informat = "gray8";
-      break;
+      case CV_8UC1:
+        informat = "gray8";
+        break;
 
-    case CV_16UC1:
+      case CV_16UC1:
 #if Q_BYTE_ORDER == Q_BIG_ENDIAN
-      informat = "gray16-be";
+        informat = "gray16-be";
 #else
-      informat = "gray16-le";
+        informat = "gray16-le";
 #endif
-      break;
+        break;
 
-    case CV_8UC3:
-      informat = "bgr";
-      break;
+      case CV_8UC3:
+        informat = "bgr";
+        break;
 
-    case CV_16UC3:
-      tmpMat = cv::Mat(size.height(), size.width(), CV_16UC4,
-                       cv::Scalar(65535, 0, 0, 0));
-      informat = "argb64";
-      break;
+      case CV_16UC3:
+        tmpMat = cv::Mat(size.height(), size.width(), CV_16UC4,
+                         cv::Scalar(65535, 0, 0, 0));
+        informat = "argb64";
+        break;
 
-    default:
-      logMessage() << "Recorder: Invalid CV image format";
-      return;
+      default:
+        logMessage() << "Recorder: Invalid CV image format";
+        return;
     }
     QString cmdline("gst-launch-1.0 -e "
                     "fdsrc fd=0 do-timestamp=true ! "
@@ -126,9 +130,9 @@ public:
                     "queue ! videoconvert ! queue ! "
                     "%5 ! "
                     "filesink location=%6");
-    cmdline = cmdline.arg(
-        informat, QString::number(FPS), QString::number(size.width()),
-        QString::number(size.height()), outputFormat, fileName);
+    cmdline =
+      cmdline.arg(informat, QString::number(FPS), QString::number(size.width()),
+                  QString::number(size.height()), outputFormat, fileName);
     gstprocess.setProcessChannelMode(QProcess::MergedChannels);
     gstprocess.start(cmdline, QIODevice::ReadWrite);
     if (gstprocess.bytesAvailable())
@@ -139,7 +143,8 @@ public:
       logMessage(false) << gstprocess.readAll().constData();
   }
 
-  virtual ~GstRecorder() {
+  virtual ~GstRecorder()
+  {
     gstprocess.closeWriteChannel();
     if (gstprocess.bytesAvailable())
       logMessage(false) << gstprocess.readAll().constData();
@@ -153,7 +158,8 @@ public:
       logMessage(false) << gstprocess.readAll().constData();
   }
 
-  bool isOK() {
+  bool isOK()
+  {
     if (!gstOK)
       return false;
     if (gstprocess.state() == QProcess::Starting) {
@@ -169,19 +175,20 @@ public:
 
   bool recordsRaw() { return false; }
 
-  void recordFrame(cv::Mat decoded) {
+  void recordFrame(cv::Mat decoded)
+  {
     if (!isOK())
       return;
     numberOfFrames++;
-    char *p;
+    char* p;
     int bytes;
     if (decoded.type() == CV_16UC3) {
-      const int mix[] = {2, 1, 1, 2, 0, 3};
+      const int mix[] = { 2, 1, 1, 2, 0, 3 };
       cv::mixChannels(&decoded, 1, &tmpMat, 1, mix, 3);
-      p = reinterpret_cast<char *>(tmpMat.data);
+      p = reinterpret_cast<char*>(tmpMat.data);
       bytes = tmpMat.total() * tmpMat.elemSize();
     } else {
-      p = reinterpret_cast<char *>(decoded.data);
+      p = reinterpret_cast<char*>(decoded.data);
       bytes = decoded.total() * decoded.elemSize();
     }
     while (gstprocess.bytesToWrite() > 200 * bytes)
@@ -191,15 +198,18 @@ public:
       logMessage(false) << gstprocess.readAll().constData();
   }
 
-  QPair<qint64, qint64> fileSize() {
+  QPair<qint64, qint64> fileSize()
+  {
     QFileInfo file(fileName);
     return qMakePair(file.size(), numberOfFrames);
   }
 };
 
-Recorder *QArv::makeGstRecorder(QStringList plugins, QString pipelineFragment,
-                                QArvDecoder *decoder, QString fileName,
-                                QSize size, int FPS, bool writeInfo) {
+Recorder*
+QArv::makeGstRecorder(QStringList plugins, QString pipelineFragment,
+                      QArvDecoder* decoder, QString fileName, QSize size,
+                      int FPS, bool writeInfo)
+{
   static bool OK = checkPluginAvailability(plugins);
 
   if (OK)

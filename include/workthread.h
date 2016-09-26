@@ -50,38 +50,40 @@ class Recorder;
 class ImageFilter;
 class Histograms;
 
-class Cooker : public QObject {
+class Cooker : public QObject
+{
   Q_OBJECT
 
   friend class Workthread;
-  explicit Cooker(QObject *parent = 0);
+  explicit Cooker(QObject* parent = 0);
 
-  struct Parameters {
+  struct Parameters
+  {
     bool imageTransform_invert = false;
     int imageTransform_flip = 0;
     int imageTransform_rot = 0;
     QList<ImageFilterPtr> filterChain;
-    QArvDecoder *decoder = nullptr;
-    QFile *timestampFile = nullptr;
-    Recorder *recorder = nullptr;
+    QArvDecoder* decoder = nullptr;
+    QFile* timestampFile = nullptr;
+    Recorder* recorder = nullptr;
   };
 
 private slots:
   void processEvents();
 
-  void returnCamera(QArvCamera *camera, QThread *thread);
+  void returnCamera(QArvCamera* camera, QThread* thread);
 
-  void cameraAcquisition(QArvCamera *camera, bool start, bool zeroCopy,
+  void cameraAcquisition(QArvCamera* camera, bool start, bool zeroCopy,
                          bool dropInvalidFrames);
 
-  void processFrame(QByteArray frame, ArvBuffer *aravisFrame);
+  void processFrame(QByteArray frame, ArvBuffer* aravisFrame);
 
   void setImageTransform(bool imageTransform_invert, int imageTransform_flip,
                          int imageTransform_rot);
 
   void setFilterChain(QList<QArv::ImageFilterPtr> filterChain);
 
-  void setRecorder(QArv::Recorder *recorder, QFile *timestampFile,
+  void setRecorder(QArv::Recorder* recorder, QFile* timestampFile,
                    int maxFrames);
 
 signals:
@@ -90,7 +92,7 @@ signals:
   void recordingStopped();
 
 private:
-  void getFps(uint *fps);
+  void getFps(uint* fps);
 
   Parameters p;
   cv::Mat processedFrame;
@@ -102,11 +104,12 @@ private:
   QTime lastFpsRequest;
 };
 
-class Renderer : public QObject {
+class Renderer : public QObject
+{
   Q_OBJECT
 
   friend class Workthread;
-  explicit Renderer(QObject *parent = 0);
+  explicit Renderer(QObject* parent = 0);
 
 private slots:
   void renderFrame(cv::Mat frame);
@@ -116,26 +119,27 @@ signals:
   void frameRendered();
 
 private:
-  QImage *destinationImage;
+  QImage* destinationImage;
   bool markClipped;
-  Histograms *hists;
+  Histograms* hists;
   bool logarithmic;
 };
 
-class Workthread : public QObject {
+class Workthread : public QObject
+{
   Q_OBJECT
 
 public:
-  explicit Workthread(QObject *parent = 0);
+  explicit Workthread(QObject* parent = 0);
   ~Workthread();
 
   // Replaces the old camera with the new one. After that, the old
   // camera can be deleted. The new camera can be NULL, and so can the
   // decoder.
-  void newCamera(QArvCamera *camera, QArvDecoder *decoder);
+  void newCamera(QArvCamera* camera, QArvDecoder* decoder);
 
   // Can be NULL.
-  void newRecorder(Recorder *recorder, QFile *timestampFile);
+  void newRecorder(Recorder* recorder, QFile* timestampFile);
 
   // maxFrames: max number of frames to record.
   //   if > 0, set new limit and reset frame count;
@@ -152,25 +156,25 @@ public:
 
   void setFilterChain(QList<ImageFilterPtr> filterChain);
 
-  void renderFrame(QImage *destinationImage, bool markClipped = false,
-                   Histograms *hists = NULL, bool logarithmic = false);
+  void renderFrame(QImage* destinationImage, bool markClipped = false,
+                   Histograms* hists = NULL, bool logarithmic = false);
 
   void waitUntilProcessingCycleCompletes();
 
   uint getFps();
 
 signals:
-  void frameDelivered(QByteArray frame, ArvBuffer *arvFrame);
+  void frameDelivered(QByteArray frame, ArvBuffer* arvFrame);
   void frameCooked(cv::Mat frame);
   void frameRendered();
   void recordingStopped();
 
 private:
-  QArvCamera *camera = nullptr;
-  Recorder *recorder = nullptr;
-  QFile *timestampFile = nullptr;
-  Cooker *cooker;
-  Renderer *renderer;
+  QArvCamera* camera = nullptr;
+  Recorder* recorder = nullptr;
+  QFile* timestampFile = nullptr;
+  Cooker* cooker;
+  Renderer* renderer;
 };
 };
 

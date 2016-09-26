@@ -35,10 +35,13 @@ extern "C" {
 
 namespace QArv {
 
-class Unsupported : public QArvDecoder {
+class Unsupported : public QArvDecoder
+{
 public:
   Unsupported(ArvPixelFormat type_, QSize size)
-      : type(type_), redImage(size.height(), size.width(), CV_8UC3) {
+    : type(type_)
+    , redImage(size.height(), size.width(), CV_8UC3)
+  {
     redImage = cv::Scalar(0, 0, 255);
   }
   void decode(QByteArray frame) {}

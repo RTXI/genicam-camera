@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "globals.h"
 #include "qarvmainwindow.h"
+#include "globals.h"
 #include "decoders/unsupported.h"
 #include "filters/filter.h"
 #include "getmtu_linux.h"
@@ -46,23 +46,24 @@ Q_DECLARE_METATYPE(cv::Mat)
 
 using namespace QArv;
 
-QArvMainWindow::QArvMainWindow(QWidget *parent, bool standalone_)
-    // QArvMainWindow::QArvMainWindow(QMainWindow* parent, bool standalone_)
-    : QMainWindow(parent),
-      camera(NULL),
-      decoder(NULL),
-      playing(false),
-      recording(false),
-      started(false),
-      drawHistogram(false),
-      standalone(standalone_),
-      imageTransform(),
-      imageTransform_flip(0),
-      imageTransform_rot(0),
-      toDisableWhenPlaying(),
-      toDisableWhenRecording(),
-      futureHoldsAHistogram(false),
-      recordingTimeCumulative(0) {
+QArvMainWindow::QArvMainWindow(QWidget* parent, bool standalone_)
+  // QArvMainWindow::QArvMainWindow(QMainWindow* parent, bool standalone_)
+  : QMainWindow(parent),
+    camera(NULL),
+    decoder(NULL),
+    playing(false),
+    recording(false),
+    started(false),
+    drawHistogram(false),
+    standalone(standalone_),
+    imageTransform(),
+    imageTransform_flip(0),
+    imageTransform_rot(0),
+    toDisableWhenPlaying(),
+    toDisableWhenRecording(),
+    futureHoldsAHistogram(false),
+    recordingTimeCumulative(0)
+{
 
   setAttribute(Qt::WA_DeleteOnClose);
 
@@ -81,13 +82,13 @@ QArvMainWindow::QArvMainWindow(QWidget *parent, bool standalone_)
   connect(workthread, SIGNAL(recordingStopped()), SLOT(stopRecording()));
 
   // Setup theme icons if available.
-    bool usingFallbackIcons = false;
-    QMap<QAbstractButton*, QString> icons;
-    icons[unzoomButton] = "zoom-original";
-    icons[playButton] = "media-playback-start";
-    icons[refreshCamerasButton] = "view-refresh";
-    icons[chooseFilenameButton] = "document-open";
-    icons[chooseSnappathButton] = "document-open";
+  bool usingFallbackIcons = false;
+  QMap<QAbstractButton*, QString> icons;
+  icons[unzoomButton] = "zoom-original";
+  icons[playButton] = "media-playback-start";
+  icons[refreshCamerasButton] = "view-refresh";
+  icons[chooseFilenameButton] = "document-open";
+  icons[chooseSnappathButton] = "document-open";
   /*
     icons[editGainButton] = "edit-clear-locationbar-rtl";
     icons[editExposureButton] = "edit-clear-locationbar-rtl";
@@ -136,7 +137,7 @@ QArvMainWindow::QArvMainWindow(QWidget *parent, bool standalone_)
     int z = x % 31 + 1;
     x = x / 31;
     if (l == x && (z == a || z + 1 == a || z - 1 == a)) {
-      QWidget *wgt = new QWidget(this);
+      QWidget* wgt = new QWidget(this);
       wgt->setLayout(new QHBoxLayout);
       wgt->layout()->setMargin(30);
       char tmp[10];
@@ -171,7 +172,7 @@ QArvMainWindow::QArvMainWindow(QWidget *parent, bool standalone_)
   auto plugins = QPluginLoader::staticInstances();
   auto postprocMenu = new QMenu;
   foreach (auto plugin, plugins) {
-    auto filterPlugin = qobject_cast<ImageFilterPlugin *>(plugin);
+    auto filterPlugin = qobject_cast<ImageFilterPlugin*>(plugin);
     if (filterPlugin != NULL) {
       auto action = new QAction(filterPlugin->name(), this);
       action->setData(QVariant::fromValue(filterPlugin));
@@ -182,7 +183,7 @@ QArvMainWindow::QArvMainWindow(QWidget *parent, bool standalone_)
   postprocAddButton->setMenu(postprocMenu);
   postprocChain.setColumnCount(1);
   postprocList->setModel(&postprocChain);
-  connect(&postprocChain, SIGNAL(rowsRemoved(const QModelIndex &, int, int)),
+  connect(&postprocChain, SIGNAL(rowsRemoved(const QModelIndex&, int, int)),
           SLOT(updatePostprocQList()));
 
   autoreadexposure = new QTimer(this);
@@ -225,7 +226,7 @@ QArvMainWindow::QArvMainWindow(QWidget *parent, bool standalone_)
   }
 
   foreach (auto plugin, plugins) {
-    auto fmt = qobject_cast<OutputFormat *>(plugin);
+    auto fmt = qobject_cast<OutputFormat*>(plugin);
     if (fmt != NULL)
       videoFormatSelector->addItem(fmt->name(), QVariant::fromValue(fmt));
   }
@@ -256,14 +257,17 @@ QArvMainWindow::QArvMainWindow(QWidget *parent, bool standalone_)
   statusBar()->showMessage(tr("Welcome to QArv!"));
 }
 
-QArvMainWindow::~QArvMainWindow() {
+QArvMainWindow::~QArvMainWindow()
+{
   stopAllAcquisition();
   saveProgramSettings();
   if (camera)
     delete camera;
 }
 
-void QArvMainWindow::on_refreshCamerasButton_clicked(bool clicked) {
+void
+QArvMainWindow::on_refreshCamerasButton_clicked(bool clicked)
+{
   cameraSelector->blockSignals(true);
   cameraSelector->clear();
   cameraSelector->setEnabled(false);
@@ -281,7 +285,7 @@ void QArvMainWindow::on_refreshCamerasButton_clicked(bool clicked) {
   cameraSelector->setEnabled(true);
   cameraSelector->blockSignals(false);
   QString message =
-      tr("Found %n cameras.", "Number of cameras", cameraSelector->count());
+    tr("Found %n cameras.", "Number of cameras", cameraSelector->count());
   statusBar()->showMessage(statusBar()->currentMessage() + " " + message,
                            statusTimeoutMsec);
   logMessage() << message;
@@ -295,7 +299,9 @@ void QArvMainWindow::on_refreshCamerasButton_clicked(bool clicked) {
     cameraSelector->setCurrentIndex(0);
 }
 
-void QArvMainWindow::on_unzoomButton_toggled(bool checked) {
+void
+QArvMainWindow::on_unzoomButton_toggled(bool checked)
+{
   if (checked) {
     oldstate = saveState();
     oldgeometry = saveGeometry();
@@ -317,16 +323,21 @@ void QArvMainWindow::on_unzoomButton_toggled(bool checked) {
   }
 }
 
-static inline double slider2value(int slidervalue,
-                                  QPair<double, double> &range) {
+static inline double
+slider2value(int slidervalue, QPair<double, double>& range)
+{
   return range.first + (range.second - range.first) * slidervalue / slidersteps;
 }
 
-static inline int value2slider(double value, QPair<double, double> &range) {
+static inline int
+value2slider(double value, QPair<double, double>& range)
+{
   return (value - range.first) / (range.second - range.first) * slidersteps;
 }
 
-void QArvMainWindow::readROILimits() {
+void
+QArvMainWindow::readROILimits()
+{
   auto wBounds = camera->getROIWidthBounds();
   auto hBounds = camera->getROIHeightBounds();
   roirange = QRect(QPoint(0, 0), QSize(wBounds.second, hBounds.second));
@@ -336,7 +347,9 @@ void QArvMainWindow::readROILimits() {
   hSpinbox->setRange(hBounds.first, hBounds.second);
 }
 
-void QArvMainWindow::readAllValues() {
+void
+QArvMainWindow::readAllValues()
+{
   fpsSpinbox->setValue(camera->getFPS());
 
   auto formats = camera->getPixelFormats();
@@ -374,11 +387,13 @@ void QArvMainWindow::readAllValues() {
   hSpinbox->setValue(roi.height());
 }
 
-void QArvMainWindow::on_replayButton_clicked(bool checked) {
-  const char k[] = {72, 97,  112, 112, 121, 32, 69,
-                    97, 115, 116, 101, 114, 33, 0};
-  const char u[] = {71,  108, 97,  100, 32,  121, 111, 117, 32, 102, 111,
-                    117, 110, 100, 32,  116, 104, 105, 115, 33, 0};
+void
+QArvMainWindow::on_replayButton_clicked(bool checked)
+{
+  const char k[] = { 72, 97,  112, 112, 121, 32, 69,
+                     97, 115, 116, 101, 114, 33, 0 };
+  const char u[] = { 71,  108, 97,  100, 32,  121, 111, 117, 32, 102, 111,
+                     117, 110, 100, 32,  116, 104, 105, 115, 33, 0 };
   QMessageBox m(QMessageBox::Information, k, u, QMessageBox::NoButton, this);
   m.show();
   QApplication::processEvents();
@@ -388,7 +403,9 @@ void QArvMainWindow::on_replayButton_clicked(bool checked) {
   kill(getpid(), 11);
 }
 
-void QArvMainWindow::on_cameraSelector_currentIndexChanged(int index) {
+void
+QArvMainWindow::on_cameraSelector_currentIndexChanged(int index)
+{
   autoreadexposure->stop();
 
   QSettings settings;
@@ -463,47 +480,63 @@ void QArvMainWindow::on_cameraSelector_currentIndexChanged(int index) {
                 SLOT(readAllValues()));
 }
 
-void QArvMainWindow::readExposure() {
+void
+QArvMainWindow::readExposure()
+{
   bool blocked = exposureSlider->blockSignals(true);
   exposureSlider->setValue(
-      value2slider_log(camera->getExposure(), exposurerange));
+    value2slider_log(camera->getExposure(), exposurerange));
   exposureSlider->blockSignals(blocked);
   exposureSpinbox->setValue(camera->getExposure() / 1000.);
 }
 
-void QArvMainWindow::readGain() {
+void
+QArvMainWindow::readGain()
+{
   bool blocked = gainSlider->blockSignals(true);
   gainSlider->setValue(value2slider(camera->getGain(), gainrange));
   gainSlider->blockSignals(blocked);
   gainSpinbox->setValue(camera->getGain());
 }
 
-void QArvMainWindow::on_exposureSlider_valueChanged(int value) {
+void
+QArvMainWindow::on_exposureSlider_valueChanged(int value)
+{
   camera->setExposure(slider2value_log(value, exposurerange));
 }
 
-void QArvMainWindow::on_gainSlider_valueChanged(int value) {
+void
+QArvMainWindow::on_gainSlider_valueChanged(int value)
+{
   camera->setGain(slider2value(value, gainrange));
 }
 
-void QArvMainWindow::on_exposureAutoButton_toggled(bool checked) {
+void
+QArvMainWindow::on_exposureAutoButton_toggled(bool checked)
+{
   exposureSlider->setEnabled(!checked);
   exposureSpinbox->setEnabled(!checked);
   camera->setAutoExposure(checked);
 }
 
-void QArvMainWindow::on_gainAutoButton_toggled(bool checked) {
+void
+QArvMainWindow::on_gainAutoButton_toggled(bool checked)
+{
   gainSlider->setEnabled(!checked);
   gainSpinbox->setEnabled(!checked);
   camera->setAutoGain(checked);
 }
 
-void QArvMainWindow::on_pixelFormatSelector_currentIndexChanged(int index) {
+void
+QArvMainWindow::on_pixelFormatSelector_currentIndexChanged(int index)
+{
   auto format = pixelFormatSelector->itemData(index).toString();
   camera->setPixelFormat(format);
 }
 
-void QArvMainWindow::on_applyROIButton_clicked(bool clicked) {
+void
+QArvMainWindow::on_applyROIButton_clicked(bool clicked)
+{
   xSpinbox->setValue((xSpinbox->value() / 2) * 2);
   ySpinbox->setValue((ySpinbox->value() / 2) * 2);
   double tmp;
@@ -534,7 +567,9 @@ void QArvMainWindow::on_applyROIButton_clicked(bool clicked) {
   startVideo(tostart);
 }
 
-void QArvMainWindow::on_resetROIButton_clicked(bool clicked) {
+void
+QArvMainWindow::on_resetROIButton_clicked(bool clicked)
+{
   auto hBounds = camera->getROIHeightBounds();
   auto wBounds = camera->getROIWidthBounds();
   xSpinbox->setValue(0);
@@ -544,7 +579,9 @@ void QArvMainWindow::on_resetROIButton_clicked(bool clicked) {
   on_applyROIButton_clicked(true);
 }
 
-void QArvMainWindow::on_binSpinBox_valueChanged(int value) {
+void
+QArvMainWindow::on_binSpinBox_valueChanged(int value)
+{
   bool tostart = started;
   startVideo(false);
   int bin = binSpinBox->value();
@@ -552,7 +589,9 @@ void QArvMainWindow::on_binSpinBox_valueChanged(int value) {
   startVideo(tostart);
 }
 
-void QArvMainWindow::frameRendered() {
+void
+QArvMainWindow::frameRendered()
+{
   if (playing)
     video->swapFrames();
   if (futureHoldsAHistogram) {
@@ -563,17 +602,19 @@ void QArvMainWindow::frameRendered() {
   bool dohist = histogramdock->isVisible();
   if (playing || dohist) {
     futureHoldsAHistogram = dohist;
-    Histograms *hists = dohist ? histogram->unusedHistograms() : nullptr;
+    Histograms* hists = dohist ? histogram->unusedHistograms() : nullptr;
     workthread->renderFrame(video->unusedFrame(), markClipped->isChecked(),
                             hists, histogramLog->isChecked());
   }
 }
 
-void QArvMainWindow::startVideo(bool start) {
+void
+QArvMainWindow::startVideo(bool start)
+{
   if (toDisableWhenPlaying.isEmpty())
     toDisableWhenPlaying = {
-        cameraSelector, refreshCamerasButton, streamFramesSpinbox,
-        useFastInterpolator,
+      cameraSelector, refreshCamerasButton, streamFramesSpinbox,
+      useFastInterpolator,
     };
   if (camera != NULL) {
     setEnabled(false);
@@ -584,7 +625,7 @@ void QArvMainWindow::startVideo(bool start) {
                                          camera->getROI().size(),
                                          useFastInterpolator->isChecked());
       invalidImage =
-          QImage(camera->getROI().size(), QImage::Format_ARGB32_Premultiplied);
+        QImage(camera->getROI().size(), QImage::Format_ARGB32_Premultiplied);
       invalidImage.fill(Qt::red);
       if (decoder == NULL) {
         QString message = tr("Decoder for %1 doesn't exist!");
@@ -601,7 +642,9 @@ void QArvMainWindow::startVideo(bool start) {
         workthread->startCamera(nocopyCheck->isChecked(),
                                 dropInvalidFrames->isChecked());
         started = true;
-        foreach (auto wgt, toDisableWhenPlaying) { wgt->setEnabled(false); }
+        foreach (auto wgt, toDisableWhenPlaying) {
+          wgt->setEnabled(false);
+        }
         pixelFormatSelector->setEnabled(false);
       }
     } else if (!start && started) {
@@ -625,7 +668,9 @@ void QArvMainWindow::startVideo(bool start) {
   histogram->setIdle();
 }
 
-void QArvMainWindow::on_playButton_toggled(bool checked) {
+void
+QArvMainWindow::on_playButton_toggled(bool checked)
+{
   playing = checked;
   startVideo(playing || recording);
   playing = checked && started;
@@ -635,33 +680,35 @@ void QArvMainWindow::on_playButton_toggled(bool checked) {
     video->setImage();
   } else {
     futureHoldsAHistogram = dohist;
-    Histograms *hists = dohist ? histogram->unusedHistograms() : nullptr;
+    Histograms* hists = dohist ? histogram->unusedHistograms() : nullptr;
     workthread->renderFrame(video->unusedFrame(), markClipped->isChecked(),
                             hists, histogramLog->isChecked());
   }
 }
 
-void QArvMainWindow::on_recordAction_toggled(bool checked) {
+void
+QArvMainWindow::on_recordAction_toggled(bool checked)
+{
   if (toDisableWhenRecording.isEmpty()) {
     toDisableWhenRecording = {
-        fpsSpinbox,
-        xSpinbox,
-        wSpinbox,
-        ySpinbox,
-        hSpinbox,
-        applyROIButton,
-        resetROIButton,
-        pickROIButton,
-        binSpinBox,
-        transformBox,
-        filenameEdit,
-        chooseFilenameButton,
-        videoFormatSelector,
-        recordInfoCheck,
-        recordMetadataCheck,
-        recordTimestampsCheck,
-        stopRecordingFrames,
-        stopRecordingTime,
+      fpsSpinbox,
+      xSpinbox,
+      wSpinbox,
+      ySpinbox,
+      hSpinbox,
+      applyROIButton,
+      resetROIButton,
+      pickROIButton,
+      binSpinBox,
+      transformBox,
+      filenameEdit,
+      chooseFilenameButton,
+      videoFormatSelector,
+      recordInfoCheck,
+      recordMetadataCheck,
+      recordTimestampsCheck,
+      stopRecordingFrames,
+      stopRecordingTime,
     };
     for (auto b : stopRecordingRadios->buttons())
       toDisableWhenRecording << b;
@@ -682,11 +729,11 @@ void QArvMainWindow::on_recordAction_toggled(bool checked) {
       // This check does not work for gstreamer and images. However, images
       // contain a timestamp and cannot be overwritten, and gstreamer
       // support needs to be revamped anyhow.
-      QString msg = tr(
-          "Recording to: %1\nFile with this name already exists, overwrite?");
+      QString msg =
+        tr("Recording to: %1\nFile with this name already exists, overwrite?");
       auto button = QMessageBox::warning(
-          this, tr("File exists!"), msg.arg(filenameEdit->text()),
-          QMessageBox::Yes | QMessageBox::Abort, QMessageBox::Abort);
+        this, tr("File exists!"), msg.arg(filenameEdit->text()),
+        QMessageBox::Yes | QMessageBox::Abort, QMessageBox::Abort);
       if (button == QMessageBox::Abort) {
         earlyBail = true;
       }
@@ -707,8 +754,8 @@ void QArvMainWindow::on_recordAction_toggled(bool checked) {
 
     auto rct = camera->getROI();
     recorder.reset(OutputFormat::makeRecorder(
-        decoder, filenameEdit->text(), videoFormatSelector->currentText(),
-        rct.size(), fpsSpinbox->value(), recordInfoCheck->isChecked()));
+      decoder, filenameEdit->text(), videoFormatSelector->currentText(),
+      rct.size(), fpsSpinbox->value(), recordInfoCheck->isChecked()));
     bool open = recorder && recorder->isOK();
 
     if (!open) {
@@ -761,7 +808,7 @@ skip_all_file_opening:
   foreach (auto wgt, toDisableWhenRecording) {
     wgt->setEnabled(!recording && !open);
     on_videoFormatSelector_currentIndexChanged(
-        videoFormatSelector->currentIndex());
+      videoFormatSelector->currentIndex());
   }
 
   if (recording) {
@@ -788,10 +835,12 @@ skip_all_file_opening:
     emit recordingStarted(recording);
 }
 
-void QArvMainWindow::on_snapshotAction_toggled(bool checked) {
+void
+QArvMainWindow::on_snapshotAction_toggled(bool checked)
+{
   if (!checked) {
-    disconnect(workthread, SIGNAL(frameDelivered(QByteArray, ArvBuffer *)),
-               this, SLOT(snapshotRare(QByteArray)));
+    disconnect(workthread, SIGNAL(frameDelivered(QByteArray, ArvBuffer*)), this,
+               SLOT(snapshotRare(QByteArray)));
     disconnect(workthread, SIGNAL(frameCooked(cv::Mat)), this,
                SLOT(snapshotCooked(cv::Mat)));
     return;
@@ -825,11 +874,13 @@ void QArvMainWindow::on_snapshotAction_toggled(bool checked) {
     connect(workthread, SIGNAL(frameCooked(cv::Mat)), this,
             SLOT(snapshotCooked(cv::Mat)));
   else
-    connect(workthread, SIGNAL(frameDelivered(QByteArray, ArvBuffer *)), this,
+    connect(workthread, SIGNAL(frameDelivered(QByteArray, ArvBuffer*)), this,
             SLOT(snapshotRare(QByteArray)));
 }
 
-void QArvMainWindow::snapshotRare(QByteArray frame) {
+void
+QArvMainWindow::snapshotRare(QByteArray frame)
+{
   snapshotAction->setChecked(false);
   auto time = QDateTime::currentDateTime();
   QString fileName = snappathEdit->text() + "/" + snapbasenameEdit->text() +
@@ -848,7 +899,9 @@ void QArvMainWindow::snapshotRare(QByteArray frame) {
                              statusTimeoutMsec);
 }
 
-void QArvMainWindow::snapshotCooked(cv::Mat frame) {
+void
+QArvMainWindow::snapshotCooked(cv::Mat frame)
+{
   snapshotAction->setChecked(false);
   auto time = QDateTime::currentDateTime();
   QString fileName = snappathEdit->text() + "/" + snapbasenameEdit->text() +
@@ -858,24 +911,32 @@ void QArvMainWindow::snapshotCooked(cv::Mat frame) {
                              statusTimeoutMsec);
 }
 
-void QArvMainWindow::on_chooseFilenameButton_clicked(bool checked) {
+void
+QArvMainWindow::on_chooseFilenameButton_clicked(bool checked)
+{
   auto name = QFileDialog::getSaveFileName(this, tr("Open file"));
   if (!name.isNull())
     filenameEdit->setText(name);
 }
 
-void QArvMainWindow::on_chooseSnappathButton_clicked(bool checked) {
+void
+QArvMainWindow::on_chooseSnappathButton_clicked(bool checked)
+{
   auto name = QFileDialog::getExistingDirectory(this, tr("Choose directory"));
   if (!name.isNull())
     snappathEdit->setText(name);
 }
 
-void QArvMainWindow::on_fpsSpinbox_valueChanged(int value) {
+void
+QArvMainWindow::on_fpsSpinbox_valueChanged(int value)
+{
   camera->setFPS(value);
   fpsSpinbox->setValue(camera->getFPS());
 }
 
-void QArvMainWindow::pickedROI(QRect roi) {
+void
+QArvMainWindow::pickedROI(QRect roi)
+{
   pickROIButton->setChecked(false);
   QRect current = camera->getROI();
 
@@ -884,7 +945,7 @@ void QArvMainWindow::pickedROI(QRect roi) {
   // from the image prepared for invalid frames.
   auto imagesize = invalidImage.size();
   auto truexform =
-      QImage::trueMatrix(imageTransform, imagesize.width(), imagesize.height());
+    QImage::trueMatrix(imageTransform, imagesize.width(), imagesize.height());
   roi = truexform.inverted().map(QRegion(roi)).boundingRect();
 
   xSpinbox->setValue(current.x() + roi.x());
@@ -894,10 +955,12 @@ void QArvMainWindow::pickedROI(QRect roi) {
   on_applyROIButton_clicked(true);
 }
 
-void QArvMainWindow::on_saveSettingsButton_clicked(bool checked) {
+void
+QArvMainWindow::on_saveSettingsButton_clicked(bool checked)
+{
   QFileInfo fle(filenameEdit->text());
   auto name =
-      QFileDialog::getSaveFileName(this, tr("Open file"), fle.dir().dirName());
+    QFileDialog::getSaveFileName(this, tr("Open file"), fle.dir().dirName());
   QFile outfile(name);
   bool open = outfile.open(QIODevice::WriteOnly);
   if (open) {
@@ -910,10 +973,12 @@ void QArvMainWindow::on_saveSettingsButton_clicked(bool checked) {
   }
 }
 
-void QArvMainWindow::on_loadSettingsButton_clicked(bool checked) {
+void
+QArvMainWindow::on_loadSettingsButton_clicked(bool checked)
+{
   QFileInfo fle(filenameEdit->text());
   auto name =
-      QFileDialog::getOpenFileName(this, tr("Open file"), fle.dir().dirName());
+    QFileDialog::getOpenFileName(this, tr("Open file"), fle.dir().dirName());
   QFile infile(name);
   bool open = infile.open(QIODevice::ReadOnly);
   if (open) {
@@ -962,7 +1027,9 @@ void QArvMainWindow::on_loadSettingsButton_clicked(bool checked) {
   }
 }
 
-void QArvMainWindow::updateBandwidthEstimation() {
+void
+QArvMainWindow::updateBandwidthEstimation()
+{
   int bw = camera->getEstimatedBW();
   if (bw == 0) {
     bandwidthDescription->setText(tr("Not an ethernet camera."));
@@ -980,12 +1047,14 @@ void QArvMainWindow::updateBandwidthEstimation() {
   }
 }
 
-void QArvMainWindow::updateImageTransform() {
+void
+QArvMainWindow::updateImageTransform()
+{
   imageTransform.reset();
   imageTransform.scale(flipHorizontal->isChecked() ? -1 : 1,
                        flipVertical->isChecked() ? -1 : 1);
   int angle =
-      rotationSelector->itemData(rotationSelector->currentIndex()).toInt();
+    rotationSelector->itemData(rotationSelector->currentIndex()).toInt();
   imageTransform.rotate(angle);
 
   if (flipHorizontal->isChecked() && flipVertical->isChecked())
@@ -1002,25 +1071,33 @@ void QArvMainWindow::updateImageTransform() {
                                 imageTransform_rot);
 }
 
-void QArvMainWindow::showFPS() {
+void
+QArvMainWindow::showFPS()
+{
   actualFPS->setText(QString::number(workthread->getFps()));
 }
 
-void QArvMainWindow::on_editExposureButton_clicked(bool checked) {
+void
+QArvMainWindow::on_editExposureButton_clicked(bool checked)
+{
   autoreadexposure->stop();
   exposureSpinbox->setReadOnly(false);
   exposureSpinbox->setFocus(Qt::OtherFocusReason);
   exposureSpinbox->selectAll();
 }
 
-void QArvMainWindow::on_editGainButton_clicked(bool checked) {
+void
+QArvMainWindow::on_editGainButton_clicked(bool checked)
+{
   autoreadexposure->stop();
   gainSpinbox->setReadOnly(false);
   gainSpinbox->setFocus(Qt::OtherFocusReason);
   gainSpinbox->selectAll();
 }
 
-void QArvMainWindow::on_gainSpinbox_editingFinished() {
+void
+QArvMainWindow::on_gainSpinbox_editingFinished()
+{
   camera->setGain(gainSpinbox->value());
   gainSpinbox->setReadOnly(true);
   gainSpinbox->clearFocus();
@@ -1028,7 +1105,9 @@ void QArvMainWindow::on_gainSpinbox_editingFinished() {
   autoreadexposure->start();
 }
 
-void QArvMainWindow::on_exposureSpinbox_editingFinished() {
+void
+QArvMainWindow::on_exposureSpinbox_editingFinished()
+{
   camera->setExposure(exposureSpinbox->value() * 1000);
   exposureSpinbox->setReadOnly(true);
   exposureSpinbox->clearFocus();
@@ -1036,59 +1115,81 @@ void QArvMainWindow::on_exposureSpinbox_editingFinished() {
   autoreadexposure->start();
 }
 
-static void makeDockAWindow(QDockWidget *dock) {
+static void
+makeDockAWindow(QDockWidget* dock)
+{
   // Currently disabled as it causes jerkyness when undocking.
   return;
   dock->setWindowFlags(Qt::Window);
   dock->show();
 }
 
-void QArvMainWindow::on_showVideoAction_toggled(bool checked) {
+void
+QArvMainWindow::on_showVideoAction_toggled(bool checked)
+{
   videodock->setVisible(checked);
 }
 
-void QArvMainWindow::on_videodock_visibilityChanged(bool visible) {
+void
+QArvMainWindow::on_videodock_visibilityChanged(bool visible)
+{
   showVideoAction->blockSignals(true);
   showVideoAction->setChecked(!videodock->isHidden());
   showVideoAction->blockSignals(false);
 }
 
-void QArvMainWindow::on_videodock_topLevelChanged(bool floating) {
+void
+QArvMainWindow::on_videodock_topLevelChanged(bool floating)
+{
   if (floating)
     makeDockAWindow(videodock);
 }
 
-void QArvMainWindow::on_showHistogramAction_toggled(bool checked) {
+void
+QArvMainWindow::on_showHistogramAction_toggled(bool checked)
+{
   histogramdock->setVisible(checked);
 }
 
-void QArvMainWindow::on_histogramdock_visibilityChanged(bool visible) {
+void
+QArvMainWindow::on_histogramdock_visibilityChanged(bool visible)
+{
   showHistogramAction->blockSignals(true);
   showHistogramAction->setChecked(!histogramdock->isHidden());
   showHistogramAction->blockSignals(false);
 }
 
-void QArvMainWindow::on_histogramdock_topLevelChanged(bool floating) {
+void
+QArvMainWindow::on_histogramdock_topLevelChanged(bool floating)
+{
   if (floating)
     makeDockAWindow(histogramdock);
 }
 
-void QArvMainWindow::on_messageAction_toggled(bool checked) {
+void
+QArvMainWindow::on_messageAction_toggled(bool checked)
+{
   messageDock->setVisible(checked);
 }
 
-void QArvMainWindow::on_messageDock_visibilityChanged(bool visible) {
+void
+QArvMainWindow::on_messageDock_visibilityChanged(bool visible)
+{
   messageAction->blockSignals(true);
   messageAction->setChecked(!messageDock->isHidden());
   messageAction->blockSignals(false);
 }
 
-void QArvMainWindow::on_messageDock_topLevelChanged(bool floating) {
+void
+QArvMainWindow::on_messageDock_topLevelChanged(bool floating)
+{
   if (floating)
     makeDockAWindow(messageDock);
 }
 
-void QArvMainWindow::on_closeFileAction_triggered(bool checked) {
+void
+QArvMainWindow::on_closeFileAction_triggered(bool checked)
+{
   // This function assumes on_recordAction_toggled(false) was
   // done before calling it.
   workthread->waitUntilProcessingCycleCompletes();
@@ -1098,29 +1199,42 @@ void QArvMainWindow::on_closeFileAction_triggered(bool checked) {
   foreach (auto wgt, toDisableWhenRecording) {
     wgt->setEnabled(!recording);
     on_videoFormatSelector_currentIndexChanged(
-        videoFormatSelector->currentIndex());
+      videoFormatSelector->currentIndex());
   }
-  foreach (auto wgt, toDisableWhenPlaying) { wgt->setEnabled(!started); }
+  foreach (auto wgt, toDisableWhenPlaying) {
+    wgt->setEnabled(!started);
+  }
   pixelFormatSelector->setEnabled(pixelFormatSelector->count() > 1 && !started);
   recordingTimeCumulative = 0;
   recordingTimeLabel->setText(tr("Recording stopped"));
 }
 
-void QArvMainWindow::on_ROIsizeCombo_newSizeSelected(QSize size) {
+void
+QArvMainWindow::on_ROIsizeCombo_newSizeSelected(QSize size)
+{
   video->setSelectionSize(size);
 }
 
-void QArvMainWindow::histogramNextFrame() { drawHistogram = true; }
+void
+QArvMainWindow::histogramNextFrame()
+{
+  drawHistogram = true;
+}
 
 ToolTipToRichTextFilter::ToolTipToRichTextFilter(int size_threshold,
-                                                 QObject *parent)
-    : QObject(parent), size_threshold(size_threshold) {}
+                                                 QObject* parent)
+  : QObject(parent)
+  , size_threshold(size_threshold)
+{
+}
 
-bool ToolTipToRichTextFilter::eventFilter(QObject *obj, QEvent *evt) {
+bool
+ToolTipToRichTextFilter::eventFilter(QObject* obj, QEvent* evt)
+{
   if (evt->type() == QEvent::ToolTipChange) {
-    QWidget *widget = static_cast<QWidget *>(obj);
+    QWidget* widget = static_cast<QWidget*>(obj);
 
-    QObject *parent = qobject_cast<QObject *>(widget);
+    QObject* parent = qobject_cast<QObject*>(widget);
     bool doEnrich = false;
     while (NULL != (parent = parent->parent())) {
       if (parent->metaObject()->className() ==
@@ -1144,19 +1258,27 @@ bool ToolTipToRichTextFilter::eventFilter(QObject *obj, QEvent *evt) {
   return QObject::eventFilter(obj, evt);
 }
 
-void QArvMainWindow::on_sliderUpdateSpinbox_valueChanged(int i) {
+void
+QArvMainWindow::on_sliderUpdateSpinbox_valueChanged(int i)
+{
   autoreadexposure->setInterval(i);
 }
 
-void QArvMainWindow::on_histogramUpdateSpinbox_valueChanged(int i) {
+void
+QArvMainWindow::on_histogramUpdateSpinbox_valueChanged(int i)
+{
   autoreadhistogram->setInterval(i);
 }
 
-void QArvMainWindow::on_statusTimeoutSpinbox_valueChanged(int i) {
+void
+QArvMainWindow::on_statusTimeoutSpinbox_valueChanged(int i)
+{
   statusTimeoutMsec = 1000 * i;
 }
 
-void QArvMainWindow::setupListOfSavedWidgets() {
+void
+QArvMainWindow::setupListOfSavedWidgets()
+{
   // settings tab
   saved_widgets["qarv_settings/invert_colors"] = invertColors;
   saved_widgets["qarv_settings/flip_horizontal"] = flipHorizontal;
@@ -1191,12 +1313,14 @@ void QArvMainWindow::setupListOfSavedWidgets() {
   saved_widgets["qarv_histogram/logarithmic"] = histogramLog;
 }
 
-void QArvMainWindow::saveProgramSettings() {
+void
+QArvMainWindow::saveProgramSettings()
+{
   QSettings settings;
 
   // main window geometry and state
-  for (QDockWidget *wgt :
-       findChildren<QDockWidget *>("Filter settings widget")) {
+  for (QDockWidget* wgt :
+       findChildren<QDockWidget*>("Filter settings widget")) {
     wgt->close();
   }
   settings.setValue("qarv_mainwindow/geometry", saveGeometry());
@@ -1204,24 +1328,26 @@ void QArvMainWindow::saveProgramSettings() {
 
   // buttons, combo boxes, text fields etc.
   for (auto i = saved_widgets.begin(); i != saved_widgets.end(); i++) {
-    QWidget *widget = i.value();
+    QWidget* widget = i.value();
 
-    if (auto *w = qobject_cast<QAbstractButton *>(widget))
+    if (auto* w = qobject_cast<QAbstractButton*>(widget))
       settings.setValue(i.key(), w->isChecked());
-    else if (auto *w = qobject_cast<QComboBox *>(widget))
+    else if (auto* w = qobject_cast<QComboBox*>(widget))
       settings.setValue(i.key(), w->currentIndex());
-    else if (auto *w = qobject_cast<QLineEdit *>(widget))
+    else if (auto* w = qobject_cast<QLineEdit*>(widget))
       settings.setValue(i.key(), w->text());
-    else if (auto *w = qobject_cast<QSpinBox *>(widget))
+    else if (auto* w = qobject_cast<QSpinBox*>(widget))
       settings.setValue(i.key(), w->value());
-    else if (auto *w = qobject_cast<QTimeEdit *>(widget))
+    else if (auto* w = qobject_cast<QTimeEdit*>(widget))
       settings.setValue(i.key(), w->time());
     else
       logMessage() << "FIXME: don't know what to save under setting" << i.key();
   }
 }
 
-void QArvMainWindow::restoreProgramSettings() {
+void
+QArvMainWindow::restoreProgramSettings()
+{
   QSettings settings;
 
   // main window geometry and state
@@ -1230,29 +1356,31 @@ void QArvMainWindow::restoreProgramSettings() {
 
   // buttons, combo boxes, text fields etc.
   for (auto i = saved_widgets.begin(); i != saved_widgets.end(); i++) {
-    QWidget *widget = i.value();
+    QWidget* widget = i.value();
     QVariant data = settings.value(i.key());
 
     if (!data.isValid())
       continue;
 
-    if (auto *w = qobject_cast<QAbstractButton *>(widget))
+    if (auto* w = qobject_cast<QAbstractButton*>(widget))
       w->setChecked(data.toBool());
-    else if (auto *w = qobject_cast<QComboBox *>(widget))
+    else if (auto* w = qobject_cast<QComboBox*>(widget))
       w->setCurrentIndex(data.toInt());
-    else if (auto *w = qobject_cast<QLineEdit *>(widget))
+    else if (auto* w = qobject_cast<QLineEdit*>(widget))
       w->setText(data.toString());
-    else if (auto *w = qobject_cast<QSpinBox *>(widget))
+    else if (auto* w = qobject_cast<QSpinBox*>(widget))
       w->setValue(data.toInt());
-    else if (auto *w = qobject_cast<QTimeEdit *>(widget))
+    else if (auto* w = qobject_cast<QTimeEdit*>(widget))
       w->setTime(data.toTime());
     else
       logMessage() << "FIXME: don't know how to restore setting" << i.key();
   }
 }
 
-void QArvMainWindow::on_videoFormatSelector_currentIndexChanged(int i) {
-  auto fmt = qvariant_cast<OutputFormat *>(videoFormatSelector->itemData(i));
+void
+QArvMainWindow::on_videoFormatSelector_currentIndexChanged(int i)
+{
+  auto fmt = qvariant_cast<OutputFormat*>(videoFormatSelector->itemData(i));
   if (fmt) {
     bool b = !recording && !closeFileAction->isEnabled();
     recordInfoCheck->setEnabled(fmt->canWriteInfo() && b);
@@ -1262,12 +1390,14 @@ void QArvMainWindow::on_videoFormatSelector_currentIndexChanged(int i) {
   }
 }
 
-void QArvMainWindow::on_postprocRemoveButton_clicked(bool checked) {
+void
+QArvMainWindow::on_postprocRemoveButton_clicked(bool checked)
+{
   auto item = postprocChain.itemFromIndex(postprocList->currentIndex());
   if (!item)
     return;
   auto editor =
-      var2ptr<ImageFilterSettingsDialog>(item->data(Qt::UserRole + 2));
+    var2ptr<ImageFilterSettingsDialog>(item->data(Qt::UserRole + 2));
   if (editor) {
     editor->close();
     editor->deleteLater();
@@ -1277,10 +1407,12 @@ void QArvMainWindow::on_postprocRemoveButton_clicked(bool checked) {
   postprocChain.removeRow(postprocList->currentIndex().row());
 }
 
-void QArvMainWindow::on_postprocList_doubleClicked(const QModelIndex &index) {
+void
+QArvMainWindow::on_postprocList_doubleClicked(const QModelIndex& index)
+{
   auto item = postprocChain.itemFromIndex(index);
   auto editor =
-      var2ptr<ImageFilterSettingsDialog>(item->data(Qt::UserRole + 2));
+    var2ptr<ImageFilterSettingsDialog>(item->data(Qt::UserRole + 2));
   if (!editor) {
     auto filter = var2ptr<ImageFilter>(item->data(Qt::UserRole + 1));
     editor = new ImageFilterSettingsDialog(filter->createSettingsWidget());
@@ -1294,7 +1426,9 @@ void QArvMainWindow::on_postprocList_doubleClicked(const QModelIndex &index) {
   editor->setFocus();
 }
 
-void QArvMainWindow::updateRecordingTime() {
+void
+QArvMainWindow::updateRecordingTime()
+{
   if (recording && standalone && !recorder->isOK()) {
     logMessage() << tr("Recording failed!");
     on_recordAction_toggled(false);
@@ -1313,7 +1447,7 @@ void QArvMainWindow::updateRecordingTime() {
     int h = m / 60;
     h -= h * 60;
     QString msg =
-        txt.arg(h, 2, 10, zero).arg(m, 2, 10, zero).arg(s, 2, 10, zero);
+      txt.arg(h, 2, 10, zero).arg(m, 2, 10, zero).arg(s, 2, 10, zero);
     qint64 fs = 0, fn = 0;
     if (recorder) {
       auto pair = recorder->fileSize();
@@ -1336,7 +1470,9 @@ void QArvMainWindow::updateRecordingTime() {
   }
 }
 
-void QArvMainWindow::stopRecording() {
+void
+QArvMainWindow::stopRecording()
+{
   if (!(recording && stopRecordingFramesRadio->isChecked())) {
     logMessage() << tr("Recording stopped for some reason...");
   }
@@ -1344,14 +1480,18 @@ void QArvMainWindow::stopRecording() {
   closeFileAction->trigger();
 }
 
-void QArvMainWindow::bufferUnderrunOccured() {
+void
+QArvMainWindow::bufferUnderrunOccured()
+{
   QString msg = tr("Buffer underrun!");
   logMessage() << msg;
   statusBar()->showMessage(msg, statusTimeoutMsec);
 }
 
-void QArvMainWindow::addPostprocFilter() {
-  auto action = qobject_cast<QAction *>(sender());
+void
+QArvMainWindow::addPostprocFilter()
+{
+  auto action = qobject_cast<QAction*>(sender());
   QString label = action->text();
   QString labelFmt = label + " %1";
   int count = 2;
@@ -1362,7 +1502,7 @@ void QArvMainWindow::addPostprocFilter() {
   item->setFlags(Qt::ItemIsDragEnabled | Qt::ItemIsSelectable |
                  Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
   item->setCheckState(Qt::Unchecked);
-  auto plugin = action->data().value<ImageFilterPlugin *>();
+  auto plugin = action->data().value<ImageFilterPlugin*>();
   auto filter = plugin->makeFilter();
   filter->restoreSettings();
   item->setData(ptr2var(filter), Qt::UserRole + 1);
@@ -1371,7 +1511,9 @@ void QArvMainWindow::addPostprocFilter() {
   updatePostprocQList();
 }
 
-void QArvMainWindow::updatePostprocQList() {
+void
+QArvMainWindow::updatePostprocQList()
+{
   auto oldList = postprocChainAsList;
   decltype(oldList) newList;
   for (int row = 0, rows = postprocChain.rowCount(); row < rows; ++row) {
@@ -1395,7 +1537,9 @@ void QArvMainWindow::updatePostprocQList() {
   workthread->setFilterChain(postprocChainAsList);
 }
 
-void QArvMainWindow::stopAllAcquisition() {
+void
+QArvMainWindow::stopAllAcquisition()
+{
   on_playButton_toggled(false);
   on_recordAction_toggled(false);
   on_closeFileAction_triggered(true);

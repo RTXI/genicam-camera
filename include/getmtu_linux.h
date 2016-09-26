@@ -32,7 +32,9 @@ extern "C" {
 #include <unistd.h>
 }
 
-int getMTU(QString ifname) {
+int
+getMTU(QString ifname)
+{
   struct ifreq req;
   auto bytes = ifname.toLatin1();
   strcpy(req.ifr_name, bytes.constData());

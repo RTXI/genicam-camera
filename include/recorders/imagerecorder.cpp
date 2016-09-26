@@ -23,9 +23,12 @@
 
 using namespace QArv;
 
-class ImageRecorder : public Recorder {
+class ImageRecorder : public Recorder
+{
 public:
-  ImageRecorder(QArvDecoder *decoder_, QString baseName_) : decoder(decoder_) {
+  ImageRecorder(QArvDecoder* decoder_, QString baseName_)
+    : decoder(decoder_)
+  {
     if (!decoder || baseName_.isEmpty()) {
       return;
     }
@@ -38,11 +41,13 @@ public:
 
   bool recordsRaw() { return false; }
 
-  QPair<qint64, qint64> fileSize() {
+  QPair<qint64, qint64> fileSize()
+  {
     return qMakePair(currentSize, currentNumber);
   }
 
-  void recordFrame(cv::Mat decoded) {
+  void recordFrame(cv::Mat decoded)
+  {
     QString file = baseName.arg(currentNumber++, 19, 10, QChar('0'));
     OK = cv::imwrite(file.toStdString(), decoded);
     if (OK)
@@ -51,15 +56,16 @@ public:
 
 private:
   bool OK = false;
-  QArvDecoder *decoder;
+  QArvDecoder* decoder;
   QString baseName;
   qint64 currentSize = 0;
   qint64 currentNumber = 0;
 };
 
-Recorder *ImageFormat::makeRecorder(QArvDecoder *decoder, QString fileName,
-                                    QSize frameSize, int framesPerSecond,
-                                    bool writeInfo) {
+Recorder*
+ImageFormat::makeRecorder(QArvDecoder* decoder, QString fileName,
+                          QSize frameSize, int framesPerSecond, bool writeInfo)
+{
   return new ImageRecorder(decoder, fileName);
 }
 

@@ -27,19 +27,21 @@
 
 namespace QArv {
 
-struct Histograms {
+struct Histograms
+{
   float red[256], green[256], blue[256];
 };
 
-class GLHistogramWidget : public QGLWidget {
+class GLHistogramWidget : public QGLWidget
+{
   Q_OBJECT
 
 public:
-  GLHistogramWidget(QWidget *parent = 0);
+  GLHistogramWidget(QWidget* parent = 0);
 
   void paintGL();
   void setIdle();
-  Histograms *unusedHistograms();
+  Histograms* unusedHistograms();
   void swapHistograms(bool grayscale);
 
 public slots:
@@ -49,7 +51,7 @@ private:
   QIcon idleImageIcon;
   bool indexed, logarithmic, idle;
   Histograms histograms1, histograms2;
-  Histograms *unusedHists;
+  Histograms* unusedHists;
   float *histRed, *histGreen, *histBlue;
 };
 }

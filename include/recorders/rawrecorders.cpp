@@ -33,7 +33,9 @@ using namespace QArv;
 
 static const QString descExt(".qarv");
 
-static void initDescfile(QSettings &s, QSize size, int FPS) {
+static void
+initDescfile(QSettings& s, QSize size, int FPS)
+{
   s.beginGroup("qarv_raw_video_description");
   s.remove("");
   s.setValue("description_version", "0.1");
@@ -44,11 +46,15 @@ static void initDescfile(QSettings &s, QSize size, int FPS) {
   s.setValue("nominal_fps", FPS);
 }
 
-class RawUndecoded : public Recorder {
+class RawUndecoded : public Recorder
+{
 public:
-  RawUndecoded(QArvDecoder *decoder_, QString fileName, QSize size, int FPS,
+  RawUndecoded(QArvDecoder* decoder_, QString fileName, QSize size, int FPS,
                bool writeInfo)
-      : file(fileName), decoder(decoder_), bytesizeWritten(false) {
+    : file(fileName)
+    , decoder(decoder_)
+    , bytesizeWritten(false)
+  {
     file.open(QIODevice::WriteOnly);
     if (isOK() && writeInfo) {
       QSettings s(fileName + descExt, QSettings::Format::IniFormat);
@@ -63,7 +69,8 @@ public:
 
   bool recordsRaw() { return true; }
 
-  void recordFrame(QByteArray raw) {
+  void recordFrame(QByteArray raw)
+  {
     if (isOK()) {
       file.write(raw);
       if (!bytesizeWritten) {
@@ -76,7 +83,8 @@ public:
     }
   }
 
-  QPair<qint64, qint64> fileSize() {
+  QPair<qint64, qint64> fileSize()
+  {
     qint64 s, n;
     if (!bytesizeWritten || !frameBytes) {
       s = n = 0;
@@ -89,35 +97,39 @@ public:
 
 private:
   QFile file;
-  QArvDecoder *decoder;
+  QArvDecoder* decoder;
   bool bytesizeWritten;
   qint64 frameBytes;
 };
 
-class RawDecoded8 : public Recorder {
+class RawDecoded8 : public Recorder
+{
 public:
-  RawDecoded8(QArvDecoder *decoder_, QString fileName, QSize size, int FPS,
+  RawDecoded8(QArvDecoder* decoder_, QString fileName, QSize size, int FPS,
               bool writeInfo)
-      : file(fileName), decoder(decoder_), OK(true) {
+    : file(fileName)
+    , decoder(decoder_)
+    , OK(true)
+  {
 
     file.open(QIODevice::WriteOnly);
     if (isOK()) {
       enum PixelFormat fmt;
       switch (decoder->cvType()) {
-      case CV_8UC1:
-      case CV_16UC1:
-        fmt = PIX_FMT_GRAY8;
-        frameBytes = size.width() * size.height();
-        break;
-      case CV_8UC3:
-      case CV_16UC3:
-        fmt = PIX_FMT_BGR24;
-        frameBytes = size.width() * size.height() * 3;
-        break;
-      default:
-        OK = false;
-        logMessage() << "Recorder: Invalid CV image format";
-        return;
+        case CV_8UC1:
+        case CV_16UC1:
+          fmt = PIX_FMT_GRAY8;
+          frameBytes = size.width() * size.height();
+          break;
+        case CV_8UC3:
+        case CV_16UC3:
+          fmt = PIX_FMT_BGR24;
+          frameBytes = size.width() * size.height() * 3;
+          break;
+        default:
+          OK = false;
+          logMessage() << "Recorder: Invalid CV image format";
+          return;
       }
       if (writeInfo) {
         QSettings s(fileName + descExt, QSettings::Format::IniFormat);
@@ -130,20 +142,22 @@ public:
     }
   }
 
-  bool isOK() {
+  bool isOK()
+  {
     return OK && file.isOpen() && (file.error() == QFile::NoError);
   }
 
   bool recordsRaw() { return false; }
 
-  void recordFrame(cv::Mat decoded) {
+  void recordFrame(cv::Mat decoded)
+  {
     if (!isOK())
       return;
     int pixPerRow = decoded.cols * decoded.channels();
     if (decoded.depth() == CV_8U) {
       for (int row = 0; row < decoded.rows; ++row) {
         auto ptr = decoded.ptr<uint8_t>(row);
-        file.write(reinterpret_cast<char *>(ptr), pixPerRow);
+        file.write(reinterpret_cast<char*>(ptr), pixPerRow);
       }
     } else {
       QVector<uint8_t> line(pixPerRow);
@@ -151,12 +165,13 @@ public:
         auto ptr = decoded.ptr<uint16_t>(row);
         for (int col = 0; col < pixPerRow; ++col)
           line[col] = ptr[col] >> 8;
-        file.write(reinterpret_cast<const char *>(line.constData()), pixPerRow);
+        file.write(reinterpret_cast<const char*>(line.constData()), pixPerRow);
       }
     }
   }
 
-  QPair<qint64, qint64> fileSize() {
+  QPair<qint64, qint64> fileSize()
+  {
     qint64 s = file.size();
     qint64 n = s / frameBytes;
     return qMakePair(s, n);
@@ -164,35 +179,39 @@ public:
 
 private:
   QFile file;
-  QArvDecoder *decoder;
+  QArvDecoder* decoder;
   bool OK;
   qint64 frameBytes;
 };
 
-class RawDecoded16 : public Recorder {
+class RawDecoded16 : public Recorder
+{
 public:
-  RawDecoded16(QArvDecoder *decoder_, QString fileName, QSize size, int FPS,
+  RawDecoded16(QArvDecoder* decoder_, QString fileName, QSize size, int FPS,
                bool writeInfo)
-      : file(fileName), decoder(decoder_), OK(true) {
+    : file(fileName)
+    , decoder(decoder_)
+    , OK(true)
+  {
 
     file.open(QIODevice::WriteOnly);
     if (isOK()) {
       enum PixelFormat fmt;
       switch (decoder->cvType()) {
-      case CV_8UC1:
-      case CV_16UC1:
-        fmt = PIX_FMT_GRAY16;
-        frameBytes = size.width() * size.height() * 2;
-        break;
-      case CV_8UC3:
-      case CV_16UC3:
-        fmt = PIX_FMT_BGR48;
-        frameBytes = size.width() * size.height() * 6;
-        break;
-      default:
-        OK = false;
-        logMessage() << "Recorder: Invalid CV image format";
-        return;
+        case CV_8UC1:
+        case CV_16UC1:
+          fmt = PIX_FMT_GRAY16;
+          frameBytes = size.width() * size.height() * 2;
+          break;
+        case CV_8UC3:
+        case CV_16UC3:
+          fmt = PIX_FMT_BGR48;
+          frameBytes = size.width() * size.height() * 6;
+          break;
+        default:
+          OK = false;
+          logMessage() << "Recorder: Invalid CV image format";
+          return;
       }
       if (writeInfo) {
         QSettings s(fileName + descExt, QSettings::Format::IniFormat);
@@ -205,20 +224,22 @@ public:
     }
   }
 
-  bool isOK() {
+  bool isOK()
+  {
     return OK && file.isOpen() && (file.error() == QFile::NoError);
   }
 
   bool recordsRaw() { return false; }
 
-  void recordFrame(cv::Mat decoded) {
+  void recordFrame(cv::Mat decoded)
+  {
     if (!isOK())
       return;
     int pixPerRow = decoded.cols * decoded.channels();
     if (decoded.depth() == CV_16U) {
       for (int row = 0; row < decoded.rows; ++row) {
         auto ptr = decoded.ptr<uint16_t>(row);
-        file.write(reinterpret_cast<char *>(ptr), pixPerRow * 2);
+        file.write(reinterpret_cast<char*>(ptr), pixPerRow * 2);
       }
     } else {
       QVector<uint16_t> line(pixPerRow);
@@ -226,13 +247,14 @@ public:
         auto ptr = decoded.ptr<uint8_t>(row);
         for (int col = 0; col < pixPerRow; ++col)
           line[col] = ptr[col] << 8;
-        file.write(reinterpret_cast<const char *>(line.constData()),
+        file.write(reinterpret_cast<const char*>(line.constData()),
                    pixPerRow * 2);
       }
     }
   }
 
-  QPair<qint64, qint64> fileSize() {
+  QPair<qint64, qint64> fileSize()
+  {
     qint64 s = file.size();
     qint64 n = s / frameBytes;
     return qMakePair(s, n);
@@ -240,30 +262,34 @@ public:
 
 private:
   QFile file;
-  QArvDecoder *decoder;
+  QArvDecoder* decoder;
   bool OK;
   qint64 frameBytes;
 };
 
-Recorder *RawUndecodedFormat::makeRecorder(QArvDecoder *decoder,
-                                           QString fileName, QSize frameSize,
-                                           int framesPerSecond,
-                                           bool writeInfo) {
+Recorder*
+RawUndecodedFormat::makeRecorder(QArvDecoder* decoder, QString fileName,
+                                 QSize frameSize, int framesPerSecond,
+                                 bool writeInfo)
+{
   return new RawUndecoded(decoder, fileName, frameSize, framesPerSecond,
                           writeInfo);
 }
 
-Recorder *RawDecoded8Format::makeRecorder(QArvDecoder *decoder,
-                                          QString fileName, QSize frameSize,
-                                          int framesPerSecond, bool writeInfo) {
+Recorder*
+RawDecoded8Format::makeRecorder(QArvDecoder* decoder, QString fileName,
+                                QSize frameSize, int framesPerSecond,
+                                bool writeInfo)
+{
   return new RawDecoded8(decoder, fileName, frameSize, framesPerSecond,
                          writeInfo);
 }
 
-Recorder *RawDecoded16Format::makeRecorder(QArvDecoder *decoder,
-                                           QString fileName, QSize frameSize,
-                                           int framesPerSecond,
-                                           bool writeInfo) {
+Recorder*
+RawDecoded16Format::makeRecorder(QArvDecoder* decoder, QString fileName,
+                                 QSize frameSize, int framesPerSecond,
+                                 bool writeInfo)
+{
   return new RawDecoded16(decoder, fileName, frameSize, framesPerSecond,
                           writeInfo);
 }

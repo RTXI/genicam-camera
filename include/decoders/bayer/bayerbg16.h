@@ -36,13 +36,15 @@ namespace QArv {
 
 #ifdef ARV_PIXEL_FORMAT_BAYER_GR_16
 
-class BayerBG16 : public QObject, public QArvPixelFormat {
+class BayerBG16 : public QObject, public QArvPixelFormat
+{
   Q_OBJECT
   Q_INTERFACES(QArvPixelFormat)
 
 public:
   ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_BAYER_BG_16; }
-  QArvDecoder *makeDecoder(QSize size) {
+  QArvDecoder* makeDecoder(QSize size)
+  {
     return new BayerDecoder<ARV_PIXEL_FORMAT_BAYER_BG_16>(size);
   }
 };

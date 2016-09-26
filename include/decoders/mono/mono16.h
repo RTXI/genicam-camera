@@ -27,16 +27,18 @@ extern "C" {
 
 namespace QArv {
 
-class Mono16Format : public QObject, public QArvPixelFormat {
+class Mono16Format : public QObject, public QArvPixelFormat
+{
   Q_OBJECT
   Q_INTERFACES(QArvPixelFormat)
   Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
 
 public:
   ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_MONO_16; }
-  QArvDecoder *makeDecoder(QSize size) {
+  QArvDecoder* makeDecoder(QSize size)
+  {
     return new MonoUnpackedDecoder<uint16_t, 16, ARV_PIXEL_FORMAT_MONO_16>(
-        size);
+      size);
   }
 };
 }

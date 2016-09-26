@@ -36,7 +36,8 @@ namespace QArv {
  * This decoder works by first decoding into RGB48 using libswscale, and then
  * copying data into the appropriate container.
  */
-class SwScaleDecoder : public QArvDecoder {
+class SwScaleDecoder : public QArvDecoder
+{
 public:
   SwScaleDecoder(QSize size, enum PixelFormat inputPixfmt,
                  ArvPixelFormat arvPixFmt,
@@ -52,8 +53,8 @@ public:
 private:
   bool OK;
   QSize size;
-  struct SwsContext *ctx;
-  uint8_t *image_pointers[4];
+  struct SwsContext* ctx;
+  uint8_t* image_pointers[4];
   int image_strides[4];
   uint8_t bufferBytesPerPixel;
   int cvMatType;

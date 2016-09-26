@@ -26,13 +26,14 @@
 
 namespace QArv {
 
-class LevelsFilter : public ImageFilter {
+class LevelsFilter : public ImageFilter
+{
 public:
-  LevelsFilter(ImageFilterPlugin *plugin);
-  ImageFilterSettingsWidget *createSettingsWidget();
+  LevelsFilter(ImageFilterPlugin* plugin);
+  ImageFilterSettingsWidget* createSettingsWidget();
   void restoreSettings();
   void saveSettings();
-  void filterImage(cv::Mat &image);
+  void filterImage(cv::Mat& image);
 
 private:
   std::atomic<double> black, white, gamma;
@@ -40,7 +41,8 @@ private:
   friend class LevelsSettingsWidget;
 };
 
-class LevelsPlugin : public QObject, public ImageFilterPlugin {
+class LevelsPlugin : public QObject, public ImageFilterPlugin
+{
   Q_OBJECT
   Q_INTERFACES(QArv::ImageFilterPlugin)
   // Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvImageFilterPlugin" FILE
@@ -49,16 +51,17 @@ class LevelsPlugin : public QObject, public ImageFilterPlugin {
 
 public:
   QString name();
-  ImageFilter *makeFilter();
+  ImageFilter* makeFilter();
 };
 
 class LevelsSettingsWidget : public ImageFilterSettingsWidget,
-                             private Ui_levelsSettingsWidget {
+                             private Ui_levelsSettingsWidget
+{
 
   Q_OBJECT
 
 public:
-  LevelsSettingsWidget(ImageFilter *filter, QWidget *parent = 0,
+  LevelsSettingsWidget(ImageFilter* filter, QWidget* parent = 0,
                        Qt::WindowFlags f = 0);
 
 protected slots:
@@ -74,7 +77,7 @@ private slots:
   void on_gammaSpinbox_valueChanged(double value);
 
 private:
-  LevelsFilter *filter();
+  LevelsFilter* filter();
   int doubleToInt(double val);
   double intToDouble(int val);
 };

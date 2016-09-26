@@ -27,7 +27,8 @@ extern "C" {
 
 namespace QArv {
 
-class Mono12PackedDecoder : public QArvDecoder {
+class Mono12PackedDecoder : public QArvDecoder
+{
 public:
   Mono12PackedDecoder(QSize size_);
   void decode(QByteArray frame);
@@ -41,14 +42,15 @@ private:
   cv::Mat M;
 };
 
-class Mono12PackedFormat : public QObject, public QArvPixelFormat {
+class Mono12PackedFormat : public QObject, public QArvPixelFormat
+{
   Q_OBJECT
   Q_INTERFACES(QArvPixelFormat)
   Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvPixelFormat")
 
 public:
   ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_MONO_12_PACKED; }
-  QArvDecoder *makeDecoder(QSize size) { return new Mono12PackedDecoder(size); }
+  QArvDecoder* makeDecoder(QSize size) { return new Mono12PackedDecoder(size); }
 };
 }
 

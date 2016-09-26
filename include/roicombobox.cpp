@@ -24,7 +24,9 @@
 
 using namespace QArv;
 
-ROIcomboBox::ROIcomboBox(QWidget *parent) : QComboBox(parent) {
+ROIcomboBox::ROIcomboBox(QWidget* parent)
+  : QComboBox(parent)
+{
   this->addItem(tr("No size constraint"), QVariant(QSize(0, 0)));
   this->addItem("1024x768", QVariant(QSize(1024, 768)));
   this->addItem("800x600", QVariant(QSize(800, 600)));
@@ -40,9 +42,13 @@ ROIcomboBox::ROIcomboBox(QWidget *parent) : QComboBox(parent) {
                 SLOT(itemSelected(int)));
 }
 
-ROIcomboBox::~ROIcomboBox() {}
+ROIcomboBox::~ROIcomboBox()
+{
+}
 
-void ROIcomboBox::itemSelected(int index) {
+void
+ROIcomboBox::itemSelected(int index)
+{
   if (index < 0)
     index = 0;
 
@@ -63,7 +69,9 @@ void ROIcomboBox::itemSelected(int index) {
   }
 }
 
-void ROIcomboBox::customSizeEntered() {
+void
+ROIcomboBox::customSizeEntered()
+{
   QRegExp ROIparse("^([0-9]+)x([0-9]+)$");
   ROIparse.indexIn(this->lineEdit()->text());
   int width = ROIparse.cap(1).toInt();

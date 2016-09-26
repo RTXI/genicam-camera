@@ -40,9 +40,13 @@ GLVideoWidget::GLVideoWidget(QWidget* parent)
   blackpen.setWidth(0);
 }
 
-GLVideoWidget::~GLVideoWidget() {}
+GLVideoWidget::~GLVideoWidget()
+{
+}
 
-void GLVideoWidget::setImage(const QImage &image_) {
+void
+GLVideoWidget::setImage(const QImage& image_)
+{
   if (image_.isNull()) {
     idling = true;
   } else {
@@ -57,7 +61,9 @@ void GLVideoWidget::setImage(const QImage &image_) {
   update();
 }
 
-void GLVideoWidget::swapFrames() {
+void
+GLVideoWidget::swapFrames()
+{
   idling = false;
   image.swap(unusedImage);
   if (in.size() != image.size()) {
@@ -68,9 +74,15 @@ void GLVideoWidget::swapFrames() {
   update();
 }
 
-QImage *GLVideoWidget::unusedFrame() { return &unusedImage; }
+QImage*
+GLVideoWidget::unusedFrame()
+{
+  return &unusedImage;
+}
 
-void GLVideoWidget::resizeEvent(QResizeEvent *event) {
+void
+GLVideoWidget::resizeEvent(QResizeEvent* event)
+{
   QGLWidget::resizeEvent(event);
   auto view = rect();
   out = view;
@@ -98,7 +110,9 @@ void GLVideoWidget::resizeEvent(QResizeEvent *event) {
   }
 }
 
-void GLVideoWidget::paintGL() {
+void
+GLVideoWidget::paintGL()
+{
   QPainter painter(this);
   if (!idling) {
     if (in.size() != out.size())
@@ -116,7 +130,9 @@ void GLVideoWidget::paintGL() {
   }
 }
 
-void GLVideoWidget::enableSelection(bool enable) {
+void
+GLVideoWidget::enableSelection(bool enable)
+{
   if (enable) {
     selecting = true;
     setCursor(Qt::CrossCursor);
@@ -132,7 +148,9 @@ void GLVideoWidget::enableSelection(bool enable) {
   }
 }
 
-void GLVideoWidget::setSelectionSize(QSize size) {
+void
+GLVideoWidget::setSelectionSize(QSize size)
+{
   if (size.width() == 0 || size.height() == 0)
     fixedSelection = false;
   else {
@@ -141,7 +159,9 @@ void GLVideoWidget::setSelectionSize(QSize size) {
   }
 }
 
-void GLVideoWidget::mousePressEvent(QMouseEvent *event) {
+void
+GLVideoWidget::mousePressEvent(QMouseEvent* event)
+{
   QWidget::mousePressEvent(event);
   if (fixedSelection)
     return;
@@ -149,7 +169,9 @@ void GLVideoWidget::mousePressEvent(QMouseEvent *event) {
     corner1 = event->pos();
 }
 
-void GLVideoWidget::mouseMoveEvent(QMouseEvent *event) {
+void
+GLVideoWidget::mouseMoveEvent(QMouseEvent* event)
+{
   QWidget::mouseMoveEvent(event);
 
   if (!selecting)
@@ -198,7 +220,9 @@ void GLVideoWidget::mouseMoveEvent(QMouseEvent *event) {
   }
 }
 
-void GLVideoWidget::mouseReleaseEvent(QMouseEvent *event) {
+void
+GLVideoWidget::mouseReleaseEvent(QMouseEvent* event)
+{
   QWidget::mouseReleaseEvent(event);
   if (selecting) {
     selecting = false;
@@ -206,4 +230,8 @@ void GLVideoWidget::mouseReleaseEvent(QMouseEvent *event) {
   }
 }
 
-QSize GLVideoWidget::getImageSize() { return image.size(); }
+QSize
+GLVideoWidget::getImageSize()
+{
+  return image.size();
+}

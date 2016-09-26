@@ -25,8 +25,8 @@
 
 namespace QArv {
 
-Recorder *makeGstRecorder(QStringList plugins, QString pipelineFragment,
-                          QArvDecoder *decoder, QString fileName, QSize size,
+Recorder* makeGstRecorder(QStringList plugins, QString pipelineFragment,
+                          QArvDecoder* decoder, QString fileName, QSize size,
                           int FPS, bool writeInfo);
 };
 

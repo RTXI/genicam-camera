@@ -22,23 +22,25 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_levelsSettingsWidget {
+class Ui_levelsSettingsWidget
+{
 public:
-  QGridLayout *gridLayout;
-  QLabel *label;
-  QSlider *blackSlider;
-  QDoubleSpinBox *blackSpinbox;
-  QLabel *label_2;
-  QSlider *gammaSlider;
-  QDoubleSpinBox *gammaSpinbox;
-  QLabel *label_3;
-  QSlider *whiteSlider;
-  QDoubleSpinBox *whiteSpinbox;
+  QGridLayout* gridLayout;
+  QLabel* label;
+  QSlider* blackSlider;
+  QDoubleSpinBox* blackSpinbox;
+  QLabel* label_2;
+  QSlider* gammaSlider;
+  QDoubleSpinBox* gammaSpinbox;
+  QLabel* label_3;
+  QSlider* whiteSlider;
+  QDoubleSpinBox* whiteSpinbox;
 
-  void setupUi(QWidget *levelsSettingsWidget) {
+  void setupUi(QWidget* levelsSettingsWidget)
+  {
     if (levelsSettingsWidget->objectName().isEmpty())
       levelsSettingsWidget->setObjectName(
-          QStringLiteral("levelsSettingsWidget"));
+        QStringLiteral("levelsSettingsWidget"));
     levelsSettingsWidget->resize(400, 139);
     gridLayout = new QGridLayout(levelsSettingsWidget);
     gridLayout->setObjectName(QStringLiteral("gridLayout"));
@@ -109,20 +111,23 @@ public:
     QMetaObject::connectSlotsByName(levelsSettingsWidget);
   } // setupUi
 
-  void retranslateUi(QWidget *levelsSettingsWidget) {
+  void retranslateUi(QWidget* levelsSettingsWidget)
+  {
     levelsSettingsWidget->setWindowTitle(
-        QApplication::translate("levelsSettingsWidget", "Levels", 0));
+      QApplication::translate("levelsSettingsWidget", "Levels", 0));
     label->setText(
-        QApplication::translate("levelsSettingsWidget", "Black point:", 0));
+      QApplication::translate("levelsSettingsWidget", "Black point:", 0));
     label_2->setText(
-        QApplication::translate("levelsSettingsWidget", "Gamma:", 0));
+      QApplication::translate("levelsSettingsWidget", "Gamma:", 0));
     label_3->setText(
-        QApplication::translate("levelsSettingsWidget", "White point:", 0));
+      QApplication::translate("levelsSettingsWidget", "White point:", 0));
   } // retranslateUi
 };
 
 namespace Ui {
-class levelsSettingsWidget : public Ui_levelsSettingsWidget {};
+class levelsSettingsWidget : public Ui_levelsSettingsWidget
+{
+};
 } // namespace Ui
 
 QT_END_NAMESPACE

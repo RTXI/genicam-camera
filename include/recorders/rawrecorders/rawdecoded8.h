@@ -24,7 +24,8 @@
 
 namespace QArv {
 
-class RawDecoded8Format : public QObject, public OutputFormat {
+class RawDecoded8Format : public QObject, public OutputFormat
+{
   Q_OBJECT
   Q_INTERFACES(QArv::OutputFormat)
   Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvOutputFormat" FILE
@@ -34,7 +35,7 @@ public:
   QString name() { return "Raw decoded (8-bit)"; }
   bool canAppend() { return true; }
   bool canWriteInfo() { return true; }
-  Recorder *makeRecorder(QArvDecoder *decoder, QString fileName,
+  Recorder* makeRecorder(QArvDecoder* decoder, QString fileName,
                          QSize frameSize, int framesPerSecond, bool writeInfo);
 };
 }

@@ -14,7 +14,7 @@
  * more details.
  *
  * You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
+ * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef GENICAM_CAMERA_H
@@ -43,26 +43,27 @@ class GenicamCamera : public QWidget,
                       public Plugin::Object,
                       public Workspace::Instance,
                       public Event::Handler,
-                      public Event::RTHandler {
+                      public Event::RTHandler
+{
 
   Q_OBJECT
 
 public:
   GenicamCamera(void);
   virtual ~GenicamCamera(void);
-  void receiveEvent(const ::Event::Object *);
-  void receiveEventRT(const ::Event::Object *);
+  void receiveEvent(const ::Event::Object*);
+  void receiveEventRT(const ::Event::Object*);
 
 public slots:
 
 protected:
 private:
-  static void *bounce(void *);
+  static void* bounce(void*);
   pthread_t thread;
   void createGUI(void);
   void initialize(void);
-  QMdiSubWindow *subWindow;
-  QArvGui *widget;
+  QMdiSubWindow* subWindow;
+  QArvGui* widget;
 
 private slots:
 };

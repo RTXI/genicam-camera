@@ -22,12 +22,14 @@
 
 using namespace QArv;
 
-Recorder *HuffyuvAviFormat::makeRecorder(QArvDecoder *decoder, QString fileName,
-                                         QSize frameSize, int framesPerSecond,
-                                         bool writeInfo) {
-  return makeGstRecorder({"avenc_huffyuv", "avimux"}, "avenc_huffyuv ! avimux",
-                         decoder, fileName, frameSize, framesPerSecond,
-                         writeInfo);
+Recorder*
+HuffyuvAviFormat::makeRecorder(QArvDecoder* decoder, QString fileName,
+                               QSize frameSize, int framesPerSecond,
+                               bool writeInfo)
+{
+  return makeGstRecorder({ "avenc_huffyuv", "avimux" },
+                         "avenc_huffyuv ! avimux", decoder, fileName, frameSize,
+                         framesPerSecond, writeInfo);
 }
 
 // Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvOutputFormat")

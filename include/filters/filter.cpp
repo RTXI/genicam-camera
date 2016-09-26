@@ -27,19 +27,31 @@
 
 using namespace QArv;
 
-ImageFilterSettingsWidget::ImageFilterSettingsWidget(ImageFilter *filter,
-                                                     QWidget *parent,
+ImageFilterSettingsWidget::ImageFilterSettingsWidget(ImageFilter* filter,
+                                                     QWidget* parent,
                                                      Qt::WindowFlags f)
-    : QWidget(parent, f), imageFilter(filter) {}
+  : QWidget(parent, f)
+  , imageFilter(filter)
+{
+}
 
-ImageFilter::ImageFilter(ImageFilterPlugin *plugin) : pluginPtr(plugin) {}
+ImageFilter::ImageFilter(ImageFilterPlugin* plugin)
+  : pluginPtr(plugin)
+{
+}
 
-ImageFilterPlugin *ImageFilter::plugin() { return pluginPtr; }
+ImageFilterPlugin*
+ImageFilter::plugin()
+{
+  return pluginPtr;
+}
 
-ImageFilter *ImageFilterPlugin::makeFilter(QString name) {
+ImageFilter*
+ImageFilterPlugin::makeFilter(QString name)
+{
   auto plugins = QPluginLoader::staticInstances();
   foreach (auto plugin, plugins) {
-    auto fmt = qobject_cast<ImageFilterPlugin *>(plugin);
+    auto fmt = qobject_cast<ImageFilterPlugin*>(plugin);
     if (fmt != NULL && name == fmt->name())
       return fmt->makeFilter();
   }
@@ -47,8 +59,10 @@ ImageFilter *ImageFilterPlugin::makeFilter(QString name) {
 }
 
 ImageFilterSettingsDialog::ImageFilterSettingsDialog(
-    ImageFilterSettingsWidget *settings_, QWidget *parent, Qt::WindowFlags f)
-    : QDockWidget(settings_->windowTitle(), parent, f), settings(settings_) {
+  ImageFilterSettingsWidget* settings_, QWidget* parent, Qt::WindowFlags f)
+  : QDockWidget(settings_->windowTitle(), parent, f)
+  , settings(settings_)
+{
 
   setWidget(new QWidget);
   widget()->setLayout(new QVBoxLayout);
@@ -69,17 +83,23 @@ ImageFilterSettingsDialog::ImageFilterSettingsDialog(
   live->setChecked(true);
 }
 
-void ImageFilterSettingsDialog::accept() {
+void
+ImageFilterSettingsDialog::accept()
+{
   apply();
   close();
 }
 
-void ImageFilterSettingsDialog::reject() {
+void
+ImageFilterSettingsDialog::reject()
+{
   settings->imageFilter->restoreSettings();
   close();
 }
 
-void ImageFilterSettingsDialog::apply() {
+void
+ImageFilterSettingsDialog::apply()
+{
   settings->applySettings();
   settings->imageFilter->saveSettings();
 }

@@ -27,14 +27,16 @@ extern "C" {
 
 namespace QArv {
 
-class Mono8SignedFormat : public QObject, public QArvPixelFormat {
+class Mono8SignedFormat : public QObject, public QArvPixelFormat
+{
   Q_OBJECT
   Q_INTERFACES(QArvPixelFormat)
 public:
   ArvPixelFormat pixelFormat() { return ARV_PIXEL_FORMAT_MONO_8_SIGNED; }
-  QArvDecoder *makeDecoder(QSize size) {
+  QArvDecoder* makeDecoder(QSize size)
+  {
     return new MonoUnpackedDecoder<int8_t, 8, ARV_PIXEL_FORMAT_MONO_8_SIGNED>(
-        size);
+      size);
   }
 };
 }

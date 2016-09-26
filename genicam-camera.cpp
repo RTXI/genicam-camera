@@ -15,7 +15,7 @@
  * more details.
  *
  * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
+ * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <iostream>
@@ -34,31 +34,36 @@
 #include <qarvcamera.h>
 #include <qarvgui.h>
 
-extern "C" Plugin::Object *createRTXIPlugin(void) {
+extern "C" Plugin::Object*
+createRTXIPlugin(void)
+{
   return new GenicamCamera();
 }
 
 // INPUTs, OUTPUTs, PARAMETERs, and STATEs
-static Workspace::variable_t vars[] = {
-    {
-        "Input", "Input", Workspace::INPUT,
-    },
-    {
-        "Output", "Output", Workspace::OUTPUT,
-    },
-    {
-        "State", "State", Workspace::STATE,
-    },
-    {
-        "Parameter", "Parameter", Workspace::PARAMETER,
-    }};
+static Workspace::variable_t vars[] = { 
+  {
+    "Input", "Input", Workspace::INPUT,
+  },
+  {
+    "Output", "Output", Workspace::OUTPUT,
+  },
+  {
+    "State", "State", Workspace::STATE,
+  },
+  {
+    "Parameter", "Parameter", Workspace::PARAMETER,
+  }
+};
 
 // Number of variables in vars
 static size_t num_vars = sizeof(vars) / sizeof(Workspace::variable_t);
 
 GenicamCamera::GenicamCamera(void)
-    : QWidget(MainWindow::getInstance()->centralWidget()), RT::Thread(0),
-      Workspace::Instance("GenICam Module", vars, num_vars) {
+  : QWidget(MainWindow::getInstance()->centralWidget())
+  , RT::Thread(0)
+  , Workspace::Instance("GenICam Module", vars, num_vars)
+{
 
   pthread_create(&thread, 0, bounce, this);
 
@@ -74,15 +79,25 @@ GenicamCamera::GenicamCamera(void)
   show();
 }
 
-GenicamCamera::~GenicamCamera(void) { pthread_join(thread, 0); }
+GenicamCamera::~GenicamCamera(void)
+{
+  pthread_join(thread, 0);
+}
 
-void *GenicamCamera::bounce(void *thing) {
+void*
+GenicamCamera::bounce(void* thing)
+{
   std::cout << "bounce. bounce." << std::endl;
 }
 
-void GenicamCamera::initialize(void) {}
+void
+GenicamCamera::initialize(void)
+{
+}
 
-void GenicamCamera::createGUI(void) {
+void
+GenicamCamera::createGUI(void)
+{
 
   subWindow = new QMdiSubWindow;
   subWindow->setAttribute(Qt::WA_DeleteOnClose);
@@ -93,7 +108,7 @@ void GenicamCamera::createGUI(void) {
   MainWindow::getInstance()->createMdi(subWindow);
 
   widget = new QArvGui(subWindow, true);
-  QVBoxLayout *layout = new QVBoxLayout(this);
+  QVBoxLayout* layout = new QVBoxLayout(this);
   layout->addWidget(widget);
 
   setLayout(layout);
@@ -103,7 +118,9 @@ void GenicamCamera::createGUI(void) {
   subWindow->adjustSize();
 }
 
-void GenicamCamera::receiveEvent(const ::Event::Object *event) {
+void
+GenicamCamera::receiveEvent(const ::Event::Object* event)
+{
   if (event->getName() == Event::START_GENICAM_RECORDING_EVENT) {
     std::cout << event->getName() << std::endl;
   } else if (event->getName() == Event::STOP_GENICAM_RECORDING_EVENT) {
@@ -115,25 +132,27 @@ void GenicamCamera::receiveEvent(const ::Event::Object *event) {
   }
 }
 
-void GenicamCamera::receiveEventRT(const ::Event::Object *event) {
+void
+GenicamCamera::receiveEventRT(const ::Event::Object* event)
+{
   if (event->getName() == Event::START_GENICAM_RECORDING_EVENT) {
-    dynamic_cast<QArv::QArvMainWindow *>(widget->mainWindow())
-        ->recordAction->setChecked(true);
+    dynamic_cast<QArv::QArvMainWindow*>(widget->mainWindow())
+      ->recordAction->setChecked(true);
     std::cout << event->getName() << " RT" << std::endl;
   } else if (event->getName() == Event::PAUSE_GENICAM_RECORDING_EVENT) {
     std::cout << event->getName() << " RT" << std::endl;
-    dynamic_cast<QArv::QArvMainWindow *>(widget->mainWindow())
-        ->recordAction->setChecked(false);
+    dynamic_cast<QArv::QArvMainWindow*>(widget->mainWindow())
+      ->recordAction->setChecked(false);
   } else if (event->getName() == Event::STOP_GENICAM_RECORDING_EVENT) {
     std::cout << event->getName() << " RT" << std::endl;
-    dynamic_cast<QArv::QArvMainWindow *>(widget->mainWindow())
-        ->recordAction->setChecked(false);
-    dynamic_cast<QArv::QArvMainWindow *>(widget->mainWindow())
-        ->closeFileAction->trigger();
+    dynamic_cast<QArv::QArvMainWindow*>(widget->mainWindow())
+      ->recordAction->setChecked(false);
+    dynamic_cast<QArv::QArvMainWindow*>(widget->mainWindow())
+      ->closeFileAction->trigger();
   } else if (event->getName() == Event::GENICAM_SNAPSHOT_EVENT) {
     std::cout << event->getName() << " RT" << std::endl;
-    dynamic_cast<QArv::QArvMainWindow *>(widget->mainWindow())
-        ->snapshotAction->setChecked(true);
+    dynamic_cast<QArv::QArvMainWindow*>(widget->mainWindow())
+      ->snapshotAction->setChecked(true);
   } else {
     std::cout << "Genicam RT: " << event->getName() << std::endl;
   }

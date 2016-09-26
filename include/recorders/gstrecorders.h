@@ -24,7 +24,8 @@
 
 namespace QArv {
 
-class HuffyuvAviFormat : public QObject, public OutputFormat {
+class HuffyuvAviFormat : public QObject, public OutputFormat
+{
   Q_OBJECT
   Q_INTERFACES(QArv::OutputFormat)
   Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QArvOutputFormat")
@@ -32,7 +33,7 @@ class HuffyuvAviFormat : public QObject, public OutputFormat {
 public:
   QString name() { return "huffyuv AVI"; }
   bool canWriteInfo() { return false; }
-  Recorder *makeRecorder(QArvDecoder *decoder, QString fileName,
+  Recorder* makeRecorder(QArvDecoder* decoder, QString fileName,
                          QSize frameSize, int framesPerSecond, bool writeInfo);
 };
 }

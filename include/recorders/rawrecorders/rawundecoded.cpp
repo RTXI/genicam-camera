@@ -33,7 +33,9 @@ using namespace QArv;
 
 static const QString descExt(".qarv");
 
-static void initDescfile(QSettings &s, QSize size, int FPS) {
+static void
+initDescfile(QSettings& s, QSize size, int FPS)
+{
   s.beginGroup("qarv_raw_video_description");
   s.remove("");
   s.setValue("description_version", "0.1");
@@ -44,11 +46,15 @@ static void initDescfile(QSettings &s, QSize size, int FPS) {
   s.setValue("nominal_fps", FPS);
 }
 
-class RawUndecoded : public Recorder {
+class RawUndecoded : public Recorder
+{
 public:
-  RawUndecoded(QArvDecoder *decoder_, QString fileName, QSize size, int FPS,
+  RawUndecoded(QArvDecoder* decoder_, QString fileName, QSize size, int FPS,
                bool writeInfo)
-      : file(fileName), decoder(decoder_), bytesizeWritten(false) {
+    : file(fileName)
+    , decoder(decoder_)
+    , bytesizeWritten(false)
+  {
     file.open(QIODevice::WriteOnly);
     if (isOK() && writeInfo) {
       QSettings s(fileName + descExt, QSettings::Format::IniFormat);
@@ -63,7 +69,8 @@ public:
 
   bool recordsRaw() { return true; }
 
-  void recordFrame(QByteArray raw) {
+  void recordFrame(QByteArray raw)
+  {
     if (isOK()) {
       file.write(raw);
       if (!bytesizeWritten) {
@@ -76,7 +83,8 @@ public:
     }
   }
 
-  QPair<qint64, qint64> fileSize() {
+  QPair<qint64, qint64> fileSize()
+  {
     qint64 s, n;
     if (!bytesizeWritten || !frameBytes) {
       s = n = 0;
@@ -89,15 +97,16 @@ public:
 
 private:
   QFile file;
-  QArvDecoder *decoder;
+  QArvDecoder* decoder;
   bool bytesizeWritten;
   qint64 frameBytes;
 };
 
-Recorder *RawUndecodedFormat::makeRecorder(QArvDecoder *decoder,
-                                           QString fileName, QSize frameSize,
-                                           int framesPerSecond,
-                                           bool writeInfo) {
+Recorder*
+RawUndecodedFormat::makeRecorder(QArvDecoder* decoder, QString fileName,
+                                 QSize frameSize, int framesPerSecond,
+                                 bool writeInfo)
+{
   return new RawUndecoded(decoder, fileName, frameSize, framesPerSecond,
                           writeInfo);
 }

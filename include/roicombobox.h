@@ -24,11 +24,12 @@
 
 namespace QArv {
 
-class ROIcomboBox : public QComboBox {
+class ROIcomboBox : public QComboBox
+{
   Q_OBJECT
 
 public:
-  ROIcomboBox(QWidget *parent = 0);
+  ROIcomboBox(QWidget* parent = 0);
   ~ROIcomboBox();
 
 signals:
@@ -39,7 +40,7 @@ private slots:
   void customSizeEntered();
 
 private:
-  QValidator *ROIsizeValidator;
+  QValidator* ROIsizeValidator;
 };
 }
 

@@ -32,12 +32,14 @@ using namespace QArv;
 
 static int init __attribute__((unused)) = []() {
   qRegisterMetaType<cv::Mat>("cv::Mat");
-  qRegisterMetaType<QFile *>("QFile*");
+  qRegisterMetaType<QFile*>("QFile*");
   qRegisterMetaType<QList<ImageFilterPtr>>("QList<QArv::ImageFilterPtr>");
   return 0;
 }();
 
-Workthread::Workthread(QObject *parent) : QObject(parent) {
+Workthread::Workthread(QObject* parent)
+  : QObject(parent)
+{
   camera = nullptr;
   auto cookerThread = new QThread(this);
   cooker = new Cooker;
@@ -62,7 +64,8 @@ Workthread::Workthread(QObject *parent) : QObject(parent) {
           SLOT(renderFrame(cv::Mat)));
 }
 
-Workthread::~Workthread() {
+Workthread::~Workthread()
+{
   newCamera(nullptr, nullptr);
   auto cookerThread = cooker->thread();
   auto rendererThread = renderer->thread();
@@ -72,82 +75,101 @@ Workthread::~Workthread() {
   rendererThread->wait();
 }
 
-void Workthread::newCamera(QArvCamera *camera_, QArvDecoder *decoder) {
+void
+Workthread::newCamera(QArvCamera* camera_, QArvDecoder* decoder)
+{
   if (camera) {
-    disconnect(camera, SIGNAL(frameReady(QByteArray, ArvBuffer *)), cooker,
-               SLOT(processFrame(QByteArray, ArvBuffer *)));
-    disconnect(camera, SIGNAL(frameReady(QByteArray, ArvBuffer *)), this,
-               SIGNAL(frameDelivered(QByteArray, ArvBuffer *)));
+    disconnect(camera, SIGNAL(frameReady(QByteArray, ArvBuffer*)), cooker,
+               SLOT(processFrame(QByteArray, ArvBuffer*)));
+    disconnect(camera, SIGNAL(frameReady(QByteArray, ArvBuffer*)), this,
+               SIGNAL(frameDelivered(QByteArray, ArvBuffer*)));
     QMetaObject::invokeMethod(
-        cooker, "returnCamera", Qt::BlockingQueuedConnection,
-        Q_ARG(QArvCamera *, camera), Q_ARG(QThread *, thread()));
+      cooker, "returnCamera", Qt::BlockingQueuedConnection,
+      Q_ARG(QArvCamera*, camera), Q_ARG(QThread*, thread()));
   }
   cooker->p.decoder = decoder;
   camera = camera_;
   if (camera) {
     camera->moveToThread(cooker->thread());
-    connect(camera, SIGNAL(frameReady(QByteArray, ArvBuffer *)), cooker,
-            SLOT(processFrame(QByteArray, ArvBuffer *)));
-    connect(camera, SIGNAL(frameReady(QByteArray, ArvBuffer *)), this,
-            SIGNAL(frameDelivered(QByteArray, ArvBuffer *)));
+    connect(camera, SIGNAL(frameReady(QByteArray, ArvBuffer*)), cooker,
+            SLOT(processFrame(QByteArray, ArvBuffer*)));
+    connect(camera, SIGNAL(frameReady(QByteArray, ArvBuffer*)), this,
+            SIGNAL(frameDelivered(QByteArray, ArvBuffer*)));
   }
 }
 
-void Workthread::newRecorder(Recorder *recorder_, QFile *timestampFile_) {
+void
+Workthread::newRecorder(Recorder* recorder_, QFile* timestampFile_)
+{
   recorder = recorder_;
   timestampFile = timestampFile_;
 }
 
-void Workthread::startRecording(int maxFrames) {
+void
+Workthread::startRecording(int maxFrames)
+{
   QMetaObject::invokeMethod(cooker, "setRecorder", Qt::QueuedConnection,
-                            Q_ARG(QArv::Recorder *, recorder),
-                            Q_ARG(QFile *, timestampFile),
+                            Q_ARG(QArv::Recorder*, recorder),
+                            Q_ARG(QFile*, timestampFile),
                             Q_ARG(int, maxFrames));
 }
 
-void Workthread::stopRecording() {
+void
+Workthread::stopRecording()
+{
   QMetaObject::invokeMethod(cooker, "setRecorder", Qt::QueuedConnection,
-                            Q_ARG(QArv::Recorder *, nullptr),
-                            Q_ARG(QFile *, nullptr), Q_ARG(int, -1));
+                            Q_ARG(QArv::Recorder*, nullptr),
+                            Q_ARG(QFile*, nullptr), Q_ARG(int, -1));
 }
 
-void Workthread::startCamera(bool zeroCopy, bool dropInvalidFrames) {
+void
+Workthread::startCamera(bool zeroCopy, bool dropInvalidFrames)
+{
   QMetaObject::invokeMethod(
-      cooker, "cameraAcquisition", Qt::BlockingQueuedConnection,
-      Q_ARG(QArvCamera *, camera), Q_ARG(bool, true), Q_ARG(bool, zeroCopy),
-      Q_ARG(bool, dropInvalidFrames));
+    cooker, "cameraAcquisition", Qt::BlockingQueuedConnection,
+    Q_ARG(QArvCamera*, camera), Q_ARG(bool, true), Q_ARG(bool, zeroCopy),
+    Q_ARG(bool, dropInvalidFrames));
 }
 
-void Workthread::stopCamera() {
+void
+Workthread::stopCamera()
+{
   QMetaObject::invokeMethod(cooker, "cameraAcquisition",
                             Qt::BlockingQueuedConnection,
-                            Q_ARG(QArvCamera *, camera), Q_ARG(bool, false),
+                            Q_ARG(QArvCamera*, camera), Q_ARG(bool, false),
                             Q_ARG(bool, true), Q_ARG(bool, true));
 }
 
-void Workthread::setImageTransform(bool imageTransform_invert,
-                                   int imageTransform_flip,
-                                   int imageTransform_rot) {
+void
+Workthread::setImageTransform(bool imageTransform_invert,
+                              int imageTransform_flip, int imageTransform_rot)
+{
   QMetaObject::invokeMethod(cooker, "setImageTransform", Qt::QueuedConnection,
                             Q_ARG(bool, imageTransform_invert),
                             Q_ARG(int, imageTransform_flip),
                             Q_ARG(int, imageTransform_rot));
 }
 
-void Workthread::setFilterChain(QList<ImageFilterPtr> filterChain) {
+void
+Workthread::setFilterChain(QList<ImageFilterPtr> filterChain)
+{
   QMetaObject::invokeMethod(cooker, "setFilterChain", Qt::QueuedConnection,
                             Q_ARG(QList<QArv::ImageFilterPtr>, filterChain));
 }
 
-void Workthread::waitUntilProcessingCycleCompletes() {
+void
+Workthread::waitUntilProcessingCycleCompletes()
+{
   QMetaObject::invokeMethod(renderer, "processEvents",
                             Qt::BlockingQueuedConnection);
   QMetaObject::invokeMethod(cooker, "processEvents",
                             Qt::BlockingQueuedConnection);
 }
 
-void Workthread::renderFrame(QImage *destinationImage, bool markClipped,
-                             Histograms *hists, bool logarithmic) {
+void
+Workthread::renderFrame(QImage* destinationImage, bool markClipped,
+                        Histograms* hists, bool logarithmic)
+{
   renderer->destinationImage = destinationImage;
   renderer->markClipped = markClipped;
   renderer->hists = hists;
@@ -155,27 +177,39 @@ void Workthread::renderFrame(QImage *destinationImage, bool markClipped,
   cooker->doRender.store(true);
 }
 
-uint Workthread::getFps() {
+uint
+Workthread::getFps()
+{
   uint fps;
   cooker->getFps(&fps);
   return fps;
 }
 
-Cooker::Cooker(QObject *parent) : QObject(parent) {
+Cooker::Cooker(QObject* parent)
+  : QObject(parent)
+{
   doRender.store(false);
   receivedFrames.store(0);
   lastFpsRequestFrames = 0;
   lastFpsRequest.start();
 }
 
-void Cooker::processEvents() { QCoreApplication::processEvents(); }
+void
+Cooker::processEvents()
+{
+  QCoreApplication::processEvents();
+}
 
-void Cooker::returnCamera(QArvCamera *camera, QThread *thread) {
+void
+Cooker::returnCamera(QArvCamera* camera, QThread* thread)
+{
   camera->moveToThread(thread);
 }
 
-void Cooker::cameraAcquisition(QArvCamera *camera, bool start, bool zeroCopy,
-                               bool dropInvalidFrames) {
+void
+Cooker::cameraAcquisition(QArvCamera* camera, bool start, bool zeroCopy,
+                          bool dropInvalidFrames)
+{
   if (start) {
     camera->startAcquisition(zeroCopy, dropInvalidFrames);
     lastFpsRequest = QTime::currentTime();
@@ -186,7 +220,9 @@ void Cooker::cameraAcquisition(QArvCamera *camera, bool start, bool zeroCopy,
   }
 }
 
-void Cooker::processFrame(QByteArray frame, ArvBuffer *aravisFrame) {
+void
+Cooker::processFrame(QByteArray frame, ArvBuffer* aravisFrame)
+{
   receivedFrames.fetch_add(1, std::memory_order_relaxed);
   if (p.decoder) {
     p.decoder->decode(frame);
@@ -201,19 +237,19 @@ void Cooker::processFrame(QByteArray frame, ArvBuffer *aravisFrame) {
       cv::flip(img, img, p.imageTransform_flip);
 
     switch (p.imageTransform_rot) {
-    case 1:
-      cv::transpose(img, img);
-      cv::flip(img, img, 0);
-      break;
+      case 1:
+        cv::transpose(img, img);
+        cv::flip(img, img, 0);
+        break;
 
-    case 2:
-      cv::flip(img, img, -1);
-      break;
+      case 2:
+        cv::flip(img, img, -1);
+        break;
 
-    case 3:
-      cv::transpose(img, img);
-      cv::flip(img, img, 1);
-      break;
+      case 3:
+        cv::transpose(img, img);
+        cv::flip(img, img, 1);
+        break;
     }
 
     bool needFiltering = false;
@@ -265,20 +301,24 @@ void Cooker::processFrame(QByteArray frame, ArvBuffer *aravisFrame) {
   }
 }
 
-void Cooker::setImageTransform(bool imageTransform_invert,
-                               int imageTransform_flip,
-                               int imageTransform_rot) {
+void
+Cooker::setImageTransform(bool imageTransform_invert, int imageTransform_flip,
+                          int imageTransform_rot)
+{
   p.imageTransform_invert = imageTransform_invert;
   p.imageTransform_flip = imageTransform_flip;
   p.imageTransform_rot = imageTransform_rot;
 }
 
-void Cooker::setFilterChain(QList<ImageFilterPtr> filterChain) {
+void
+Cooker::setFilterChain(QList<ImageFilterPtr> filterChain)
+{
   p.filterChain = filterChain;
 }
 
-void Cooker::setRecorder(Recorder *recorder, QFile *timestampFile,
-                         int maxFrames) {
+void
+Cooker::setRecorder(Recorder* recorder, QFile* timestampFile, int maxFrames)
+{
   p.recorder = recorder;
   p.timestampFile = timestampFile;
   if (maxFrames != -1) {
@@ -287,7 +327,9 @@ void Cooker::setRecorder(Recorder *recorder, QFile *timestampFile,
   }
 }
 
-void Cooker::getFps(uint *fps) {
+void
+Cooker::getFps(uint* fps)
+{
   if (fps) {
     uint ms = lastFpsRequest.elapsed();
     uint rcvFrm = receivedFrames.load(std::memory_order_relaxed);
@@ -299,11 +341,12 @@ void Cooker::getFps(uint *fps) {
 }
 
 template <bool grayscale, bool depth8>
-static void renderFrameF(const cv::Mat frame, QImage *image_,
-                         bool markClipped = false, Histograms *hists = NULL,
-                         bool logarithmic = false) {
+static void
+renderFrameF(const cv::Mat frame, QImage* image_, bool markClipped = false,
+             Histograms* hists = NULL, bool logarithmic = false)
+{
   typedef
-      typename ::std::conditional<depth8, uint8_t, uint16_t>::type ImageType;
+    typename ::std::conditional<depth8, uint8_t, uint16_t>::type ImageType;
   float *histRed, *histGreen, *histBlue;
   if (hists) {
     histRed = hists->red;
@@ -315,19 +358,19 @@ static void renderFrameF(const cv::Mat frame, QImage *image_,
   } else {
     histRed = histGreen = histBlue = NULL;
   }
-  QImage &image = *image_;
+  QImage& image = *image_;
   const int h = frame.rows, w = frame.cols;
   QSize s = image.size();
   if (s.height() != h || s.width() != w ||
       image.format() != QImage::Format_ARGB32_Premultiplied)
     image = QImage(w, h, QImage::Format_ARGB32_Premultiplied);
   if (!grayscale) {
-    float *histograms[3] = {histRed, histGreen, histBlue};
+    float* histograms[3] = { histRed, histGreen, histBlue };
     for (int i = 0; i < h; i++) {
       auto imgLine = image.scanLine(i);
       auto imageLine = frame.ptr<cv::Vec<ImageType, 3>>(i);
       for (int j = 0; j < w; j++) {
-        auto &bgr = imageLine[j];
+        auto& bgr = imageLine[j];
         bool clipped = false;
         for (int px = 0; px < 3; px++) {
           uint8_t tmp = depth8 ? bgr[2 - px] : bgr[2 - px] >> 8;
@@ -348,7 +391,7 @@ static void renderFrameF(const cv::Mat frame, QImage *image_,
       ;
       for (int c = 0; c < 3; c++)
         for (int i = 0; i < 256; i++) {
-          float *h = histograms[c] + i;
+          float* h = histograms[c] + i;
           *h = log2(*h + 1);
         }
     }
@@ -378,27 +421,36 @@ static void renderFrameF(const cv::Mat frame, QImage *image_,
   }
 }
 
-Renderer::Renderer(QObject *parent) : QObject(parent) {}
+Renderer::Renderer(QObject* parent)
+  : QObject(parent)
+{
+}
 
-void Renderer::processEvents() { QCoreApplication::processEvents(); }
+void
+Renderer::processEvents()
+{
+  QCoreApplication::processEvents();
+}
 
-void Renderer::renderFrame(cv::Mat frame) {
-  void (*theFunc)(const cv::Mat, QImage *, bool, QArv::Histograms *, bool);
+void
+Renderer::renderFrame(cv::Mat frame)
+{
+  void (*theFunc)(const cv::Mat, QImage*, bool, QArv::Histograms*, bool);
   switch (frame.type()) {
-  case CV_16UC1:
-    theFunc = renderFrameF<true, false>;
-    break;
-  case CV_16UC3:
-    theFunc = renderFrameF<false, false>;
-    break;
-  case CV_8UC1:
-    theFunc = renderFrameF<true, true>;
-    break;
-  case CV_8UC3:
-    theFunc = renderFrameF<false, true>;
-    break;
-  default:
-    throw QString("Invalid image type!");
+    case CV_16UC1:
+      theFunc = renderFrameF<true, false>;
+      break;
+    case CV_16UC3:
+      theFunc = renderFrameF<false, false>;
+      break;
+    case CV_8UC1:
+      theFunc = renderFrameF<true, true>;
+      break;
+    case CV_8UC3:
+      theFunc = renderFrameF<false, true>;
+      break;
+    default:
+      throw QString("Invalid image type!");
   }
 
   theFunc(frame, destinationImage, markClipped, hists, logarithmic);

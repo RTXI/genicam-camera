@@ -23,9 +23,13 @@
 
 using namespace QArv;
 
-GLHistogramWidget::GLHistogramWidget(QWidget *parent)
-    : QGLWidget(), unusedHists(&histograms2), histRed(histograms1.red),
-      histGreen(histograms1.green), histBlue(histograms1.blue) {
+GLHistogramWidget::GLHistogramWidget(QWidget* parent)
+  : QGLWidget()
+  , unusedHists(&histograms2)
+  , histRed(histograms1.red)
+  , histGreen(histograms1.green)
+  , histBlue(histograms1.blue)
+{
   indexed = true;
   logarithmic = false;
   // QFile iconfile(QString(qarv_datafiles) +
@@ -37,19 +41,29 @@ GLHistogramWidget::GLHistogramWidget(QWidget *parent)
   setIdle();
 }
 
-void GLHistogramWidget::setLogarithmic(bool logarithmic_) {
+void
+GLHistogramWidget::setLogarithmic(bool logarithmic_)
+{
   logarithmic = logarithmic_;
 }
 
-void GLHistogramWidget::setIdle() {
+void
+GLHistogramWidget::setIdle()
+{
   idle = true;
   update();
   return;
 }
 
-Histograms *GLHistogramWidget::unusedHistograms() { return unusedHists; }
+Histograms*
+GLHistogramWidget::unusedHistograms()
+{
+  return unusedHists;
+}
 
-void GLHistogramWidget::swapHistograms(bool grayscale) {
+void
+GLHistogramWidget::swapHistograms(bool grayscale)
+{
   idle = false;
   indexed = grayscale;
   histRed = unusedHists->red;
@@ -62,7 +76,9 @@ void GLHistogramWidget::swapHistograms(bool grayscale) {
   update();
 }
 
-void GLHistogramWidget::paintGL() {
+void
+GLHistogramWidget::paintGL()
+{
   if (idle) {
     QPainter painter(this);
     painter.drawPixmap(rect(), idleImageIcon.pixmap(rect().size()));
@@ -94,10 +110,10 @@ void GLHistogramWidget::paintGL() {
       painter.drawRect(QRectF(topLeft, bottomRight));
     }
   } else {
-    QColor colors[] = {QColor::fromRgba(qRgba(255, 0, 0, 128)),
-                       QColor::fromRgba(qRgba(0, 255, 0, 128)),
-                       QColor::fromRgba(qRgba(0, 0, 255, 128))};
-    float *histograms[] = {histRed, histGreen, histBlue};
+    QColor colors[] = { QColor::fromRgba(qRgba(255, 0, 0, 128)),
+                        QColor::fromRgba(qRgba(0, 255, 0, 128)),
+                        QColor::fromRgba(qRgba(0, 0, 255, 128)) };
+    float* histograms[] = { histRed, histGreen, histBlue };
     float max = 0;
     for (int c = 0; c < 3; c++) {
       for (int i = 0; i < 256; i++)

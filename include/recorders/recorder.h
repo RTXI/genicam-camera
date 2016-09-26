@@ -29,7 +29,8 @@
 
 namespace QArv {
 
-class Recorder {
+class Recorder
+{
 public:
   virtual ~Recorder() {}
 
@@ -60,7 +61,8 @@ public:
   virtual QPair<qint64, qint64> fileSize() = 0;
 };
 
-class OutputFormat {
+class OutputFormat
+{
 public:
   //! Returns the name of the output format.
   virtual QString name() = 0;
@@ -69,18 +71,18 @@ public:
   virtual bool canWriteInfo() = 0;
 
   //! Instantiates a recorder using this plugin.
-  virtual Recorder *makeRecorder(QArvDecoder *decoder, QString fileName,
+  virtual Recorder* makeRecorder(QArvDecoder* decoder, QString fileName,
                                  QSize frameSize, int framesPerSecond,
                                  bool writeInfo) = 0;
 
   //! Creates a recorder for the requested output format.
-  static Recorder *makeRecorder(QArvDecoder *decoder, QString fileName,
+  static Recorder* makeRecorder(QArvDecoder* decoder, QString fileName,
                                 QString outputFormat, QSize frameSize,
                                 int framesPerSecond, bool writeInfo);
 };
 }
 
 Q_DECLARE_INTERFACE(QArv::OutputFormat, "org.qt-project.Qt.QArvOutputFormat")
-Q_DECLARE_METATYPE(QArv::OutputFormat *)
+Q_DECLARE_METATYPE(QArv::OutputFormat*)
 
 #endif

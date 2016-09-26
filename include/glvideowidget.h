@@ -28,16 +28,17 @@
 
 namespace QArv {
 
-class GLVideoWidget : public QGLWidget {
+class GLVideoWidget : public QGLWidget
+{
   Q_OBJECT
 
 public:
-  GLVideoWidget(QWidget *parent = NULL);
+  GLVideoWidget(QWidget* parent = NULL);
   ~GLVideoWidget();
   void paintGL();
-  QImage *unusedFrame();
+  QImage* unusedFrame();
   void swapFrames();
-  void setImage(const QImage &image_ = QImage());
+  void setImage(const QImage& image_ = QImage());
   QSize getImageSize();
 
 public slots:
@@ -48,10 +49,10 @@ signals:
   void selectionComplete(QRect region);
 
 private:
-  virtual void mouseMoveEvent(QMouseEvent *event);
-  virtual void mousePressEvent(QMouseEvent *event);
-  virtual void mouseReleaseEvent(QMouseEvent *event);
-  virtual void resizeEvent(QResizeEvent *event);
+  virtual void mouseMoveEvent(QMouseEvent* event);
+  virtual void mousePressEvent(QMouseEvent* event);
+  virtual void mouseReleaseEvent(QMouseEvent* event);
+  virtual void resizeEvent(QResizeEvent* event);
 
   QImage image, unusedImage;
   QRect in, out;
