@@ -33,7 +33,7 @@ GLHistogramWidget::GLHistogramWidget(QWidget *parent)
   // if (iconfile.exists())
   // idleImageIcon = QIcon(iconfile.fileName());
   // else
-  idleImageIcon = QIcon::fromTheme("view-object-histogram-linear");
+  // idleImageIcon = QIcon::fromTheme("view-object-histogram-linear");
   setIdle();
 }
 
