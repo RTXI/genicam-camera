@@ -10,8 +10,6 @@ HEADERS = genicam-camera.h \
           include/glvideowidget.h \
           include/ui_mainwindow.h \
           include/workthread.h \
-          include/decoders/graymap.h \
-          include/decoders/swscaledecoder.h \
           include/recorders/recorder.h \
           include/filters/filter.h \
           include/filters/levels.h \
@@ -25,8 +23,6 @@ SOURCES = genicam-camera.cpp \
           include/roicombobox.cpp \
           include/glvideowidget.cpp \
           include/workthread.cpp \
-          include/decoders/graymap.cpp \
-          include/decoders/swscaledecoder.cpp \
           include/recorders/recorder.cpp \
           include/filters/filter.cpp \
           include/filters/levels.cpp \
