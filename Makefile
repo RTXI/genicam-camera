@@ -11,7 +11,7 @@ HEADERS = genicam-camera.h \
           include/ui_mainwindow.h \
           include/workthread.h \
           include/decoders/graymap.h \
-          include/decoders/monoumpacked.h \
+          include/decoders/monounpacked.h \
           include/decoders/swscaledecoder.h \
           include/decoders/unsupported.h \
           include/recorders/recorder.h \
@@ -29,7 +29,6 @@ SOURCES = genicam-camera.cpp \
           include/glvideowidget.cpp \
           include/workthread.cpp \
           include/decoders/graymap.cpp \
-          include/decoders/monoumpacked.cpp \
           include/decoders/swscaledecoder.cpp \
           include/recorders/recorder.cpp \
           include/recorders/gstrecorder_implementation.cpp \
