@@ -51,7 +51,7 @@ Next, switch to the "IPv4 Settings" tab, and set the IP address for the camera.
 Under "Method," pick "Manual." Under "Addresses," you can set the address to
 more-or-less whatever you want. For example: 
 
-	Address: 169.251.1.1 
+	Address: 169.254.0.1 
 	Netmask: 255.255.0.0 
 	Gateway: 169.254.255.255
 
