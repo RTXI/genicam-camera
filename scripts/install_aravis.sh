@@ -30,14 +30,6 @@ cd ${DEP_DIR}/aravis-${ARAVIS_VERSION}
     --enable-gst-plugin --enable-cpp-test && \
   make -j`nproc` && sudo make install
 
+sudo ldconfig
+
 cd ${SCRIPT_DIR}
-
-
-################################################################################
-# Export variables. Assumes that the script is run from the base of the 
-# repository. Values will be lost when you close your shell, so you may want 
-# manually enter the full path name (i.e., without pwd) in your shell profile.
-################################################################################
-
-#export GI_TYPELIB_PATH=$GI_TYPELIB_PATH:$(pwd)/aravis-git/src
-#export LD_LIBRARY_PATH=$(pwd)/aravis-git/src/.libs
