@@ -1,10 +1,6 @@
 ### GenICam Module
 
-**Requirements:** intltool, libgstreamer1.0-dev, libgtk-3-dev, gtk-doc-tools,
-libnotify-dev, libgstreamer-plugins-base1.0-dev, libgirepository1.0-dev,
-libgstreamer0.10-dev, libgstreamer-plugins-base0.10-dev, python-gobject-dev,
-python-gst0.10-dev, python-gst-1.0, gobject-introspection, net-tools
-
+**Requirements:** See `install_aravis.sh` and `install_qarv.sh`
 **Limitations:** non-real-time
 
 ![Genicam Camera GUI](genicam-camera.png)
@@ -44,24 +40,28 @@ Hit "Add" to open the connection creation dialog, pick "Ethernet," and hit
 "Create." Another dialog box will open up. Under the "Etheret" tab (the one it
 opens first), set the device MAC address from the dropdown menu. You'll need to
 know beforehand which device interface name (i.e., `eth0`, `eth1`, etc.)
-corresponds to your camera. (Run `sudo ifconfig` in another terminal to see
+corresponds to your camera. (Run `ifconfig` in another terminal to see
 what interfaces exist.) Once the MAC address is set, **set the MTU to 9000**. 
 
-Next, switch to the "IPv4 Settings" tab, and set the IP address for the camera.
-Under "Method," pick "Manual." Under "Addresses," you can set the address to
-more-or-less whatever you want. For example: 
-
-	Address: 169.254.0.1 
-	Netmask: 255.255.0.0 
-	Gateway: 169.254.255.255
+Next, switch to the "IPv4 Settings" tab, and set the IPv4 settings to
+Link-Local (look int the "Method" dropdown menu). 
 
 You don't need to configure anything else in this tab. Hit "Save...", and
 you're done. 
 
-
 To open a camera within RTXI, load the module and pick it from the dropdown
 menu. If you just installed the module, the first detected camera will be
 "Aravis Fake." Switch to you own camera via the dropdown menu. 
+
+#### Recording
+
+You can use this module to take snapshots and record video. Snapshots can be
+raw values or as pngs (lossless compression). Videos can be stored in raw
+format or also stored as uncompressed avi containers or as x264 (lossless
+compression) in Matroska containers. Avi files will be *big*, so if you don't
+need to view raw values, consider the compressed versions. 
+
+If you see artifacts in the recordings, those are bugs and should be reported. 
 
 
 Based almost entirely on [QArv](https://github.com/AD-Vega/qarv). 
