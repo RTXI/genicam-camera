@@ -10,7 +10,7 @@ sudo apt-get update && sudo apt-get -y install \
   libgstreamer-plugins-base1.0-dev libgirepository1.0-dev \
   libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev \
   python-gobject-dev python-gst0.10-dev python-gst-1.0 \
-  gobject-introspection gstreamer1.0-plugins-bad
+  gobject-introspection gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly
 
 
 ################################################################################
