@@ -20,16 +20,20 @@
 #ifndef GENICAM_CAMERA_H
 #define GENICAM_CAMERA_H
 
+
+#include <qarvcamera.h>
+#include <qarvgui.h>
+#include <include/qarvmainwindow.h>
+
 #include <event.h>
 #include <plugin.h>
 #include <rt.h>
 #include <settings.h>
 #include <workspace.h>
 
-#include <qarvcamera.h>
-#include <qarvgui.h>
+#include <main_window.h>
 
-#include <QtGlobal>
+//#include <QtGlobal>
 #if QT_VERSION >= 0x050000
 #include <QtWidgets>
 #else

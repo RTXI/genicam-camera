@@ -18,21 +18,9 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <iostream>
-#include <main_window.h>
 #include <pthread.h>
 
-#include <QtGlobal>
-#if QT_VERSION >= 0x050000
-#include <QtWidgets>
-#else
-#include <QtGui>
-#endif
-
 #include "genicam-camera.h"
-#include "include/qarvmainwindow.h"
-#include <qarvcamera.h>
-#include <qarvgui.h>
 
 extern "C" Plugin::Object*
 createRTXIPlugin(void)

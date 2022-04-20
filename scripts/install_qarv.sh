@@ -7,7 +7,7 @@ set -eu
 
 sudo apt-get install -y \
   cmake libswscale-dev libavutil-dev libavcodec-dev libopencv-dev \
-  gstreamer1.0-libav
+  gstreamer1.0-libavi libsystemd-dev
 
 
 ################################################################################
@@ -16,16 +16,16 @@ sudo apt-get install -y \
 
 SCRIPT_DIR=$(pwd)
 DEP_DIR=$(dirname `pwd`)/deps
-QARV_VERSION=2
+QARV_VERSION=2.1.0
 
 cd ${DEP_DIR}
-tar xf qarv-${QARV_VERSION}.tar.xz
-cd ${DEP_DIR}/qarv-${QARV_VERSION}
+git clone https://github.com/AD-Vega/qarv.git
+cd ${DEP_DIR}/qarv
 
 mkdir -p build
 cd build
 cmake .. 
 make -j`nproc` && sudo make install
-sudo ldconfig
+#sudo ldconfig
 
 cd ${SCRIPT_DIR}
