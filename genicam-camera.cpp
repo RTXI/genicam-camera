@@ -109,39 +109,39 @@ GenicamCamera::createGUI(void)
 void
 GenicamCamera::receiveEvent(const ::Event::Object* event)
 {
-  if (event->getName() == Event::START_GENICAM_RECORDING_EVENT) {
-    std::cout << event->getName() << std::endl;
-  } else if (event->getName() == Event::STOP_GENICAM_RECORDING_EVENT) {
-    std::cout << event->getName() << std::endl;
-  } else if (event->getName() == Event::GENICAM_SNAPSHOT_EVENT) {
-    std::cout << event->getName() << std::endl;
-  } else {
-    std::cout << "Genicam: " << event->getName() << std::endl;
-  }
+//  if (event->getName() == Event::START_GENICAM_RECORDING_EVENT) {
+//    std::cout << event->getName() << std::endl;
+//  } else if (event->getName() == Event::STOP_GENICAM_RECORDING_EVENT) {
+//    std::cout << event->getName() << std::endl;
+//  } else if (event->getName() == Event::GENICAM_SNAPSHOT_EVENT) {
+//    std::cout << event->getName() << std::endl;
+//  } else {
+//    std::cout << "Genicam: " << event->getName() << std::endl;
+//  }
 }
 
 void
 GenicamCamera::receiveEventRT(const ::Event::Object* event)
 {
-  if (event->getName() == Event::START_GENICAM_RECORDING_EVENT) {
-    dynamic_cast<QArv::QArvMainWindow*>(widget->mainWindow())
-      ->recordAction->setChecked(true);
-    std::cout << event->getName() << " RT" << std::endl;
-  } else if (event->getName() == Event::PAUSE_GENICAM_RECORDING_EVENT) {
-    std::cout << event->getName() << " RT" << std::endl;
-    dynamic_cast<QArv::QArvMainWindow*>(widget->mainWindow())
-      ->recordAction->setChecked(false);
-  } else if (event->getName() == Event::STOP_GENICAM_RECORDING_EVENT) {
-    std::cout << event->getName() << " RT" << std::endl;
-    dynamic_cast<QArv::QArvMainWindow*>(widget->mainWindow())
-      ->recordAction->setChecked(false);
-    dynamic_cast<QArv::QArvMainWindow*>(widget->mainWindow())
-      ->closeFileAction->trigger();
-  } else if (event->getName() == Event::GENICAM_SNAPSHOT_EVENT) {
-    std::cout << event->getName() << " RT" << std::endl;
-    dynamic_cast<QArv::QArvMainWindow*>(widget->mainWindow())
-      ->snapshotAction->setChecked(true);
-  } else {
-    std::cout << "Genicam RT: " << event->getName() << std::endl;
-  }
+//  if (event->getName() == Event::START_GENICAM_RECORDING_EVENT) {
+//    dynamic_cast<QArv::QArvMainWindow*>(widget->mainWindow())
+//      ->recordAction->setChecked(true);
+//    std::cout << event->getName() << " RT" << std::endl;
+//  } else if (event->getName() == Event::PAUSE_GENICAM_RECORDING_EVENT) {
+//    std::cout << event->getName() << " RT" << std::endl;
+//    dynamic_cast<QArv::QArvMainWindow*>(widget->mainWindow())
+//      ->recordAction->setChecked(false);
+//  } else if (event->getName() == Event::STOP_GENICAM_RECORDING_EVENT) {
+//    std::cout << event->getName() << " RT" << std::endl;
+//    dynamic_cast<QArv::QArvMainWindow*>(widget->mainWindow())
+//      ->recordAction->setChecked(false);
+//    dynamic_cast<QArv::QArvMainWindow*>(widget->mainWindow())
+//      ->closeFileAction->trigger();
+//  } else if (event->getName() == Event::GENICAM_SNAPSHOT_EVENT) {
+//    std::cout << event->getName() << " RT" << std::endl;
+//    dynamic_cast<QArv::QArvMainWindow*>(widget->mainWindow())
+//      ->snapshotAction->setChecked(true);
+//  } else {
+//    std::cout << "Genicam RT: " << event->getName() << std::endl;
+//  }
 }

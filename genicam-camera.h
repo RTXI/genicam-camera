@@ -23,7 +23,7 @@
 
 #include <qarvcamera.h>
 #include <qarvgui.h>
-#include <include/qarvmainwindow.h>
+//#include <qarvmainwindow.h>
 
 #include <event.h>
 #include <plugin.h>
