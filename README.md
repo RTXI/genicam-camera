@@ -9,9 +9,10 @@ Module for controlling cameras that the use the open GenICam standard.
 Currently a work in progress. Will include: 
 
 - [x] Video/image capture
-- [x] Events to trigger capture from other modules
+- [x] Events to trigger capture from other modules (non-real time)
 - [x] Camera controls (setting gain, exposure time, etc.)
 - [ ] Support loadable plugins for image processing
+- [ ] Support Real-Time Events handling
 
 To install the module, you need to install Aravis and QArv. Aravis is a
 GNOME-supported set of drivers for streaming images from GeniICam cameras.
