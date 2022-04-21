@@ -53,7 +53,7 @@ GenicamCamera::GenicamCamera(void)
   , Workspace::Instance("GenICam Module", vars, num_vars)
 {
 
-  pthread_create(&thread, 0, bounce, this);
+  //pthread_create(&thread, 0, bounce, this);
 
   setWindowTitle(QString::number(getID()) + " GenICam Module");
   QArvCamera::init();
@@ -69,7 +69,7 @@ GenicamCamera::GenicamCamera(void)
 
 GenicamCamera::~GenicamCamera(void)
 {
-  pthread_join(thread, 0);
+  //pthread_join(thread, 0);
 }
 
 void*
@@ -109,15 +109,15 @@ GenicamCamera::createGUI(void)
 void
 GenicamCamera::receiveEvent(const ::Event::Object* event)
 {
-//  if (event->getName() == Event::START_GENICAM_RECORDING_EVENT) {
-//    std::cout << event->getName() << std::endl;
-//  } else if (event->getName() == Event::STOP_GENICAM_RECORDING_EVENT) {
-//    std::cout << event->getName() << std::endl;
-//  } else if (event->getName() == Event::GENICAM_SNAPSHOT_EVENT) {
-//    std::cout << event->getName() << std::endl;
-//  } else {
-//    std::cout << "Genicam: " << event->getName() << std::endl;
-//  }
+  if (event->getName() == Event::START_GENICAM_RECORDING_EVENT) {
+    std::cout << event->getName() << std::endl;
+  } else if (event->getName() == Event::STOP_GENICAM_RECORDING_EVENT) {
+    std::cout << event->getName() << std::endl;
+  } else if (event->getName() == Event::GENICAM_SNAPSHOT_EVENT) {
+    std::cout << event->getName() << std::endl;
+  } else {
+    std::cout << "Genicam: " << event->getName() << std::endl;
+  }
 }
 
 void
